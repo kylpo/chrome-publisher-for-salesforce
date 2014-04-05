@@ -21,9 +21,28 @@
       	width: 80px;
       	padding-left: 20px;
       	padding-right: 20px;
+      	-webkit-animation: grow 0.4s;
+      	-webkit-animation-delay: 0.2s;
+      	-webkit-animation-fill-mode: forwards;
+      	opacity: 0;
       }
       .grid .action .title {
       	color: white;
+      	-webkit-animation: fadein 0.4s;
+      	-webkit-animation-delay: 0.2s;
+      	-webkit-animation-fill-mode: forwards;
+      	opacity: 0;
+      }
+      
+      @-webkit-keyframes grow {
+      	0%   { opacity: 0; -webkit-transform: scale(0.0); }
+      	90%  { opacity: 1; -webkit-transform: scale(1.1); }
+      	100% { opacity: 1; -webkit-transform: scale(1.0); }
+      }
+      
+      @-webkit-keyframes fadein {
+      	0%   { opacity: 0; }
+      	100% { opacity: 1; }
       }
     </style>
   </head>
