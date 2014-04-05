@@ -5,7 +5,7 @@
 var React = require("react");
 var Grid = require("./grid.jsx");
 
-module.exports = React.createClass({
+var App = React.createClass({
     render: function() {
         return (
             <Grid/>
@@ -13,4 +13,4 @@ module.exports = React.createClass({
     }
 })
 
-
+React.renderComponent(<App />, document.body);
