@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Getting Started Extension's Popup</title>
+    <title>Quick Actions for Salesforce</title>
     <style>
       body {
         min-width: 357px;
@@ -15,19 +15,17 @@
         width: 75px;
         height: 75px;
       }
+      .grid .action {
+      	text-align: center;
+      	cursor: pointer;
+      	float: left;
+      }
     </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
-      <script src="libs/react-with-addons-0.10.0.js"></script>
-
-      <!--<script src="popup.js"></script>-->
+    <script src="libs/react-with-addons-0.10.0.js"></script>
   </head>
   <body>
+  <script src="build/action.js"></script>
+  <script src="build/grid.js"></script>
   <script src="build/app.js"></script>
   </body>
 </html>

@@ -1,13 +1,13 @@
 /** @jsx React.DOM */
 
-//'use strict';
+'use strict';
 
 var App = React.createClass({
     render: function() {
         return (
-            <div> HELLO </div>
+            <Grid />
             );
     }
 });
 
-React.renderComponent(<App/>, document.body);
+React.renderComponent(<App />, document.body);
