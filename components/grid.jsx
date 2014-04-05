@@ -7,7 +7,7 @@ var Action = require("./action.jsx");
 
 module.exports = React.createClass({
 	propTypes: {
-		actions: React.PropTypes.array,
+		actions: React.PropTypes.array
 	},
 	getDefaultProps: function() {
 		return {
