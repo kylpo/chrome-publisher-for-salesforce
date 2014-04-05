@@ -6,6 +6,20 @@ var React = require("react");
 var Action = require("./action.jsx");
 
 module.exports = React.createClass({
+	propTypes: {
+		actions: React.PropTypes.array,
+	},
+	getDefaultProps: function() {
+		return {
+			actions: []
+		};
+	},
+	getInitialState: function() {
+		return {
+			page: 0,
+			pageSize: 6
+		}
+	},
     render: function() {
         return (
             <div className="grid">
