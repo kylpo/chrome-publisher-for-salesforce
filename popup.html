@@ -4,26 +4,31 @@
     <title>Quick Actions for Salesforce</title>
     <style>
       body {
-        min-width: 357px;
+        min-width: 320px;
         overflow-x: hidden;
-      }
-
-      img {
-        margin: 5px;
-        border: 2px solid black;
-        vertical-align: middle;
-        width: 75px;
-        height: 75px;
+        background-color: #344a5f;
+        margin: 0px;
       }
       .grid .action {
       	text-align: center;
       	cursor: pointer;
       	float: left;
+      	outline: 1px solid #2d4356;
+      	padding: 20px;
+      }
+      .grid .action img {
+      	height: 80px;
+      	width: 80px;
+      	padding-left: 20px;
+      	padding-right: 20px;
+      }
+      .grid .action .title {
+      	color: white;
       }
     </style>
+    <script src="libs/react-with-addons-0.10.0.js"></script>
   </head>
   <body>
   <script src="app.built.js"></script>
   </body>
 </html>
-
