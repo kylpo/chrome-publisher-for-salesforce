@@ -4,6 +4,7 @@
 
 var React = require("react");
 var Grid = require("./grid.jsx");
+var DAO = require("../js/DAO.js");
 
 var App = React.createClass({
 	getDefaultProps: function() {
@@ -36,4 +37,6 @@ var App = React.createClass({
     }
 })
 
-React.renderComponent(<App />, document.body);
+
+
+React.renderComponent(<App actions={DAO.getActions}/>, document.body);
