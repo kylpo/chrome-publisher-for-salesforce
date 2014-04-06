@@ -75,8 +75,40 @@ module.exports = React.createClass({displayName: 'exports',
 },{"./action.jsx":1,"react":125}],4:[function(require,module,exports){
 'use strict'
 
+/**
+ * Given an accessToken, this will perform xhr requests to salesforce
+ * @param accessToken
+ */
 module.exports = function() {
+    function xhrWithAuth(callback, method, connection, url) {
+//        console.log(connection);
+        var xhr = new XMLHttpRequest();
+        xhr.onload = requestComplete;
+        xhr.open(method, connection.host + url, true);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + connection.access_token);
+        xhr.send();
 
+        function requestComplete() {
+//            console.log(this.status);
+            // did not succeed
+            if (this.status < 200 || this.status >= 300) {
+                callback(this.status);
+            } else {
+                console.log(this.response);
+                // did succeed
+                if (this.response.length > 0) {
+                    callback(null, JSON.parse(this.response));
+                } else {
+                    callback(null, null);
+                }
+            }
+        }
+    }
+
+    this.getActions = function(callback, connection) {
+        console.log("getActions");
+        xhrWithAuth(callback, "GET", connection, "/services/data/v29.0/sobjects/Global/quickActions")
+    }
 }
 },{}],5:[function(require,module,exports){
 'use strict';
@@ -84,60 +116,171 @@ module.exports = function() {
 var clientId = require("../secret.js").clientId;
 var clientSecret = require("../secret.js").clientSecret;
 var Auth = require("./SalesforceChromeOAuth.js");
+var Api = require("./Api.js");
 
-exports.getActions = function() {
-//    var redirectUri = "https://" + chrome.runtime.id + ".chromiumapp.org/provider_cb";
-//    var host = "https://na15.salesforce.com"
-//
-//    var options = {
-//        "interactive": true,
-//        "url": host + "/services/oauth2/authorize?client_id=" + clientId +
-//            "&response_type=code" +
-//            "&display=touch" +
-//            "&redirect_uri=" + encodeURIComponent(redirectUri)
-//    };
-//
-//    console.log(options.url);
-//
-//    chrome.identity.launchWebAuthFlow(options, function(redirectUri) {
-//        console.log(chrome.runtime.lastError);
-//        debugger;
-//    });
+module.exports.getActions = function() {
 
-    var auth = new Auth(clientId, clientSecret);
-    auth.authenticate(function(err, data) {
+    function getActionsFromServer(connection) {
+        var api = new Api();
+        api.getActions(function(err, data) {
+            switch(err) {
+                // success
+                case null:
+                case undefined:
+                    console.log("success")
+                    console.log(data);
+                    return data;
+                    break;
+                case 401:
+                    console.log("refreshToken");
+                    var auth = new Auth(clientId, clientSecret);
+                    auth.refreshToken(function(err, data) {
+                        if (err) {
+                            console.error(err);
+                        } else {
+                            console.log(data)
+                            upsertConnection(data);
+                        }
+                    }, connection);
+                    break;
+                default:
+                    console.log("no");
+                    break;
+            }
+        }, connection);
+    }
+
+//    function getDescribeQuickActionFromServer(connection) {
+//        var api = new Api();
+//        api.getActions(function(err, data) {
+//            switch(err) {
+//                // success
+//                case null:
+//                case undefined:
+//                    console.log("success")
+//                    console.log(data);
+//                    return data;
+//                    break;
+//                case 401:
+//                    console.log("refreshToken");
+//                    var auth = new Auth(clientId, clientSecret);
+//                    auth.refreshToken(function(err, data) {
+//                        if (err) {
+//                            console.error(err);
+//                        } else {
+//                            console.log(data)
+//                            upsertConnection(data);
+//                        }
+//                    }, connection);
+//                    break;
+//                default:
+//                    console.log("no");
+//                    break;
+//            }
+//        }, connection);
+//    }
+
+    function getConnection(callback) {
+        chrome.storage.sync.get("connection", function (items) {
+//            if (chrome.runtime.lastError) {
+//                callback(new Error(chrome.runtime.lastError));
+//                return;
+//            }
+//            console.log("items");
+//            console.log(items);
+            if (items && items.hasOwnProperty("connection")) {
+                callback(null, items.connection);
+            } else {
+                callback("connection not found in chrome.storage.sync")
+            }
+        });
+    }
+
+    function upsertConnection(connection) {
+        getConnection(function(err, data) {
+            if (err) {
+                console.log(err);
+                console.log("inserting connection")
+                console.log(connection);
+                chrome.storage.sync.set({"connection": connection});
+            } else {
+//                console.log("upsert");
+                var newConnection = {
+                    "access_token": connection.access_token,
+                    "host": connection.host,
+                    "refresh_token": connection.refresh_token
+                }
+//                console.log("newConnection");
+//                console.log(newConnection);
+
+//                console.log(data);
+                if (data && data.hasOwnProperty("access_token")) {
+//                    console.log("new data");
+                    newConnection.access_token = data.access_token;
+                }
+
+//                console.log("upserting");
+//                console.log(newConnection);
+//                console.log("vs");
+//                console.log(connection);
+                chrome.storage.sync.set({"connection": newConnection});
+            }
+        })
+    }
+
+    getConnection(function(err, data) {
         if (err) {
+            var auth = new Auth(clientId, clientSecret);
             console.error(err);
+            auth.authenticate(function(err, connection) {
+                if (err) {
+                    console.error(err);
+                } else {
+//                    console.log(connection);
+                    getActionsFromServer(connection);
+                    upsertConnection(connection);
+                }
+            });
         } else {
-            console.log(data);
+//            console.log("got it");
+            getActionsFromServer(data);
         }
     });
 
-    var items = [{
-        title : "Action 1",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png"
-    }, {
-        title : "Action 2",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Baidu-icon.png"
-    }, {
-        title : "Action 3",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Dzone-icon.png"
-    }, {
-        title : "Action 4",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Formspring-icon.png"
-    }, {
-        title : "Action 5",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Foursquare-icon.png"
-    }, {
-        title : "Action 6",
-        icon : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Evernote-icon.png"
-    }];
-
-    return items;
+//                var items = [
+//                    {
+//                        title: "Action 1",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png"
+//                    },
+//                    {
+//                        title: "Action 2",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Baidu-icon.png"
+//                    },
+//                    {
+//                        title: "Action 3",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Dzone-icon.png"
+//                    },
+//                    {
+//                        title: "Action 4",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Formspring-icon.png"
+//                    },
+//                    {
+//                        title: "Action 5",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Foursquare-icon.png"
+//                    },
+//                    {
+//                        title: "Action 6",
+//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Evernote-icon.png"
+//                    }
+//                ];
+//
+//                return items;
 
 }
-},{"../secret.js":126,"./SalesforceChromeOAuth.js":6}],6:[function(require,module,exports){
-var SalesforceChromeOAuth = function(clientId, clientSecret) {
+
+},{"../secret.js":126,"./Api.js":4,"./SalesforceChromeOAuth.js":6}],6:[function(require,module,exports){
+module.exports = function(clientId, clientSecret) {
+    //todo: input an options object, including clientId, secret, response_type, display, etc
     var redirectUri = 'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
     var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
@@ -148,7 +291,7 @@ var SalesforceChromeOAuth = function(clientId, clientSecret) {
             "interactive": true,
             "url": host + "/services/oauth2/authorize?client_id=" + clientId +
                 "&response_type=code" +
-                "&display=touch" +
+                "&display=page" +
                 "&redirect_uri=" + encodeURIComponent(redirectUri)
         };
 
@@ -216,10 +359,36 @@ var SalesforceChromeOAuth = function(clientId, clientSecret) {
                 callback(new Error('error in handleProviderTokensResponse.'));
             }
         }
+    },
+
+    this.refreshToken = function(callback, connection) {
+        var url = connection.host + '/services/oauth2/token?client_id=' + clientId +
+            '&client_secret=' + clientSecret +
+            '&grant_type=refresh_token' +
+            '&refresh_token=' + connection.refresh_token;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.onload = function() {
+            if (this.status < 200 || this.status >=300) {
+                callback(new Error('error in handleCodeResponse.'));
+            } else {
+                handleProviderTokenResponse(JSON.parse(this.response));
+            }
+        };
+        xhr.send();
+
+        function handleProviderTokenResponse(values) {
+            if (values.hasOwnProperty('access_token')) {
+//                console.log("values");
+//                console.log(values);
+                callback(null, values);
+            } else {
+                callback(new Error('error in handleProviderTokenResponse.'));
+            }
+        }
     }
 }
-
-module.exports = SalesforceChromeOAuth;
 },{}],7:[function(require,module,exports){
 // shim for using process in browser
 

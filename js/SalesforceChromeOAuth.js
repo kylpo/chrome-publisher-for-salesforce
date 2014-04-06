@@ -1,4 +1,5 @@
-var SalesforceChromeOAuth = function(clientId, clientSecret) {
+module.exports = function(clientId, clientSecret) {
+    //todo: input an options object, including clientId, secret, response_type, display, etc
     var redirectUri = 'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
     var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
@@ -9,7 +10,7 @@ var SalesforceChromeOAuth = function(clientId, clientSecret) {
             "interactive": true,
             "url": host + "/services/oauth2/authorize?client_id=" + clientId +
                 "&response_type=code" +
-                "&display=touch" +
+                "&display=page" +
                 "&redirect_uri=" + encodeURIComponent(redirectUri)
         };
 
@@ -77,7 +78,33 @@ var SalesforceChromeOAuth = function(clientId, clientSecret) {
                 callback(new Error('error in handleProviderTokensResponse.'));
             }
         }
+    },
+
+    this.refreshToken = function(callback, connection) {
+        var url = connection.host + '/services/oauth2/token?client_id=' + clientId +
+            '&client_secret=' + clientSecret +
+            '&grant_type=refresh_token' +
+            '&refresh_token=' + connection.refresh_token;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.onload = function() {
+            if (this.status < 200 || this.status >=300) {
+                callback(new Error('error in handleCodeResponse.'));
+            } else {
+                handleProviderTokenResponse(JSON.parse(this.response));
+            }
+        };
+        xhr.send();
+
+        function handleProviderTokenResponse(values) {
+            if (values.hasOwnProperty('access_token')) {
+//                console.log("values");
+//                console.log(values);
+                callback(null, values);
+            } else {
+                callback(new Error('error in handleProviderTokenResponse.'));
+            }
+        }
     }
 }
-
-module.exports = SalesforceChromeOAuth;
