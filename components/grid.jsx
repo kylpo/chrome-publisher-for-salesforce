@@ -1,9 +1,10 @@
-﻿/** @jsx React.DOM */
+/** @jsx React.DOM */
 
 'use strict';
 
 var React = require("react");
 var Action = require("./action.jsx");
+var Dot = require("./dot.jsx");
 
 module.exports = React.createClass({
 	propTypes: {
@@ -20,6 +21,9 @@ module.exports = React.createClass({
 			pageSize: 6,
 			selectedAction: null
 		}
+	},
+	getPageCount: function() {
+		return Math.ceil(this.props.actions.length / this.state.pageSize);
 	},
 	onActionClicked: function(action) {
 		console.log("Action selected: " + action.label);
@@ -38,6 +42,7 @@ module.exports = React.createClass({
             	<div className="action-wrapper">
             		{ pageActions }
             		<div className="clearfix" />
+            		<Dot />
             	</div>
             	<div className="backside"><span /></div>
             </div>

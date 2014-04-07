@@ -68,6 +68,55 @@
       .clearfix {
       	clear: both;
       }
+      .page-nav {
+		  outline: 1px solid #2d4356;
+		  background-color: #2d4356;
+		  text-align: center;
+		}
+		.page-nav ul {
+		  list-style: none;
+		  margin: 20px 0 15px 0;
+		  padding: 0;
+		  display: inline-block;
+		  position: relative;
+		}
+		.page-nav ul li {
+		  position: relative;
+		  float: left;
+		  width: 10px;
+		  height: 10px;
+		  cursor: pointer;
+		  display: block;
+		  margin: 0 10px;
+		}
+		.page-nav ul li a {
+		  background-color: transparent;
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  border-radius: 50%;
+		  cursor: pointer;
+		}
+		.page-nav ul li a::before, .page-nav ul li a::after {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  border-radius: 50%;
+		  //background-color: white;
+		  content: '';
+		  text-indent: 0;
+		}
+		.page-nav ul li a::after {
+		  background-color: #14222E;
+		}
+		.page-nav ul li.active a::after {
+		  background-color: #2A94D6;
+		  -webkit-animation: grow 0.4s;
+		}
       
       @-webkit-keyframes grow {
       	0%   { opacity: 0; -webkit-transform: scale(0.0); }
