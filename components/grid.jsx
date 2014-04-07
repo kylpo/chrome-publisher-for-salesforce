@@ -4,7 +4,7 @@
 
 var React = require("react");
 var Action = require("./action.jsx");
-var Dot = require("./dot.jsx");
+var DotNav = require("./dot-nav.jsx");
 
 module.exports = React.createClass({
 	propTypes: {
@@ -42,7 +42,7 @@ module.exports = React.createClass({
             	<div className="action-wrapper">
             		{ pageActions }
             		<div className="clearfix" />
-            		<Dot />
+            		<DotNav />
             	</div>
             	<div className="backside"><span /></div>
             </div>
