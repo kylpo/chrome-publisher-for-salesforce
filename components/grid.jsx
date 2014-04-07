@@ -17,16 +17,29 @@ module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			page: 0,
-			pageSize: 6
+			pageSize: 6,
+			selectedAction: null
 		}
 	},
+	onActionClicked: function(action) {
+		console.log("Action selected: " + action.label);
+		this.setState({ selectedAction: action });
+	},
     render: function() {
-    	var pageActions = this.props.actions.splice(this.state.page * this.state.pageSize, this.state.pageSize).map(function(action, index) {
-            		return <Action title={action.title} icon={action.icon} />
+    	var startIndex = this.state.page * this.state.pageSize;
+    	var endIndex = startIndex + this.state.pageSize;
+    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function(action, index) {
+            		return <Action key={action.name} title={action.label} icon={action.icon} onClick={this.onActionClicked.bind(this, action)} />
             	}, this);
+        var classNames = "grid"
+        if (this.state.selectedAction != null) { classNames = "grid flipped" };
         return (
-            <div className="grid">
-            	{ pageActions }
+            <div className={classNames}>
+            	<div className="action-wrapper">
+            		{ pageActions }
+            		<div className="clearfix" />
+            	</div>
+            	<div className="backside"><span /></div>
             </div>
             );
     }

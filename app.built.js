@@ -10,12 +10,9 @@ module.exports = React.createClass({displayName: 'exports',
 		title: React.PropTypes.string.isRequired,
 		icon: React.PropTypes.string.isRequired
 	},
-	handleClick: function(e) {
-		console.log("Clicked: {this.props.title}");
-	},
     render: function() {
         return (
-        	React.DOM.div( {className:"action", onClick:this.handleClick}, React.DOM.img( {className:"icon", src:this.props.icon} ),React.DOM.div( {className:"title"}, this.props.title))
+        	React.DOM.div( {className:"action", onClick:this.props.onClick}, React.DOM.img( {className:"icon", src:this.props.icon} ),React.DOM.div( {className:"title"}, this.props.title))
             );
     }
 });
@@ -29,9 +26,12 @@ var Grid = require("./grid.jsx");
 var DAO = require("../js/DAO.js");
 
 var App = React.createClass({displayName: 'App',
+	handleActionSelected: function(action) {
+		console.log("handling action: " + action.label);
+	},
     render: function() {
         return (
-            Grid( {actions:this.props.items})
+            Grid( {actions:this.props.items, callback:this.handleActionSelected})
             );
     }
 })
@@ -58,16 +58,29 @@ module.exports = React.createClass({displayName: 'exports',
 	getInitialState: function() {
 		return {
 			page: 0,
-			pageSize: 6
+			pageSize: 6,
+			selectedAction: null
 		}
 	},
+	onActionClicked: function(action) {
+		console.log("Action selected: " + action.label);
+		this.setState({ selectedAction: action });
+	},
     render: function() {
-    	var pageActions = this.props.actions.splice(this.state.page * this.state.pageSize, this.state.pageSize).map(function(action, index) {
-            		return Action( {title:action.title, icon:action.icon} )
+    	var startIndex = this.state.page * this.state.pageSize;
+    	var endIndex = startIndex + this.state.pageSize;
+    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function(action, index) {
+            		return Action( {key:action.name, title:action.label, icon:action.icon, onClick:this.onActionClicked.bind(this, action)} )
             	}, this);
+        var classNames = "grid"
+        if (this.state.selectedAction != null) { classNames = "grid flipped" };
         return (
-            React.DOM.div( {className:"grid"}, 
-            	 pageActions 
+            React.DOM.div( {className:classNames}, 
+            	React.DOM.div( {className:"action-wrapper"}, 
+            		 pageActions, 
+            		React.DOM.div( {className:"clearfix"} )
+            	),
+            	React.DOM.div( {className:"backside"}, React.DOM.span(null ))
             )
             );
     }
@@ -117,6 +130,7 @@ module.exports = function() {
 }
 },{}],5:[function(require,module,exports){
 'use strict';
+
 
 var clientId = require("../secret.js").clientId;
 var clientSecret = require("../secret.js").clientSecret;
@@ -252,35 +266,142 @@ module.exports.getActions = function() {
         }
     });
 
-//                var items = [
-//                    {
-//                        title: "Action 1",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png"
-//                    },
-//                    {
-//                        title: "Action 2",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Baidu-icon.png"
-//                    },
-//                    {
-//                        title: "Action 3",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Dzone-icon.png"
-//                    },
-//                    {
-//                        title: "Action 4",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Formspring-icon.png"
-//                    },
-//                    {
-//                        title: "Action 5",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Foursquare-icon.png"
-//                    },
-//                    {
-//                        title: "Action 6",
-//                        icon: "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Evernote-icon.png"
-//                    }
-//                ];
-//
-//                return items;
-
+    var items = [{
+		"name" : "LogACall",
+		"type" : "LogACall",
+		"label" : "Log a Call",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/LogACall/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/LogACall",
+			"defaultValues" : "/services/data/v29.0/quickActions/LogACall/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/LogACall/describe"
+		}
+		}, {
+		"name" : "NewAccount",
+		"type" : "Create",
+		"label" : "New Account",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewAccount/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewAccount",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewAccount/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewAccount/describe"
+		}
+	}, {
+		"name" : "NewCase",
+		"type" : "Create",
+		"label" : "New Case",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewCase/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewCase",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewCase/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewCase/describe"
+		}
+	}, {
+		"name" : "NewContact",
+		"type" : "Create",
+		"label" : "New Contact",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewContact/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewContact",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewContact/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewContact/describe"
+		}
+	}, {
+		"name" : "NewEvent",
+		"type" : "Create",
+		"label" : "New Event",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewEvent/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewEvent",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewEvent/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewEvent/describe"
+		}
+	}, {
+		"name" : "NewLead",
+		"type" : "Create",
+		"label" : "New Lead",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewLead/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewLead",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewLead/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewLead/describe"
+		}
+	}, {
+		"name" : "NewNote",
+		"type" : "Create",
+		"label" : "New Note",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewNote/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewNote",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewNote/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewNote/describe"
+		}
+	}, {
+		"name" : "NewOpportunity",
+		"type" : "Create",
+		"label" : "New Opportunity",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewOpportunity/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewOpportunity",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewOpportunity/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewOpportunity/describe"
+		}
+	}, {
+		"name" : "NewTask",
+		"type" : "Create",
+		"label" : "New Task",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewTask/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/NewTask",
+			"defaultValues" : "/services/data/v29.0/quickActions/NewTask/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/NewTask/describe"
+		}
+	}, {
+		"name" : "FeedItem.TextPost",
+		"type" : "Post",
+		"label" : "Post",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.ContentPost",
+		"type" : "Post",
+		"label" : "File",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.MobileSmartActions",
+		"type" : "Post",
+		"label" : "Mobile Smart Actions",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.LinkPost",
+		"type" : "Post",
+		"label" : "Link",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.PollPost",
+		"type" : "Post",
+		"label" : "Poll",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}];
+    return items;
 }
 
 },{"../secret.js":126,"./Api.js":4,"./SalesforceChromeOAuth.js":6}],6:[function(require,module,exports){
