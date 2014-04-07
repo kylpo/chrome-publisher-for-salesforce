@@ -32,6 +32,11 @@ module.exports = function() {
 
     this.getActions = function(callback, connection) {
         console.log("getActions");
-        xhrWithAuth(callback, "GET", connection, "/services/data/v29.0/sobjects/Global/quickActions")
+        xhrWithAuth(callback, "GET", connection, "/services/data/v29.0/sobjects/Global/quickActions");
+    }
+
+    this.getDescribeAction = function(callback, connection, url) {
+        console.log("getDescribeAction");
+        xhrWithAuth(callback, "GET", connection, url);
     }
 }
