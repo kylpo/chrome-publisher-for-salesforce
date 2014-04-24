@@ -27,7 +27,7 @@ module.exports = React.createClass({
     	var pages = Math.min(this.props.dots, this.props.maxDots);
 		var dots = [];
 		
-		for( var i = 0; i < this.props.dots; ++i ) {
+		for( var i = 0; i < Math.min(this.props.maxDots, this.props.dots); ++i ) {
 			dots.push(<li key={"page_" + i} className={ i == this.state.page ? "active" : "" }><a href="#" onClick={this.onDotClicked.bind(this, i)}></a></li>);
 		}
 		
