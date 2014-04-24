@@ -45,8 +45,10 @@ module.exports = React.createClass({
         return (
             <div className={classNames}>
             	<div className="action-wrapper">
-            		{ pageActions }
-            		<div className="clearfix" />
+					<div className="actions">
+						{ pageActions }
+						<div className="clearfix" />
+					</div>
             		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
             	<div className="backside"><span /></div>

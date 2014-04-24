@@ -38,7 +38,8 @@
       	bottom: 0px;
       	background-color: white;
       }
-      .grid .action-wrapper {
+      .grid .action-wrapper .actions {
+		height: 441px;
       }
       .grid .action {
       	text-align: center;
@@ -73,7 +74,11 @@
       .clearfix {
       	clear: both;
       }
+	  .grid.flipped .page-nav {
+		opacity: 0;
+	  }
       .page-nav {
+		-webkit-transition: opacity 0.4s;
 		  outline: 1px solid #2d4356;
 		  background-color: #2d4356;
 		  text-align: center;
