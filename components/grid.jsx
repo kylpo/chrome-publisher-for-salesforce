@@ -29,7 +29,12 @@ module.exports = React.createClass({
 		console.log("Action selected: " + action.label);
 		this.setState({ selectedAction: action });
 	},
+	onPageChanged: function(page) {
+		console.log("Page changed to: " + page);
+		this.setState({ page: page });
+	},
     render: function() {
+		var dotsNeeded = Math.ceil(this.props.actions.length / this.state.pageSize);
     	var startIndex = this.state.page * this.state.pageSize;
     	var endIndex = startIndex + this.state.pageSize;
     	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function(action, index) {
@@ -42,7 +47,7 @@ module.exports = React.createClass({
             	<div className="action-wrapper">
             		{ pageActions }
             		<div className="clearfix" />
-            		<DotNav />
+            		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
             	<div className="backside"><span /></div>
             </div>

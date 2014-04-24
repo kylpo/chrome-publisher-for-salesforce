@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	},
 	getDefaultProps: function() {
 		return {
-			dots: 4,
+			dots: 0,
 			maxDots: 6
 		};
 	},
@@ -21,6 +21,7 @@ module.exports = React.createClass({
 	},
 	onDotClicked: function(dot) {
 		this.setState({ page: dot });
+		this.props.onPageSelected(dot);
 	},
     render: function() {
     	var pages = Math.min(this.props.dots, this.props.maxDots);
