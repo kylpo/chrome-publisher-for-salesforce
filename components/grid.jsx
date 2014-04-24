@@ -5,6 +5,7 @@
 var React = require("react");
 var Action = require("./action.jsx");
 var DotNav = require("./dot-nav.jsx");
+var BackNav = require("./back-nav.jsx");
 
 module.exports = React.createClass({
 	propTypes: {
@@ -51,7 +52,9 @@ module.exports = React.createClass({
 					</div>
             		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
-            	<div className="backside"><span /></div>
+            	<div className="backside"><span />
+					<BackNav title="Back" />
+				</div>
             </div>
             );
     }
