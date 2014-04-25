@@ -57,6 +57,10 @@ module.exports = React.createClass({
 		if (this.state.rotateClass != null) {
 			classNames += (" " + this.state.rotateClass);
 		}
+		var title = "Back";
+		if( this.state.selectedAction != null ) {
+			title = this.state.selectedAction.label;
+		}
         return (
             <div className={classNames}>
             	<div className="action-wrapper">
@@ -67,7 +71,7 @@ module.exports = React.createClass({
             		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
             	<div className="backside"><span />
-					<BackNav title="Back" onBackClicked={this.onBackClicked} />
+					<BackNav title={title} onBackClicked={this.onBackClicked} />
 				</div>
             </div>
             );
