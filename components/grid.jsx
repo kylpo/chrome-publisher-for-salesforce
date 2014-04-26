@@ -6,6 +6,7 @@ var React = require("react");
 var Action = require("./action.jsx");
 var DotNav = require("./dot-nav.jsx");
 var BackNav = require("./back-nav.jsx");
+var ActionForm = require("./action-form.jsx");
 
 module.exports = React.createClass({
 	FLIPPED: "flipped",
@@ -70,8 +71,9 @@ module.exports = React.createClass({
 					</div>
             		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
-            	<div className="backside"><span />
+            	<div className="backside">
 					<BackNav title={title} onBackClicked={this.onBackClicked} />
+					<ActionForm action={this.state.selectedAction} />
 				</div>
             </div>
             );
