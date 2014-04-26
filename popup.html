@@ -139,6 +139,8 @@
 		line-height: 50px;
 		text-align: center;
 		margin-right: 50px;
+		font-size: 18px;
+		font-variant: small-caps;
 	}
 	
 	.back-nav .icon {
@@ -149,6 +151,48 @@
 		color: white;
 		padding: 0 10px;
 		cursor: pointer;
+	}
+	
+	.action-form {
+		position: absolute;
+		top: 50px;
+		left: 0px;
+		right: 0px;
+		bottom: 0px;
+		padding: 5px;
+	}
+	
+	.action-form * {
+		-webkit-backface-visibility: hidden;
+	}
+	
+	.action-form .action-form-group {
+		padding: 5px;
+	}
+	
+	.action-form .action-form-group label {
+		display: block;
+	}
+	
+	.action-form .action-form-group input {
+		box-sizing: border-box;
+		width: 100%;
+		border-radius: 5px;
+		border-width: 1px;
+		border-style: solid;
+		padding: 7px;
+		border-color: #888;
+	}
+	
+	.action-form .action-form-group button {
+		border-width: 0px;
+		border-radius: 5px;
+		font-size: 16px;
+		background-color: #3f9fd9;
+		color: white;
+		padding: 7px;
+		display: block;
+		width: 100%;
 	}
       
       @-webkit-keyframes grow {
