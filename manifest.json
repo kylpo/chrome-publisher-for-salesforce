@@ -1,0 +1,17 @@
+{
+    "manifest_version": 2,
+
+    "name": "Quick Actions for Salesforce",
+    "description": "Perform Salesforce's Quick Actions from a browser extension!",
+    "version": "0.0.1",
+
+    "permissions": [
+        "https://*.salesforce.com/",
+        "identity"
+    ],
+
+    "browser_action": {
+        "default_icon": "icon-flat.png",
+        "default_popup": "popup.html"
+    }
+}
