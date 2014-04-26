@@ -4,15 +4,26 @@
     "name": "Quick Actions for Salesforce",
     "description": "Perform Salesforce's Quick Actions from a browser extension!",
     "version": "0.0.1",
+	
+	"icons": {
+		"16": "icon-flat.png",
+		"48": "icon-flat.png",
+		"128": "icon-flat.png"
+	},
 
     "permissions": [
         "https://*.salesforce.com/",
         "identity",
-		"tabs"
+		"tabs",
+		"contextMenus"
     ],
 
     "browser_action": {
         "default_icon": "icon-flat.png",
         "default_popup": "popup.html"
-    }
+    },
+	
+	"background": {
+		"scripts": ["contexts.js"]
+	}
 }
