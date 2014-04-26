@@ -1,11 +1,13 @@
 module.exports = function(clientId, clientSecret) {
     //todo: input an options object, including clientId, secret, response_type, display, etc
-    var redirectUri = 'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
-    var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
+//    var redirectUri = 'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
+
 
     this.authenticate = function(callback) {
         //TODO: remove this hardcoding
         var host = "https://na15.salesforce.com"
+        var redirectUri = chrome.identity.getRedirectURL; //'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
+        var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
         var options = {
             "interactive": true,
