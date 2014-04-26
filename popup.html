@@ -2,13 +2,16 @@
 <html>
   <head>
     <title>Quick Actions for Salesforce</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <style>
       body {
         min-width: 320px;
+		min-height: 491px;
         overflow-x: hidden;
         margin: 0px;
         background-color: #999;
         -webkit-perspective: 800px;
+        font-family: 'Open Sans', sans-serif;
       }
       .grid {
       	-webkit-transition: -webkit-transform 0.4s;
@@ -35,7 +38,8 @@
       	bottom: 0px;
       	background-color: white;
       }
-      .grid .action-wrapper {
+      .grid .action-wrapper .actions {
+		height: 441px;
       }
       .grid .action {
       	text-align: center;
@@ -43,6 +47,7 @@
       	float: left;
       	outline: 1px solid #2d4356;
       	padding: 20px;
+		width: 120px;
       }
       .grid .action img {
       	height: 100px;
@@ -63,10 +68,66 @@
       	-webkit-animation-fill-mode: forwards;
       	opacity: 0;
       	-webkit-backface-visibility: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		overflow: hidden;
       }
       .clearfix {
       	clear: both;
       }
+	  .grid.flipped .page-nav {
+		opacity: 0;
+	  }
+      .page-nav {
+		-webkit-transition: opacity 0.4s;
+		  outline: 1px solid #2d4356;
+		  background-color: #2d4356;
+		  text-align: center;
+		}
+		.page-nav ul {
+		  list-style: none;
+		  margin: 20px 0 15px 0;
+		  padding: 0;
+		  display: inline-block;
+		  position: relative;
+		}
+		.page-nav ul li {
+		  position: relative;
+		  float: left;
+		  width: 10px;
+		  height: 10px;
+		  cursor: pointer;
+		  display: block;
+		  margin: 0 10px;
+		}
+		.page-nav ul li a {
+		  background-color: transparent;
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  border-radius: 50%;
+		  cursor: pointer;
+		}
+		.page-nav ul li a::before, .page-nav ul li a::after {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  width: 100%;
+		  height: 100%;
+		  border-radius: 50%;
+		  //background-color: white;
+		  content: '';
+		  text-indent: 0;
+		}
+		.page-nav ul li a::after {
+		  background-color: #14222E;
+		}
+		.page-nav ul li.active a::after {
+		  background-color: #2A94D6;
+		  -webkit-animation: grow 0.4s;
+		}
       
       @-webkit-keyframes grow {
       	0%   { opacity: 0; -webkit-transform: scale(0.0); }
@@ -81,13 +142,13 @@
       
       @-webkit-keyframes away-and-back {
 		  0%   { -webkit-transform: scale(1.0) rotateY(0deg); }
-		  50%  { -webkit-transform: scale(0.5) rotateY(90deg); }
-		  100% { -webkit-transform: scale(1.0) rotateY(180deg); }
+		  50%  { -webkit-transform: scale(0.5) rotateY(-90deg); }
+		  100% { -webkit-transform: scale(1.0) rotateY(-180deg); }
 		}
 		
 		@-webkit-keyframes back-and-away {
-		  0%   { -webkit-transform: scale(1.0) rotateY(180deg); }
-		  50%  { -webkit-transform: scale(0.5) rotateY(90deg); }
+		  0%   { -webkit-transform: scale(1.0) rotateY(-180deg); }
+		  50%  { -webkit-transform: scale(0.5) rotateY(-90deg); }
 		  100% { -webkit-transform: scale(1.0) rotateY(0deg); }
 		}
     </style>
