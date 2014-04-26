@@ -2,21 +2,43 @@
 
 exports.getActions = function() {
     var items = [{
-		"name" : "LogACall",
-		"type" : "LogACall",
-		"label" : "Log a Call",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"name" : "FeedItem.TextPost",
+		"type" : "Post",
+		"label" : "Post",
+		"icon" : "icons/post_120.png",
+		"iconColor" : "#4eb1cb",
 		"urls" : {
-			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/LogACall/defaultValues/{ID}",
-			"quickAction" : "/services/data/v29.0/quickActions/LogACall",
-			"defaultValues" : "/services/data/v29.0/quickActions/LogACall/defaultValues",
-			"describe" : "/services/data/v29.0/quickActions/LogACall/describe"
 		}
-		}, {
+	}, {
+		"name" : "FeedItem.LinkPost",
+		"type" : "Post",
+		"label" : "Link",
+		"icon" : "icons/link_120.png",
+		"iconColor" : "#6078c2",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.ContentPost",
+		"type" : "Post",
+		"label" : "File",
+		"icon" : "icons/file_120.png",
+		"iconColor" : "#b19f7e",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.PollPost",
+		"type" : "Post",
+		"label" : "Poll",
+		"icon" : "icons/poll_120.png",
+		"iconColor" : "#5181c4",
+		"urls" : {
+		}
+	}, {
 		"name" : "NewAccount",
 		"type" : "Create",
 		"label" : "New Account",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/account_120.png",
+		"iconColor" : "#717ecd",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewAccount/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewAccount",
@@ -27,7 +49,8 @@ exports.getActions = function() {
 		"name" : "NewCase",
 		"type" : "Create",
 		"label" : "New Case",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/case_comment_120.png",
+		"iconColor" : "#eac95a",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewCase/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewCase",
@@ -38,7 +61,8 @@ exports.getActions = function() {
 		"name" : "NewContact",
 		"type" : "Create",
 		"label" : "New Contact",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/contact_120.png",
+		"iconColor" : "#8b7fd5",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewContact/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewContact",
@@ -49,7 +73,8 @@ exports.getActions = function() {
 		"name" : "NewEvent",
 		"type" : "Create",
 		"label" : "New Event",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/event_120.png",
+		"iconColor" : "#d96383",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewEvent/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewEvent",
@@ -60,7 +85,8 @@ exports.getActions = function() {
 		"name" : "NewLead",
 		"type" : "Create",
 		"label" : "New Lead",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/lead_120.png",
+		"iconColor" : "#ed7e58",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewLead/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewLead",
@@ -71,7 +97,8 @@ exports.getActions = function() {
 		"name" : "NewNote",
 		"type" : "Create",
 		"label" : "New Note",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/note_120.png",
+		"iconColor" : "#dcd861",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewNote/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewNote",
@@ -82,7 +109,8 @@ exports.getActions = function() {
 		"name" : "NewOpportunity",
 		"type" : "Create",
 		"label" : "New Opportunity",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/opportunity_120.png",
+		"iconColor" : "#f3ae4e",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewOpportunity/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewOpportunity",
@@ -93,7 +121,8 @@ exports.getActions = function() {
 		"name" : "NewTask",
 		"type" : "Create",
 		"label" : "New Task",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/task_120.png",
+		"iconColor" : "#4ab471",
 		"urls" : {
 			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/NewTask/defaultValues/{ID}",
 			"quickAction" : "/services/data/v29.0/quickActions/NewTask",
@@ -101,38 +130,23 @@ exports.getActions = function() {
 			"describe" : "/services/data/v29.0/quickActions/NewTask/describe"
 		}
 	}, {
-		"name" : "FeedItem.TextPost",
-		"type" : "Post",
-		"label" : "Post",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"name" : "LogACall",
+		"type" : "LogACall",
+		"label" : "Log a Call",
+		"icon" : "icons/case_log_a_call_120.png",
+		"iconColor" : "#eac95a",
 		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.ContentPost",
-		"type" : "Post",
-		"label" : "File",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/LogACall/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/LogACall",
+			"defaultValues" : "/services/data/v29.0/quickActions/LogACall/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/LogACall/describe"
 		}
 	}, {
 		"name" : "FeedItem.MobileSmartActions",
 		"type" : "Post",
 		"label" : "Mobile Smart Actions",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.LinkPost",
-		"type" : "Post",
-		"label" : "Link",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.PollPost",
-		"type" : "Post",
-		"label" : "Poll",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"icon" : "icons/default_120.png",
+		"iconColor" : "#849cb1",
 		"urls" : {
 		}
 	}];

@@ -52,7 +52,7 @@ module.exports = React.createClass({
     	var startIndex = this.state.page * this.state.pageSize;
     	var endIndex = startIndex + this.state.pageSize;
     	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function(action, index) {
-            		return <Action key={action.name} title={action.label} icon={action.icon} onClick={this.onActionClicked.bind(this, action)} />
+            		return <Action key={action.name} title={action.label} icon={action.icon} iconColor={action.iconColor} onClick={this.onActionClicked.bind(this, action)} />
             	}, this);
         var classNames = "grid";
 		if (this.state.rotateClass != null) {
