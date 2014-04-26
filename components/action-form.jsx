@@ -37,6 +37,9 @@ module.exports = React.createClass({
 					<label>Link Description</label>
 					<input type="text" name="link-description" />
 				</div>
+				<div className="action-form-group">
+					<button>Share Link</button>
+				</div>
         	</div>
         );
     }
