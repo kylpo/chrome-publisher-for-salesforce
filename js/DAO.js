@@ -2,17 +2,34 @@
 
 exports.getActions = function() {
     var items = [{
-		"name" : "LogACall",
-		"type" : "LogACall",
-		"label" : "Log a Call",
+		"name" : "FeedItem.TextPost",
+		"type" : "Post",
+		"label" : "Post",
 		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
 		"urls" : {
-			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/LogACall/defaultValues/{ID}",
-			"quickAction" : "/services/data/v29.0/quickActions/LogACall",
-			"defaultValues" : "/services/data/v29.0/quickActions/LogACall/defaultValues",
-			"describe" : "/services/data/v29.0/quickActions/LogACall/describe"
 		}
-		}, {
+	}, {
+		"name" : "FeedItem.LinkPost",
+		"type" : "Post",
+		"label" : "Link",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.ContentPost",
+		"type" : "Post",
+		"label" : "File",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
+		"name" : "FeedItem.PollPost",
+		"type" : "Post",
+		"label" : "Poll",
+		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
+		"urls" : {
+		}
+	}, {
 		"name" : "NewAccount",
 		"type" : "Create",
 		"label" : "New Account",
@@ -101,37 +118,20 @@ exports.getActions = function() {
 			"describe" : "/services/data/v29.0/quickActions/NewTask/describe"
 		}
 	}, {
-		"name" : "FeedItem.TextPost",
-		"type" : "Post",
-		"label" : "Post",
+		"name" : "LogACall",
+		"type" : "LogACall",
+		"label" : "Log a Call",
 		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
 		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.ContentPost",
-		"type" : "Post",
-		"label" : "File",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
+			"defaultValuesTemplate" : "/services/data/v29.0/quickActions/LogACall/defaultValues/{ID}",
+			"quickAction" : "/services/data/v29.0/quickActions/LogACall",
+			"defaultValues" : "/services/data/v29.0/quickActions/LogACall/defaultValues",
+			"describe" : "/services/data/v29.0/quickActions/LogACall/describe"
 		}
 	}, {
 		"name" : "FeedItem.MobileSmartActions",
 		"type" : "Post",
 		"label" : "Mobile Smart Actions",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.LinkPost",
-		"type" : "Post",
-		"label" : "Link",
-		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
-		"urls" : {
-		}
-	}, {
-		"name" : "FeedItem.PollPost",
-		"type" : "Post",
-		"label" : "Poll",
 		"icon" : "http://icons.iconarchive.com/icons/designbolts/handstitch-social/128/Android-icon.png",
 		"urls" : {
 		}
