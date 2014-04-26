@@ -3,6 +3,7 @@
   <head>
     <title>Quick Actions for Salesforce</title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="sf1/style.css">
     <style>
       body {
         min-width: 320px;
@@ -18,7 +19,6 @@
       	position: relative;
       	background-color: #344a5f;
       	-webkit-transform-style: preserve-3d;
-      	-webkit-backface-visibility: hidden;
       }
       .grid.flipped {
 		-webkit-animation: away-and-back 0.4s;
@@ -128,6 +128,28 @@
 		  background-color: #2A94D6;
 		  -webkit-animation: grow 0.4s;
 		}
+		
+	.back-nav {
+		background-color: #2d4356;
+		height: 50px;
+	}
+	
+	.back-nav .title {
+		color: white;
+		line-height: 50px;
+		text-align: center;
+		margin-right: 50px;
+	}
+	
+	.back-nav .icon {
+		line-height: 50px;
+		font-size: 24px;
+		float: left;
+		display: inline-block;
+		color: white;
+		padding: 0 10px;
+		cursor: pointer;
+	}
       
       @-webkit-keyframes grow {
       	0%   { opacity: 0; -webkit-transform: scale(0.0); }
