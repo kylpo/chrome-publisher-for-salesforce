@@ -1,0 +1,241 @@
+body {
+	min-width: 320px;
+	min-height: 491px;
+	overflow-x: hidden;
+	margin: 0px;
+	background-color: #999;
+	-webkit-perspective: 800px;
+	font-family: 'Open Sans', sans-serif;
+}
+.card {
+	-webkit-transition: -webkit-transform 0.4s;
+	position: relative;
+	background-color: #344a5f;
+	-webkit-transform-style: preserve-3d;
+}
+.card[data-flipped=true] {
+	-webkit-animation: away-and-back 0.4s;
+	-webkit-animation-fill-mode: forwards;
+}
+.card[data-unflipped=true] {
+	-webkit-animation: back-and-away 0.4s;
+	-webkit-animation-fill-mode: forwards;
+}
+.card .backface {
+	-webkit-transform: rotateY(-180deg);
+	-webkit-backface-visibility: hidden;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	background-color: white;
+}
+.grid .action-wrapper .actions {
+	height: 471px;
+}
+.grid .action {
+	text-align: center;
+	cursor: pointer;
+	float: left;
+	outline: 1px solid #2d4356;
+	padding: 10px 20px;
+	width: 120px;
+}
+.grid .action img {
+	height: 100px;
+	width: 100px;
+	margin: 10px;
+	margin-bottom: 0px;
+	-webkit-animation: grow 0.4s;
+	-webkit-animation-delay: 0.2s;
+	-webkit-animation-fill-mode: forwards;
+	opacity: 0;
+	-webkit-backface-visibility: hidden;
+	border-radius: 8px;
+}
+.grid .action .title {
+	color: white;
+	-webkit-animation: fadein 0.4s;
+	-webkit-animation-delay: 0.2s;
+	-webkit-animation-fill-mode: forwards;
+	opacity: 0;
+	-webkit-backface-visibility: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+.clearfix {
+	clear: both;
+}
+.card[data-flipped=true] .page-nav {
+	opacity: 0;
+}
+.page-nav {
+	-webkit-transition: opacity 0.4s;
+	outline: 1px solid #2d4356;
+	background-color: #2d4356;
+	text-align: center;
+}
+.page-nav ul {
+	list-style: none;
+	margin: 20px 0 15px 0;
+	padding: 0;
+	display: inline-block;
+	position: relative;
+}
+.page-nav ul li {
+	position: relative;
+	float: left;
+	width: 10px;
+	height: 10px;
+	cursor: pointer;
+	display: block;
+	margin: 0 10px;
+}
+.page-nav ul li a {
+	background-color: transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.page-nav ul li a::before, .page-nav ul li a::after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	//background-color: white;
+	content: '';
+	text-indent: 0;
+}
+.page-nav ul li a::after {
+	background-color: #14222E;
+}
+.page-nav ul li.active a::after {
+	background-color: #2A94D6;
+	-webkit-animation: grow 0.4s;
+}
+
+.back-nav {
+	background-color: #2d4356;
+	height: 50px;
+}
+
+.back-nav .title {
+	color: white;
+	line-height: 50px;
+	text-align: center;
+	margin-right: 50px;
+	font-size: 18px;
+	font-variant: small-caps;
+}
+
+.back-nav .icon {
+	line-height: 50px;
+	font-size: 24px;
+	float: left;
+	display: inline-block;
+	color: white;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.action-form {
+	position: absolute;
+	top: 50px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	padding: 5px;
+}
+
+.card .frontface, .card .backface {
+	-webkit-backface-visibility: hidden;
+}
+
+.action-form {
+	background-color: white;
+}
+
+.action-form .action-form-group {
+	padding: 5px;
+}
+
+.action-form .action-form-group label {
+	display: block;
+}
+
+.action-form .action-form-group input {
+	box-sizing: border-box;
+	width: 100%;
+	border-radius: 5px;
+	border-width: 1px;
+	border-style: solid;
+	padding: 7px;
+	border-color: #888;
+}
+
+.action-form .action-form-group button {
+	border-width: 0px;
+	border-radius: 5px;
+	font-size: 16px;
+	background-color: #3f9fd9;
+	color: white;
+	padding: 7px;
+	display: block;
+	width: 100%;
+}
+
+@-webkit-keyframes grow {
+	0%  { 
+		opacity: 0; 
+		-webkit-transform: scale(0.0); 
+	}
+	90%  { 
+		opacity: 1; 
+		-webkit-transform: scale(1.1); 
+	}
+	100% { 
+		opacity: 1; 
+		-webkit-transform: scale(1.0); 
+	}
+}
+
+@-webkit-keyframes fadein {
+	0%  { 
+		opacity: 0; 
+	}
+	100% { 
+		opacity: 1; 
+	}
+}
+
+@-webkit-keyframes away-and-back {
+	0%  { 
+		-webkit-transform: scale(1.0) rotateY(0deg); 
+	}
+	50%  { 
+		-webkit-transform: scale(0.5) rotateY(-90deg); 
+	}
+	100% { 
+		-webkit-transform: scale(1.0) rotateY(-180deg); 
+	}
+}
+
+@-webkit-keyframes back-and-away {
+	0%  { 
+		-webkit-transform: scale(1.0) rotateY(-180deg); 
+	}
+	50%  { 
+		-webkit-transform: scale(0.5) rotateY(-90deg); 
+	}
+	100% { 
+		-webkit-transform: scale(1.0) rotateY(0deg); 
+	}
+}
