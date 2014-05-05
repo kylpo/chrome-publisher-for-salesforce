@@ -12,29 +12,36 @@ var DAO = require("../js/DAO.js");
 var App = React.createClass({
 	getInitialState: function() {
 		return {
-			flipped: false
+			flipped: false,
+			unflipped: false,
+			selectedAction: null
 		}
 	},
 	handleActionSelected: function(action) {
 		console.log("handling action: " + action.label);
 		this.setState({
-			flipped: true
+			flipped: true,
+			unflipped: false,
+			selectedAction: action
 		});
 	},
 	onBackClicked: function() {
 		console.log("handling back pressed");
 		this.setState({
-			flipped: false
+			flipped: false,
+			unflipped: true,
+			selectedAction: null
 		});
 	},
     render: function() {
+		var backTitle = this.state.selectedAction == null ? "" : this.state.selectedAction.label;
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
-    		<BackNav title={"Back"} onBackClicked={this.onBackClicked} />,
+    		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
     		<ActionForm />
     	];
         return (
-        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} />
+        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
         );
     }
 })
