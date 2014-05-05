@@ -21,7 +21,7 @@ body {
 	-webkit-animation: back-and-away 0.4s;
 	-webkit-animation-fill-mode: forwards;
 }
-.card .backside {
+.card .backface {
 	-webkit-transform: rotateY(-180deg);
 	-webkit-backface-visibility: hidden;
 	position: absolute;
@@ -155,8 +155,12 @@ body {
 	padding: 5px;
 }
 
-.action-form * {
+.card .frontface, .card .backface {
 	-webkit-backface-visibility: hidden;
+}
+
+.action-form {
+	background-color: white;
 }
 
 .action-form .action-form-group {
@@ -204,7 +208,7 @@ body {
 }
 
 @-webkit-keyframes fadein {
-	0%   { 
+	0%  { 
 		opacity: 0; 
 	}
 	100% { 
@@ -213,7 +217,7 @@ body {
 }
 
 @-webkit-keyframes away-and-back {
-	0%   { 
+	0%  { 
 		-webkit-transform: scale(1.0) rotateY(0deg); 
 	}
 	50%  { 
@@ -225,7 +229,7 @@ body {
 }
 
 @-webkit-keyframes back-and-away {
-	0%   { 
+	0%  { 
 		-webkit-transform: scale(1.0) rotateY(-180deg); 
 	}
 	50%  { 

@@ -14,10 +14,10 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div className="card" data-flipped={this.props.flipped} data-unflipped={this.props.unflipped}>
-            	<div className="frontside">
+            	<div className="frontface">
             		{ this.props.frontface }
             	</div>
-            	<div className="backside">
+            	<div className="backface">
             		{ this.props.backface }
 				</div>
             </div>
