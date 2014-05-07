@@ -197,6 +197,25 @@ body {
 	width: 100%;
 }
 
+.not-supported {
+	font-size: 1.6em;
+	text-align: center;
+	display: table;
+	height: 100%;
+	width: 100%;
+	padding-bottom: 50px;
+}
+
+.not-supported .emphasize {
+	font-size: 1.8em;
+	font-weight: 800;
+}
+
+.not-supported .wrapper{
+	display: table-cell;
+	vertical-align: middle;
+}
+
 @-webkit-keyframes grow {
 	0%  { 
 		opacity: 0; 

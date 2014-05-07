@@ -38,7 +38,7 @@ var App = React.createClass({
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm />
+    		<ActionForm action={this.state.selectedAction} />
     	];
         return (
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
