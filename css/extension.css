@@ -71,6 +71,10 @@ body {
 .card[data-flipped=true] .page-nav {
 	opacity: 0;
 }
+.card[data-flipped=true] .frontface, .card[data-unflipped=true] .backface {
+	opacity: 0;
+}
+
 .page-nav {
 	-webkit-transition: opacity 0.4s;
 	outline: 1px solid #2d4356;
@@ -157,6 +161,7 @@ body {
 
 .card .frontface, .card .backface {
 	-webkit-backface-visibility: hidden;
+	-webkit-transition: opacity 0.4s;
 }
 
 .action-form {
