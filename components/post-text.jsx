@@ -5,11 +5,21 @@
 var React = require("react");
 
 module.exports = React.createClass({
+	getInitialState: function() {
+		return {
+		}
+	},
     render: function() {
         return (
-        	<div>
-			Post Text
-        	</div>
+			<div className="post-text">
+				<div className="action-form-group">
+					<label>Post Text</label>
+					<textarea name="post-text" rows="4" />
+				</div>
+				<div className="action-form-group">
+					<button>Share Link</button>
+				</div>
+			</div>
         );
     }
 });

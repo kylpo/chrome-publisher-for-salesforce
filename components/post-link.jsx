@@ -35,7 +35,7 @@ module.exports = React.createClass({
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
-					<input type="text" name="link-description" />
+					<textarea name="link-description" rows="4" />
 				</div>
 				<div className="action-form-group">
 					<button>Share Link</button>
