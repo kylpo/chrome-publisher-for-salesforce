@@ -198,6 +198,37 @@ body {
 	width: 100%;
 }
 
+.action-form .action-form-group select {
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.share-with .share-with-group {
+	display: flex;
+}
+
+.share-with .share-with-group label {
+	padding: 5px;
+	padding-left: 0px;
+}
+
+.share-with .share-with-group input {
+	width: inherit;
+	flex-grow: 1;
+}
+
+.share-with .share-with-group button {
+	width: inherit;
+}
+
+#share-with-who {
+	flex-grow: 1;
+}
+
+label.share {
+	display: inline-block;
+}
+
 .not-supported {
 	font-size: 1.6em;
 	text-align: center;
