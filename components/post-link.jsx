@@ -3,6 +3,7 @@
 'use strict';
 
 var React = require("react");
+var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -37,9 +38,7 @@ module.exports = React.createClass({
 					<label>Link Description</label>
 					<textarea name="link-description" rows="4" />
 				</div>
-				<div className="action-form-group">
-					<button>Share Link</button>
-				</div>
+				<ShareWith shareTitle="Share Link" />
 			</div>
         );
     }
