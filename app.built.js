@@ -69,7 +69,7 @@ module.exports = React.createClass({displayName: 'exports',
     render: function() {
     	var startIndex = this.state.page * this.state.pageSize;
     	var endIndex = startIndex + this.state.pageSize;
-    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function(action, index) {
+    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function pageActions(action, index) {
             		return Action( {key:action.name, title:action.label, icon:action.icon, onClick:this.onActionClicked.bind(this, action)} )
             	}, this);
         var classNames = "grid"
@@ -407,12 +407,12 @@ module.exports.getActions = function() {
 },{"../secret.js":126,"./Api.js":4,"./SalesforceChromeOAuth.js":6}],6:[function(require,module,exports){
 module.exports = function(clientId, clientSecret) {
     //todo: input an options object, including clientId, secret, response_type, display, etc
-    var redirectUri = 'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
-    var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
     this.authenticate = function(callback) {
         //TODO: remove this hardcoding
         var host = "https://na15.salesforce.com"
+        var redirectUri = chrome.identity.getRedirectURL() + "provider_cb"; //'https://' + chrome.runtime.id + '.chromiumapp.org/provider_cb';
+        var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
         var options = {
             "interactive": true,
