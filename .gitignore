@@ -2,3 +2,4 @@
 node_modules
 .project
 app.built.js
+secret.js

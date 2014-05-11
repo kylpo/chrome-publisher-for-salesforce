@@ -16,7 +16,12 @@
         "identity",
 		"tabs",
 		"contextMenus"
+        "storage"
     ],
+
+    "background": {
+        "scripts": ["background.js"]
+    },
 
     "browser_action": {
         "default_icon": "icon-flat.png",
