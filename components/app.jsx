@@ -38,7 +38,7 @@ var App = React.createClass({
 			this.setState({
 				selectedAction: null
 			});
-		}, 400);
+		}.bind(this), 400);
 	},
     render: function() {
 		var backTitle = this.state.selectedAction == null ? "" : this.state.selectedAction.label;

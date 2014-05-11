@@ -15,7 +15,7 @@
         "https://*.salesforce.com/",
         "identity",
 		"tabs",
-		"contextMenus"
+		"contextMenus",
         "storage"
     ],
 
