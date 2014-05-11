@@ -1,0 +1,45 @@
+/** @jsx React.DOM */
+
+'use strict';
+
+var React = require("react");
+var ShareWith = require("./share-with.jsx");
+
+module.exports = React.createClass({
+	getInitialState: function() {
+		return {
+			title: "",
+			url: ""
+		}
+	},
+	tabQueryResponse: function(arrayOfTabs) {
+		var activeTab = arrayOfTabs[0];
+		this.setState({
+			title: activeTab.title,
+			url: activeTab.url
+		});
+	},
+    render: function() {
+        chrome.tabs.query({
+			active: true,
+			currentWindow: true
+		}, this.tabQueryResponse);
+        return (
+			<div className="post-link">
+				<div className="action-form-group">
+					<label>Link Url</label>
+					<input type="text" name="link-url" value={this.state.url} />
+				</div>
+				<div className="action-form-group">
+					<label>Link Name</label>
+					<input type="text" name="link-name" value={this.state.title} />
+				</div>
+				<div className="action-form-group">
+					<label>Link Description</label>
+					<textarea name="link-description" rows="4" />
+				</div>
+				<ShareWith shareTitle="Share Link" />
+			</div>
+        );
+    }
+});

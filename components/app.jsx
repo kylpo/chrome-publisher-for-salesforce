@@ -29,16 +29,23 @@ var App = React.createClass({
 		console.log("handling back pressed");
 		this.setState({
 			flipped: false,
-			unflipped: true,
-			selectedAction: null
+			unflipped: true
 		});
+		// Create a timeout to remove the selectedAction
+		// Required because card flip takes 0.4s to execute
+		// but state updates immediately. Therefore UI update is visible.
+		setTimeout(function() {
+			this.setState({
+				selectedAction: null
+			});
+		}, 400);
 	},
     render: function() {
 		var backTitle = this.state.selectedAction == null ? "" : this.state.selectedAction.label;
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm />
+    		<ActionForm action={this.state.selectedAction} />
     	];
         return (
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
