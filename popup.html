@@ -2,94 +2,9 @@
 <html>
   <head>
     <title>Quick Actions for Salesforce</title>
-    <style>
-      body {
-        min-width: 320px;
-        overflow-x: hidden;
-        margin: 0px;
-        background-color: #999;
-        -webkit-perspective: 800px;
-      }
-      .grid {
-      	-webkit-transition: -webkit-transform 0.4s;
-      	position: relative;
-      	background-color: #344a5f;
-      	-webkit-transform-style: preserve-3d;
-      	-webkit-backface-visibility: hidden;
-      }
-      .grid.flipped {
-		-webkit-animation: away-and-back 0.4s;
-		-webkit-animation-fill-mode: forwards;
-      }
-	  .grid.flapped {
-		-webkit-animation: back-and-away 0.4s;
-		-webkit-animation-fill-mode: forwards;
-      }
-      .grid .backside {
-      	-webkit-transform: rotateY(-180deg);
-      	-webkit-backface-visibility: hidden;
-      	position: absolute;
-      	top: 0px;
-      	left: 0px;
-      	right: 0px;
-      	bottom: 0px;
-      	background-color: white;
-      }
-      .grid .action-wrapper {
-      }
-      .grid .action {
-      	text-align: center;
-      	cursor: pointer;
-      	float: left;
-      	outline: 1px solid #2d4356;
-      	padding: 20px;
-      }
-      .grid .action img {
-      	height: 80px;
-      	width: 80px;
-      	padding-left: 20px;
-      	padding-right: 20px;
-      	-webkit-animation: grow 0.4s;
-      	-webkit-animation-delay: 0.2s;
-      	-webkit-animation-fill-mode: forwards;
-      	opacity: 0;
-      	-webkit-backface-visibility: hidden;
-      }
-      .grid .action .title {
-      	color: white;
-      	-webkit-animation: fadein 0.4s;
-      	-webkit-animation-delay: 0.2s;
-      	-webkit-animation-fill-mode: forwards;
-      	opacity: 0;
-      	-webkit-backface-visibility: hidden;
-      }
-      .clearfix {
-      	clear: both;
-      }
-      
-      @-webkit-keyframes grow {
-      	0%   { opacity: 0; -webkit-transform: scale(0.0); }
-      	90%  { opacity: 1; -webkit-transform: scale(1.1); }
-      	100% { opacity: 1; -webkit-transform: scale(1.0); }
-      }
-      
-      @-webkit-keyframes fadein {
-      	0%   { opacity: 0; }
-      	100% { opacity: 1; }
-      }
-      
-      @-webkit-keyframes away-and-back {
-		  0%   { -webkit-transform: scale(1.0) rotateY(0deg); }
-		  50%  { -webkit-transform: scale(0.5) rotateY(90deg); }
-		  100% { -webkit-transform: scale(1.0) rotateY(180deg); }
-		}
-		
-		@-webkit-keyframes back-and-away {
-		  0%   { -webkit-transform: scale(1.0) rotateY(180deg); }
-		  50%  { -webkit-transform: scale(0.5) rotateY(90deg); }
-		  100% { -webkit-transform: scale(1.0) rotateY(0deg); }
-		}
-    </style>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="sf1/style.css">
+	<link rel="stylesheet" href="css/extension.css">
   </head>
   <body>
   <script src="app.built.js"></script>
