@@ -7,7 +7,7 @@ var CardFlip = require("./card-flip.jsx");
 var Grid = require("./grid.jsx");
 var BackNav = require("./back-nav.jsx");
 var ActionForm = require("./action-form.jsx");
-var DAO = require("../js/DAO.js");
+//var DAO = require("../js/DAO.js");
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -51,6 +51,16 @@ var App = React.createClass({
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
         );
     }
-})
+});
 
-React.renderComponent(<App items={DAO.getActions()}/>, document.body);
+chrome.runtime.sendMessage({type: "getActions"}, function(response) {
+//    if (err != null) {
+//        console.error("error returned from getActions");
+//    }
+    console.log(chrome.runtime.lastError);
+    debugger;
+    console.log("got data: " + response);
+
+    React.renderComponent(<App items={response}/>, document.body);
+});
+
