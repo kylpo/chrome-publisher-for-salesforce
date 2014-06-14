@@ -1,9 +1,11 @@
+//todo: input an options object, including clientId, secret, response_type, display, etc
 module.exports = function(clientId, clientSecret) {
-    //todo: input an options object, including clientId, secret, response_type, display, etc
+    var module = {};
 
-    this.authenticate = function(callback) {
+    module.authenticate = function(callback) {
         //TODO: remove this hardcoding
-        var host = "https://na15.salesforce.com";
+//        var host = "https://na15.salesforce.com";
+        var host = "https://login.salesforce.com";
         var redirectUri = chrome.identity.getRedirectURL() + "provider_cb";
         var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
@@ -17,8 +19,7 @@ module.exports = function(clientId, clientSecret) {
 
         chrome.identity.launchWebAuthFlow(options, function(redirectUri) {
             if (chrome.runtime.lastError) {
-                callback(new Error(chrome.runtime.lastError));
-                return;
+                return callback(new Error(chrome.runtime.lastError));
             }
 
             // Upon success the response is appended to redirectUri, e.g.
@@ -36,8 +37,8 @@ module.exports = function(clientId, clientSecret) {
             var values = {};
 
             pairs.forEach(function(pair) {
-                var nameval = pair.split(/=/);
-                values[nameval[0]] = nameval[1];
+                var nameVal = pair.split(/=/);
+                values[nameVal[0]] = nameVal[1];
             });
 
             return values;
@@ -79,9 +80,9 @@ module.exports = function(clientId, clientSecret) {
                 callback(new Error('error in handleProviderTokensResponse.'));
             }
         }
-    },
+    };
 
-    this.refreshToken = function(callback, connection) {
+    module.refreshToken = function(connection, callback) {
         var url = connection.host + '/services/oauth2/token?client_id=' + clientId +
             '&client_secret=' + clientSecret +
             '&grant_type=refresh_token' +
@@ -100,12 +101,12 @@ module.exports = function(clientId, clientSecret) {
 
         function handleProviderTokenResponse(values) {
             if (values.hasOwnProperty('access_token')) {
-//                console.log("values");
-//                console.log(values);
                 callback(null, values);
             } else {
                 callback(new Error('error in handleProviderTokenResponse.'));
             }
         }
-    }
-}
+    };
+
+    return module;
+};

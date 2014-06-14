@@ -43,16 +43,43 @@ var React = require("react");
 
 module.exports = React.createClass({displayName: 'exports',
 	propTypes: {
-		title: React.PropTypes.string.isRequired,
-		icon: React.PropTypes.string.isRequired,
-		iconColor: React.PropTypes.string.isRequired
+//		title: React.PropTypes.string.isRequired,
+//		icon: React.PropTypes.string.isRequired,
+//		iconColor: React.PropTypes.string.isRequired
 	},
+//    getDefaultProps: function() {
+//        return {
+//            defaultIcon: "icons/default_120.png",
+//            defaultIconColor: "#849cb1"
+//        };
+//    },
     render: function() {
-		var inlineStyle = {
-			"background-color": this.props.iconColor
-		};
+        var iconObj = null;
+        var iconColorObj = null;
+
+        if (this.props.action.icons) {
+            iconObj = this.props.action.icons.filter(function (icon) {
+                return icon.height === 120;
+            })[0];
+        }
+
+        if (this.props.action.colors) {
+            iconColorObj = this.props.action.colors.filter(function (color) {
+                return color.theme === "theme4";
+            })[0];
+        }
+
+
+
+        var inlineStyle = {
+            "background-color": "#".concat(iconColorObj ? iconColorObj.color : "849cb1")
+        };
+
         return (
-        	React.DOM.div( {className:"action", onClick:this.props.onClick}, React.DOM.img( {className:"icon", src:this.props.icon, style:inlineStyle} ),React.DOM.div( {className:"title"}, this.props.title))
+        	React.DOM.div( {className:"action", onClick:this.props.onClick}, 
+                React.DOM.img( {className:"icon", src:iconObj ? iconObj.url : "icons/default_120.png", style:inlineStyle} ),
+                React.DOM.div( {className:"title"}, this.props.action.label)
+            )
             );
     }
 });
@@ -61,12 +88,11 @@ module.exports = React.createClass({displayName: 'exports',
 
 'use strict';
 
-var React = require("react");
-var CardFlip = require("./card-flip.jsx");
-var Grid = require("./grid.jsx");
-var BackNav = require("./back-nav.jsx");
-var ActionForm = require("./action-form.jsx");
-//var DAO = require("../js/DAO.js");
+var React = require("react"),
+    CardFlip = require("./card-flip.jsx"),
+    Grid = require("./grid.jsx"),
+    BackNav = require("./back-nav.jsx"),
+    ActionForm = require("./action-form.jsx");
 
 var App = React.createClass({displayName: 'App',
 	getInitialState: function() {
@@ -113,14 +139,12 @@ var App = React.createClass({displayName: 'App',
 });
 
 chrome.runtime.sendMessage({type: "getActions"}, function(response) {
-//    if (err != null) {
-//        console.error("error returned from getActions");
-//    }
-    console.log(chrome.runtime.lastError);
-    debugger;
-    console.log("got data: " + response);
-
-    React.renderComponent(App( {items:response}), document.body);
+    if (response === null) {
+        console.error("Error getting actions to client");
+    } else {
+        console.log(response);
+        React.renderComponent(App( {items:response}), document.body);
+    }
 });
 
 
@@ -271,8 +295,8 @@ module.exports = React.createClass({displayName: 'exports',
 		var dotsNeeded = Math.ceil(this.props.actions.length / this.props.pageSize);
     	var startIndex = this.state.page * this.props.pageSize;
     	var endIndex = startIndex + this.props.pageSize;
-    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function pageActions(action, index) {
-    		return Action( {key:action.name, title:action.label, icon:action.icon, iconColor:action.iconColor, onClick:this.onActionClicked.bind(this, action)} )
+    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function pageActions(action) {
+    		return Action( {key:action.name, action:action, onClick:this.onActionClicked.bind(this, action)} )
         }, this);
 
         return (

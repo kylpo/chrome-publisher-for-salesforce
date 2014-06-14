@@ -39,8 +39,8 @@ module.exports = React.createClass({
 		var dotsNeeded = Math.ceil(this.props.actions.length / this.props.pageSize);
     	var startIndex = this.state.page * this.props.pageSize;
     	var endIndex = startIndex + this.props.pageSize;
-    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function pageActions(action, index) {
-    		return <Action key={action.name} title={action.label} icon={action.icon} iconColor={action.iconColor} onClick={this.onActionClicked.bind(this, action)} />
+    	var pageActions = this.props.actions.slice(startIndex, endIndex).map(function pageActions(action) {
+    		return <Action key={action.name} action={action} onClick={this.onActionClicked.bind(this, action)} />
         }, this);
 
         return (

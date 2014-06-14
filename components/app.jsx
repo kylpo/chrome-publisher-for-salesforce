@@ -2,12 +2,11 @@
 
 'use strict';
 
-var React = require("react");
-var CardFlip = require("./card-flip.jsx");
-var Grid = require("./grid.jsx");
-var BackNav = require("./back-nav.jsx");
-var ActionForm = require("./action-form.jsx");
-//var DAO = require("../js/DAO.js");
+var React = require("react"),
+    CardFlip = require("./card-flip.jsx"),
+    Grid = require("./grid.jsx"),
+    BackNav = require("./back-nav.jsx"),
+    ActionForm = require("./action-form.jsx");
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -54,13 +53,11 @@ var App = React.createClass({
 });
 
 chrome.runtime.sendMessage({type: "getActions"}, function(response) {
-//    if (err != null) {
-//        console.error("error returned from getActions");
-//    }
-    console.log(chrome.runtime.lastError);
-    debugger;
-    console.log("got data: " + response);
-
-    React.renderComponent(<App items={response}/>, document.body);
+    if (response === null) {
+        console.error("Error getting actions to client");
+    } else {
+        console.log(response);
+        React.renderComponent(<App items={response}/>, document.body);
+    }
 });
 
