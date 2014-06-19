@@ -14,74 +14,28 @@ var Storage = require("./storage.js"),
 //
 //});
 
-if (chrome.runtime && chrome.runtime.onStartup) {
-    chrome.runtime.onStartup.addListener(function () {
-        Storage.getConnection(function (err, connection) {
-            if (err) {
-                getAndStoreConnection(function (err, data) {
-                    if (err) {
-                        console.error(err.description);
-                    }
-
-                    localStateConnection = data;
-                });
-            } else {
-                localStateConnection = connection;
-            }
-        });
-
-        Storage.getActions(function (err, actions) {
-            if (err) {
-                getAndStoreActionsFromServer(null, function (err, actions) {
-                    if (err) {
-                        console.error(err.description);
-                    } else {
-                        filterInitialActions(actions, function (err, filteredActions) {
-                            if (err) {
-                                console.error(err.description);
-                            }
-
-                            localStateActions = filteredActions;
-                        });
-                    }
-                });
-            } else {
-                filterInitialActions(actions, function (err, filteredActions) {
-                    if (err) {
-                        console.error(err.description);
-                    }
-
-                    localStateActions = filteredActions;
-                });
-            }
-        });
-
-
-    });
-}
-
 // This essentially acts as a router for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.type === "getActions") {
-        getActions(function(err, actions) {
-            if (err) {
-                console.error(err.description);
-                sendResponse(null);
-            } else {
-                sendResponse(actions);
-            }
-        });
+    switch (request.type) {
+        case "getActions":
+            getActions(function(err, actions) {
+                if (err) {
+                    console.error(err.description);
+                    sendResponse(null);
+                } else {
+                    sendResponse(actions);
+                }
+            });
+            return true; // necessary to use sendResponse asynchronously
 
-        return true;
-    } else if (request.type === "submitPost") {
+        case "submitPost":
+            createMessageObject(request.message, function(err, data) {
+                if (err) {
+                    console.error(err.description);
+                    return sendResponse(null);
+                }
 
-        createMessageObject(request.message, function(err, data) {
-            if (err) {
-                console.error(err.description);
-                return sendResponse(null);
-            }
-            chrome.storage.sync.get("connection", function (items) {
-                submitPost(data, items.connection, false, function(err, data) {
+                submitPost(data, false, function (err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
@@ -91,30 +45,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
                 });
             });
+            return true; // necessary to use sendResponse asynchronously
 
-
-
-
-
-        });
-        return true;
+        default:
+            break;
     }
-//    switch (request.type) {
-//        case "getActions":
-//
-//
-//            break;
-//        case "submitPost":
-//
-//
-////            return true;
-//            break;
-//        default:
-//            break;
-//    }
-//    // (rageguy)! I wasted 2 hours figuring out this return true is needed to use sendResponse asynchronously.
-////    return true;
-
 });
 
 function createMessageObject(message, callback) {
@@ -132,16 +67,18 @@ function createMessageObject(message, callback) {
 }
 
 
-function submitPost(message, connection, isRetry, callback) {
-//    if (connection) {
-        Api.submitPost(connection, message, function (err, data) {
+function submitPost(message, isRetry, callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
 
-            // err is a status code, or null if success
-            switch (err) {
+        Api.submitPost(connection, message, function (status, data) {
+            switch (status) {
                 case null:
                 case undefined:
+                    // success
                     callback(null, data);
-//                    populateActionsWithDescribeData(data, 0, connection, callback);
                     break;
                 case 401:
                     if (isRetry) {
@@ -160,21 +97,8 @@ function submitPost(message, connection, isRetry, callback) {
                     return callback(new Error("getActions errored with: " + err));
             }
         });
-//    } else {
-//        Storage.getConnection(function(err, connection) {
-//            if (err) {
-//                getAndStoreConnection(function(err, data) {
-//                    if (err) {
-//                        return callback(err);
-//                    }
-//
-//                    return submitPost(message, data, isRetry, callback);
-//                });
-//            } else {
-//                return submitPost(message, connection, isRetry, callback);
-//            }
-//        });
-//    }
+    });
+
 }
 
 
@@ -185,7 +109,7 @@ function submitPost(message, connection, isRetry, callback) {
  * Then finally try to get (and store) actions from server
  *
  * @param {function(Object, Object=)} callback
- * @returns actions in callback or and error callback
+ * @returns actions in callback or an error callback
  */
 function getActions(callback) {
     if (localStateActions) {
@@ -194,7 +118,7 @@ function getActions(callback) {
 
     Storage.getActions(function(err, actions) {
         if (err) {
-            getAndStoreActionsFromServer(null, function(err, actions) {
+            getAndStoreActionsFromServer(function(err, actions) {
                 if (err) {
                     return callback(err);
                 } else {
@@ -210,6 +134,36 @@ function getActions(callback) {
                 localStateActions = filteredActions;
                 return callback(null, filteredActions);
             });
+        }
+    });
+}
+
+/**
+ * First check if connection exist in state
+ * Then check if connection exist in storage
+ * Then finally authorize with server to establish connection
+ *
+ * @param {function(Object, Object=)} callback
+ * @returns connection in callback or an error callback
+ */
+function getConnection(callback) {
+    if (localStateConnection) {
+        return callback(null, localStateConnection);
+    }
+
+    Storage.getConnection(function(err, connection) {
+        if (err) {
+            getAndStoreConnection(function(err, data) {
+                if (err) {
+                    return callback(err);
+                } else {
+                    localStateConnection = data;
+                    return callback(null, data);
+                }
+            });
+        } else {
+            localStateConnection = connection;
+            return callback(null, connection);
         }
     });
 }
@@ -241,19 +195,22 @@ function filterInitialActions(actions, callback) {
  * 4) store filtered actions in local state
  * 5) callback with filtered actions or error
  *
- * @param {Object} connection - in a sense, this is a handy way of retrying
  * @param {function(Object, Object=)} callback
   */
-function getAndStoreActionsFromServer(connection, callback) {
-    if (connection) {
-        getActionsFromServer(connection, false, function(err, actions) {
+function getAndStoreActionsFromServer(callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        getActionsFromServer(connection, false, function (err, actions) {
             if (err) {
                 return callback(err);
             }
 
             Storage.setActions(actions);
 
-            filterInitialActions(actions, function(err, filteredActions) {
+            filterInitialActions(actions, function (err, filteredActions) {
                 if (err) {
                     return callback(err);
                 }
@@ -262,23 +219,7 @@ function getAndStoreActionsFromServer(connection, callback) {
                 callback(null, filteredActions);
             });
         });
-    } else {
-        Storage.getConnection(function(err, connection) {
-            if (err) {
-                getAndStoreConnection(function(err, data) {
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    localStateConnection = data;
-                    return getAndStoreActionsFromServer(data, callback);
-                });
-            } else {
-                localStateConnection = connection;
-                return getAndStoreActionsFromServer(connection, callback);
-            }
-        });
-    }
+    });
 }
 
 /**
@@ -295,6 +236,7 @@ function getAndStoreConnection(callback) {
         }
 
         Storage.upsertConnection(connection, function() {
+            localStateConnection = connection;
             callback(null, connection);
         });
     });
@@ -320,6 +262,7 @@ function getAndStoreRefreshedConnection(connection, callback) {
                 return callback(err);
             }
 
+            localStateConnection = data;
             return callback(null, data);
         });
     });
@@ -335,12 +278,11 @@ function getAndStoreRefreshedConnection(connection, callback) {
  * @param {function(Object, Object=)} callback
  */
 function getActionsFromServer(connection, isRetry, callback) {
-    Api.getActions(connection, function (err, data) {
-
-        // err is a status code, or null if success
-        switch (err) {
+    Api.getActions(connection, function (status, data) {
+        switch (status) {
             case null:
             case undefined:
+                // Success
                 populateActionsWithDescribeData(data, 0, connection, callback);
                 break;
             case 401:
