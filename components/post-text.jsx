@@ -47,14 +47,13 @@ module.exports = React.createClass({
             "message": this.state.value
         };
 
-        this.props.port.postMessage(options);
-//        chrome.runtime.sendMessage(options, function(response) {
-//            if (response === null) {
-//                console.error("Error getting submitting Post");
-//            } else {
-//                console.log(response);
-//            }
-//        });
+        chrome.runtime.sendMessage(options, function(response) {
+            if (response === null) {
+                console.error("Error getting submitting Post");
+            } else {
+                console.log(response);
+            }
+        });
     },
     render: function() {
         var value = this.state.value;

@@ -14,69 +14,108 @@ var Storage = require("./storage.js"),
 //
 //});
 
-
-// This essentially acts as a router for what function to call
-chrome.runtime.onConnect.addListener(function(port) {
-    port.onMessage.addListener(function (request) { //, sender, sendResponse) {
-        switch (request.type) {
-            case "getActions":
-                getActions(function (err, actions) {
+if (chrome.runtime && chrome.runtime.onStartup) {
+    chrome.runtime.onStartup.addListener(function () {
+        Storage.getConnection(function (err, connection) {
+            if (err) {
+                getAndStoreConnection(function (err, data) {
                     if (err) {
                         console.error(err.description);
-                        port.postMessage(null);
+                    }
+
+                    localStateConnection = data;
+                });
+            } else {
+                localStateConnection = connection;
+            }
+        });
+
+        Storage.getActions(function (err, actions) {
+            if (err) {
+                getAndStoreActionsFromServer(null, function (err, actions) {
+                    if (err) {
+                        console.error(err.description);
                     } else {
-                        port.postMessage(actions);
+                        filterInitialActions(actions, function (err, filteredActions) {
+                            if (err) {
+                                console.error(err.description);
+                            }
+
+                            localStateActions = filteredActions;
+                        });
                     }
                 });
+            } else {
+                filterInitialActions(actions, function (err, filteredActions) {
+                    if (err) {
+                        console.error(err.description);
+                    }
 
-                break;
-            case "submitPost":
-                createMessageObject(request.data, function (err, data) {
+                    localStateActions = filteredActions;
+                });
+            }
+        });
+
+
+    });
+}
+
+// This essentially acts as a router for what function to call
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.type === "getActions") {
+        getActions(function(err, actions) {
+            if (err) {
+                console.error(err.description);
+                sendResponse(null);
+            } else {
+                sendResponse(actions);
+            }
+        });
+
+        return true;
+    } else if (request.type === "submitPost") {
+
+        createMessageObject(request.message, function(err, data) {
+            if (err) {
+                console.error(err.description);
+                return sendResponse(null);
+            }
+            chrome.storage.sync.get("connection", function (items) {
+                submitPost(data, items.connection, false, function(err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
                     }
 
-                    Storage.getConnection(function (err, connection) {
-//                    if (err) {
-//                        getAndStoreConnection(function(err, data) {
-//                            if (err) {
-//                                return callback(err);
-//                            }
-//
-//                            return submitPost(message, data, isRetry, callback);
-//                        });
-//                    } else {
-//                        return submitPost(message, connection, isRetry, callback);
-//                    }
-                        submitPost(data, connection, false, function (err, data) {
-                            if (err) {
-                                console.error(err.description);
-                                port.postMessage(null);
-                            }
-
-                            port.postMessage(data);
-//                            sendResponse(data);
-
-                        });
-                    });
-
+                    sendResponse(data);
 
                 });
-
-//            return true;
-                break;
-            default:
-                break;
-        }
-        // (rageguy)! I wasted 2 hours figuring out this return true is needed to use sendResponse asynchronously.
-//        return true;
+            });
 
 
+
+
+
+        });
+        return true;
+    }
+//    switch (request.type) {
+//        case "getActions":
+//
+//
+//            break;
+//        case "submitPost":
+//
+//
+////            return true;
+//            break;
+//        default:
+//            break;
 //    }
-    });
-});
+//    // (rageguy)! I wasted 2 hours figuring out this return true is needed to use sendResponse asynchronously.
+////    return true;
 
+});
 
 function createMessageObject(message, callback) {
     var messageObject = {
@@ -94,8 +133,8 @@ function createMessageObject(message, callback) {
 
 
 function submitPost(message, connection, isRetry, callback) {
-    if (connection) {
-        Api.submitPost(connection, function (err, data) {
+//    if (connection) {
+        Api.submitPost(connection, message, function (err, data) {
 
             // err is a status code, or null if success
             switch (err) {
@@ -121,21 +160,21 @@ function submitPost(message, connection, isRetry, callback) {
                     return callback(new Error("getActions errored with: " + err));
             }
         });
-    } else {
-        Storage.getConnection(function(err, connection) {
-            if (err) {
-                getAndStoreConnection(function(err, data) {
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    return submitPost(message, data, isRetry, callback);
-                });
-            } else {
-                return submitPost(message, connection, isRetry, callback);
-            }
-        });
-    }
+//    } else {
+//        Storage.getConnection(function(err, connection) {
+//            if (err) {
+//                getAndStoreConnection(function(err, data) {
+//                    if (err) {
+//                        return callback(err);
+//                    }
+//
+//                    return submitPost(message, data, isRetry, callback);
+//                });
+//            } else {
+//                return submitPost(message, connection, isRetry, callback);
+//            }
+//        });
+//    }
 }
 
 

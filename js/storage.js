@@ -3,22 +3,22 @@
 var ACTIONS_KEY = "actions";
 var CONNECTION_KEY = "connection";
 
-function getConnection(callback) {
-    chrome.storage.sync.get(CONNECTION_KEY, function (items) {
+
+exports.getConnection = function getConnection(callback) {
+    chrome.storage.sync.get("connection", function (items) {
         if (chrome.runtime.lastError) {
-            return callback(new Error(chrome.runtime.lastError));
+            callback(new Error(chrome.runtime.lastError));
         } else if (items && items.hasOwnProperty(CONNECTION_KEY)) {
-            return callback(null, items[CONNECTION_KEY]);
+            callback(null, items[CONNECTION_KEY]);
         } else {
-            return callback(new Error("Connection not found in chrome.storage.sync"));
+            callback(new Error("Connection not found in chrome.storage.sync"));
         }
     });
-}
+};
 
-exports.getConnection = getConnection;
 
 exports.upsertConnection = function(newConnection, callback) {
-    getConnection(function(err, data) {
+    exports.getConnection(function(err, data) {
         if (err) {
             var connectionObj = {};
             connectionObj[CONNECTION_KEY] = newConnection;
@@ -49,7 +49,9 @@ exports.upsertConnection = function(newConnection, callback) {
 
 exports.getActions = function(callback) {
     chrome.storage.local.get(ACTIONS_KEY, function (items) {
-        if (items && items.hasOwnProperty(ACTIONS_KEY)) {
+        if (chrome.runtime.lastError) {
+            return callback(new Error(chrome.runtime.lastError));
+        } else if (items && items.hasOwnProperty(ACTIONS_KEY)) {
             return callback(null, items[ACTIONS_KEY]);
         }
 

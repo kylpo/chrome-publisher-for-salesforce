@@ -16,7 +16,7 @@ function xhrWithAuth(callback, method, connection, url, data) {
     xhr.open(method, connection.host + url, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + connection.access_token);
     if (data) {
-        xhr.setRequestHeaders("Content-Type", "application/json;charset=UTF-8");
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhr.send(JSON.stringify(data));
     } else {
         xhr.send();

@@ -17,7 +17,7 @@ module.exports = React.createClass({displayName: 'exports',
 		var name = this.props.action && this.props.action.name;
 		switch(name) {
 		case this.TEXT_POST:
-			return PostText( {port:this.props.port});
+			return PostText(null );
 		case this.LINK_POST:
 			return PostLink(null );
 		default:
@@ -153,7 +153,7 @@ var App = React.createClass({displayName: 'App',
     	var frontface = Grid( {actions:this.props.items, onActionSelected:this.handleActionSelected});
     	var backface = [
     		BackNav( {title:backTitle, onBackClicked:this.onBackClicked} ),
-    		ActionForm( {action:this.state.selectedAction, port:this.props.port})
+    		ActionForm( {action:this.state.selectedAction} )
     	];
         return (
         	CardFlip( {frontface:frontface, backface:backface, flipped:this.state.flipped, unflipped:this.state.unflipped} )
@@ -161,26 +161,14 @@ var App = React.createClass({displayName: 'App',
     }
 });
 
-var port = chrome.runtime.connect();
-
-port.postMessage({type: "getActions"});
-
-port.onMessage.addListener(function(response) {
+chrome.runtime.sendMessage({type: "getActions"}, function(response) {
     if (response === null) {
         console.error("Error getting actions to client");
     } else {
         console.log(response);
-        React.renderComponent(App( {items:response, port:port}), document.body);
+        React.renderComponent(App( {items:response}), document.body);
     }
 });
-//chrome.runtime.sendMessage({type: "getActions"}, function(response) {
-//    if (response === null) {
-//        console.error("Error getting actions to client");
-//    } else {
-//        console.log(response);
-//        React.renderComponent(<App items={response}/>, document.body);
-//    }
-//});
 
 
 },{"./action-form.jsx":1,"./back-nav.jsx":4,"./card-flip.jsx":5,"./grid.jsx":7,"react":146}],4:[function(require,module,exports){
@@ -444,14 +432,13 @@ module.exports = React.createClass({displayName: 'exports',
             "message": this.state.value
         };
 
-        this.props.port.postMessage(options);
-//        chrome.runtime.sendMessage(options, function(response) {
-//            if (response === null) {
-//                console.error("Error getting submitting Post");
-//            } else {
-//                console.log(response);
-//            }
-//        });
+        chrome.runtime.sendMessage(options, function(response) {
+            if (response === null) {
+                console.error("Error getting submitting Post");
+            } else {
+                console.log(response);
+            }
+        });
     },
     render: function() {
         var value = this.state.value;
