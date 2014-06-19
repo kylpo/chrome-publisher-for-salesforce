@@ -16,7 +16,7 @@ module.exports = React.createClass({
 		var name = this.props.action && this.props.action.name;
 		switch(name) {
 		case this.TEXT_POST:
-			return <PostText />;
+			return <PostText port={this.props.port}/>;
 		case this.LINK_POST:
 			return <PostLink />;
 		default:

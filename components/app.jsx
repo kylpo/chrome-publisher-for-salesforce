@@ -44,7 +44,7 @@ var App = React.createClass({
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm action={this.state.selectedAction} />
+    		<ActionForm action={this.state.selectedAction} port={this.props.port}/>
     	];
         return (
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
@@ -52,12 +52,24 @@ var App = React.createClass({
     }
 });
 
-chrome.runtime.sendMessage({type: "getActions"}, function(response) {
+var port = chrome.runtime.connect();
+
+port.postMessage({type: "getActions"});
+
+port.onMessage.addListener(function(response) {
     if (response === null) {
         console.error("Error getting actions to client");
     } else {
         console.log(response);
-        React.renderComponent(<App items={response}/>, document.body);
+        React.renderComponent(<App items={response} port={port}/>, document.body);
     }
 });
+//chrome.runtime.sendMessage({type: "getActions"}, function(response) {
+//    if (response === null) {
+//        console.error("Error getting actions to client");
+//    } else {
+//        console.log(response);
+//        React.renderComponent(<App items={response}/>, document.body);
+//    }
+//});
 

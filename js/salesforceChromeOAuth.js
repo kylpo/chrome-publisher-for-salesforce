@@ -3,8 +3,6 @@ module.exports = function(clientId, clientSecret) {
     var module = {};
 
     module.authenticate = function(callback) {
-        //TODO: remove this hardcoding
-//        var host = "https://na15.salesforce.com";
         var host = "https://login.salesforce.com";
         var redirectUri = chrome.identity.getRedirectURL() + "provider_cb";
         var redirectRe = new RegExp(redirectUri + '[#\?](.*)');

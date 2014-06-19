@@ -5,7 +5,8 @@ var Storage = require("./storage.js"),
     clientId = require("../secret.js").clientId,
     clientSecret = require("../secret.js").clientSecret,
     Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret),
-    localStateActions = null;
+    localStateActions = null,
+    localStateConnection = null;
 
 
 //TODO: watch for storage changes, and store changes in app state
@@ -15,29 +16,133 @@ var Storage = require("./storage.js"),
 
 
 // This essentially acts as a router for what function to call
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.type) {
-        case "getActions":
-            getActions(function(err, actions) {
-                if (err) {
-                    console.error(err.description);
-                    sendResponse(null);
-                } else {
-                    sendResponse(actions);
-                }
-            });
+chrome.runtime.onConnect.addListener(function(port) {
+    port.onMessage.addListener(function (request) { //, sender, sendResponse) {
+        switch (request.type) {
+            case "getActions":
+                getActions(function (err, actions) {
+                    if (err) {
+                        console.error(err.description);
+                        port.postMessage(null);
+                    } else {
+                        port.postMessage(actions);
+                    }
+                });
 
-            // (rageguy)! I wasted 2 hours figuring out this return true is needed to use sendResponse asynchronously.
-            return true;
-        default:
-            break;
-    }
+                break;
+            case "submitPost":
+                createMessageObject(request.data, function (err, data) {
+                    if (err) {
+                        console.error(err.description);
+                        return sendResponse(null);
+                    }
 
+                    Storage.getConnection(function (err, connection) {
+//                    if (err) {
+//                        getAndStoreConnection(function(err, data) {
+//                            if (err) {
+//                                return callback(err);
+//                            }
+//
+//                            return submitPost(message, data, isRetry, callback);
+//                        });
+//                    } else {
+//                        return submitPost(message, connection, isRetry, callback);
+//                    }
+                        submitPost(data, connection, false, function (err, data) {
+                            if (err) {
+                                console.error(err.description);
+                                port.postMessage(null);
+                            }
+
+                            port.postMessage(data);
+//                            sendResponse(data);
+
+                        });
+                    });
+
+
+                });
+
+//            return true;
+                break;
+            default:
+                break;
+        }
+        // (rageguy)! I wasted 2 hours figuring out this return true is needed to use sendResponse asynchronously.
+//        return true;
+
+
+//    }
+    });
 });
+
+
+function createMessageObject(message, callback) {
+    var messageObject = {
+        "body": {
+            "messageSegments": []
+        }
+    };
+
+    messageObject.body.messageSegments.push({
+            "type": "text",
+            "text": message
+    });
+    callback(null, messageObject);
+}
+
+
+function submitPost(message, connection, isRetry, callback) {
+    if (connection) {
+        Api.submitPost(connection, function (err, data) {
+
+            // err is a status code, or null if success
+            switch (err) {
+                case null:
+                case undefined:
+                    callback(null, data);
+//                    populateActionsWithDescribeData(data, 0, connection, callback);
+                    break;
+                case 401:
+                    if (isRetry) {
+                        return callback(new Error("Invalid refresh token on retry"));
+                    }
+
+                    getAndStoreRefreshedConnection(connection, function (err, data) {
+                        if (err) {
+                            return callback(err);
+                        }
+
+                        return submitPost(message, data, true, callback);
+                    });
+                    break;
+                default:
+                    return callback(new Error("getActions errored with: " + err));
+            }
+        });
+    } else {
+        Storage.getConnection(function(err, connection) {
+            if (err) {
+                getAndStoreConnection(function(err, data) {
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    return submitPost(message, data, isRetry, callback);
+                });
+            } else {
+                return submitPost(message, connection, isRetry, callback);
+            }
+        });
+    }
+}
+
 
 /**
  * First check if actions exist in state
  * Then check if actions exist in storage
+ * - if taken from storage, filter actions
  * Then finally try to get (and store) actions from server
  *
  * @param {function(Object, Object=)} callback
@@ -58,18 +163,44 @@ function getActions(callback) {
                 }
             });
         } else {
-            return callback(null, actions);
+            filterInitialActions(actions, function(err, filteredActions) {
+                if (err) {
+                    return callback(err);
+                }
+
+                localStateActions = filteredActions;
+                return callback(null, filteredActions);
+            });
         }
     });
+}
+
+/**
+ * This essentially acts as a white-list for what actions are supported
+ *
+ * @param {Object[]} actions
+ * @param {function(Object, Object=)} callback
+ */
+function filterInitialActions(actions, callback) {
+    var filteredActions = actions.filter(function(action) {
+        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
+    });
+
+    if (!filteredActions) {
+        return callback(new Error("Filtering action list resulted in empty list"));
+    }
+
+    return callback(null, filteredActions);
 }
 
 /**
  * 1) get connection info
  *    if fail, re-auth
  * 2) use connection info to hit api for actions
- *    if fail, return null
- *
- * Callback with actions or error
+ *    if fail, error
+ * 3) store unfiltered actions in storage
+ * 4) store filtered actions in local state
+ * 5) callback with filtered actions or error
  *
  * @param {Object} connection - in a sense, this is a handy way of retrying
  * @param {function(Object, Object=)} callback
@@ -81,11 +212,16 @@ function getAndStoreActionsFromServer(connection, callback) {
                 return callback(err);
             }
 
-            // Todo: should I check for success before callback?
             Storage.setActions(actions);
-            localStateActions = actions;
 
-            callback(null, actions);
+            filterInitialActions(actions, function(err, filteredActions) {
+                if (err) {
+                    return callback(err);
+                }
+
+                localStateActions = filteredActions;
+                callback(null, filteredActions);
+            });
         });
     } else {
         Storage.getConnection(function(err, connection) {
@@ -95,9 +231,11 @@ function getAndStoreActionsFromServer(connection, callback) {
                         return callback(err);
                     }
 
+                    localStateConnection = data;
                     return getAndStoreActionsFromServer(data, callback);
                 });
             } else {
+                localStateConnection = connection;
                 return getAndStoreActionsFromServer(connection, callback);
             }
         });
