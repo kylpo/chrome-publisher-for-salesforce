@@ -17,6 +17,7 @@ var Storage = require("./storage.js"),
 // This essentially acts as a router for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type) {
+
         case "getActions":
             getActions(function(err, actions) {
                 if (err) {
@@ -38,11 +39,31 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 submitPost(data, false, function (err, data) {
                     if (err) {
                         console.error(err.description);
-                        return sendResponse(null);
+                        return;
+//                        return sendResponse(null);
                     }
 
-                    sendResponse(data);
+                    launchNewTab(localStateConnection.host + "/" + data.id);
+                });
+            });
+            return true; // necessary to use sendResponse asynchronously
 
+        case "submitLink":
+            createMessageObject(request.message, function(err, data) {
+                if (err) {
+                    console.error(err.description);
+                    return sendResponse(null);
+                }
+
+                data.attachment = request.attachment
+                submitPost(data, false, function (err, data) {
+                    if (err) {
+                        console.error(err.description);
+                        return;
+//                        return sendResponse(null);
+                    }
+
+                    launchNewTab(localStateConnection.host + "/" + data.id);
                 });
             });
             return true; // necessary to use sendResponse asynchronously
@@ -52,6 +73,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
+function launchNewTab(url) {
+    // would like to use chrome.tabs.getCurrent, but this doesn't work in the background script
+    chrome.tabs.query({active: true}, function(tabs) {
+        var currentTab = tabs[0];
+        //TODO , '"index": currentTab.index + 1' isn't consistently working. Sometimes it opens in position 1
+        chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
+    })
+}
 function createMessageObject(message, callback) {
     var messageObject = {
         "body": {
@@ -94,7 +123,7 @@ function submitPost(message, isRetry, callback) {
                     });
                     break;
                 default:
-                    return callback(new Error("getActions errored with: " + err));
+                    return callback(new Error("getActions errored with: " + status));
             }
         });
     });

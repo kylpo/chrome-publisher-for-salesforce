@@ -258,6 +258,16 @@ module.exports = React.createClass({displayName: 'exports',
 		this.setState({ page: dot });
 		this.props.onPageSelected(dot);
 	},
+    launchPanel: function() {
+        chrome.windows.create({
+            "url": "popup.html",
+            "type": "panel",
+//            "type": "popup",
+            "width": 320,
+            "height": 500
+        });
+        window.close();
+    },
     render: function() {
     	var pages = Math.min(this.props.dots, this.props.maxDots);
 		var dots = [];
@@ -270,7 +280,8 @@ module.exports = React.createClass({displayName: 'exports',
         	React.DOM.div( {className:"page-nav"}, 
         		React.DOM.ul(null, 
         			 dots 
-        		)
+        		),
+                React.DOM.button( {onClick:this.launchPanel}, "Pop")
         	)
         );
     }
@@ -344,12 +355,13 @@ var React = require("react");
 var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({displayName: 'exports',
-	getInitialState: function() {
-		return {
-			title: "",
-			url: ""
-		}
-	},
+    getInitialState: function() {
+        return {
+            title: "",
+            url: "",
+            message: ''
+        }
+    },
 	tabQueryResponse: function(arrayOfTabs) {
 		var activeTab = arrayOfTabs[0];
 		this.setState({
@@ -357,26 +369,63 @@ module.exports = React.createClass({displayName: 'exports',
 			url: activeTab.url
 		});
 	},
+    handleTitleChange: function(event) {
+        this.setState({title: event.target.value});
+    },
+    handleUrlChange: function(event) {
+        this.setState({url: event.target.value});
+    },
+    handleMessageChange: function(event) {
+        this.setState({message: event.target.value});
+    },
+    handleSubmit: function() {
+        var options = {
+            "type": "submitLink",
+            "message": this.state.message,
+            "attachment": {
+                "attachmentType" : "Link",
+                "url" : this.state.url,
+                "urlName" : this.state.title
+            }
+        };
+
+        chrome.runtime.sendMessage(options, function(response) {
+//            if (response === null) {
+//                console.error("Error getting submitting Post");
+//            } else {
+//                console.log(response);
+//            }
+        });
+    },
     render: function() {
         chrome.tabs.query({
-			active: true,
-			currentWindow: true
+			active: true
+//			currentWindow: true
 		}, this.tabQueryResponse);
+
+//        <ShareWith shareTitle="Share Link" />
         return (
-			React.DOM.div( {className:"post-link"}, 
+			React.DOM.form( {className:"post-link", onSubmit:this.handleSubmit}, 
 				React.DOM.div( {className:"action-form-group"}, 
 					React.DOM.label(null, "Link Url"),
-					React.DOM.input( {type:"text", name:"link-url", value:this.state.url} )
+					React.DOM.input( {type:"text", name:"link-url", value:this.state.url, onChange:this.handleTitleChange})
 				),
 				React.DOM.div( {className:"action-form-group"}, 
 					React.DOM.label(null, "Link Name"),
-					React.DOM.input( {type:"text", name:"link-name", value:this.state.title} )
+					React.DOM.input( {type:"text", name:"link-name", value:this.state.title, onChange:this.handleUrlChange})
 				),
 				React.DOM.div( {className:"action-form-group"}, 
 					React.DOM.label(null, "Link Description"),
-					React.DOM.textarea( {name:"link-description", rows:"4"} )
+					React.DOM.input(
+                    {type:"textarea",
+                    name:"link-description",
+                    value:this.state.message,
+                    onChange:this.handleMessageChange}
+                    )
 				),
-				ShareWith( {shareTitle:"Share Link"} )
+                React.DOM.div( {className:"action-form-group"}, 
+                    React.DOM.button( {type:"submit"}, "Share Link")
+                )
 			)
         );
     }
@@ -433,11 +482,11 @@ module.exports = React.createClass({displayName: 'exports',
         };
 
         chrome.runtime.sendMessage(options, function(response) {
-            if (response === null) {
-                console.error("Error getting submitting Post");
-            } else {
-                console.log(response);
-            }
+//            if (response === null) {
+//                console.error("Error getting submitting Post");
+//            } else {
+//                console.log(response);
+//            }
         });
     },
     render: function() {
@@ -452,7 +501,7 @@ module.exports = React.createClass({displayName: 'exports',
 
                 ),
                 React.DOM.div( {className:"action-form-group"}, 
-                    React.DOM.button( {type:"submit"}, "Share Link")
+                    React.DOM.button( {type:"submit"}, "Submit Post")
                 )
             )
         );

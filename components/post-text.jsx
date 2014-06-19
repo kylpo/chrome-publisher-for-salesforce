@@ -48,11 +48,11 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function(response) {
-            if (response === null) {
-                console.error("Error getting submitting Post");
-            } else {
-                console.log(response);
-            }
+//            if (response === null) {
+//                console.error("Error getting submitting Post");
+//            } else {
+//                console.log(response);
+//            }
         });
     },
     render: function() {
@@ -67,7 +67,7 @@ module.exports = React.createClass({
 
                 </div>
                 <div className="action-form-group">
-                    <button type="submit">Share Link</button>
+                    <button type="submit">Submit Post</button>
                 </div>
             </form>
         );

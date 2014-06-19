@@ -23,6 +23,16 @@ module.exports = React.createClass({
 		this.setState({ page: dot });
 		this.props.onPageSelected(dot);
 	},
+    launchPanel: function() {
+        chrome.windows.create({
+            "url": "popup.html",
+            "type": "panel",
+//            "type": "popup",
+            "width": 320,
+            "height": 500
+        });
+        window.close();
+    },
     render: function() {
     	var pages = Math.min(this.props.dots, this.props.maxDots);
 		var dots = [];
@@ -36,6 +46,7 @@ module.exports = React.createClass({
         		<ul>
         			{ dots }
         		</ul>
+                <button onClick={this.launchPanel}>Pop</button>
         	</div>
         );
     }
