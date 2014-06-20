@@ -10,8 +10,11 @@ body {
 .card {
 	-webkit-transition: -webkit-transform 0.4s;
 	position: relative;
-	background-color: #344a5f;
 	-webkit-transform-style: preserve-3d;
+
+    /*background-color: #344a5f;*/
+    /*GUS*/
+    background-color: #414141;
 }
 .card[data-flipped=true] {
 	-webkit-animation: away-and-back 0.4s;
@@ -38,7 +41,7 @@ body {
 	text-align: center;
 	cursor: pointer;
 	float: left;
-	outline: 1px solid #2d4356;
+	outline: 1px solid #333;
 	padding: 10px 20px;
 	width: 120px;
 }
@@ -77,9 +80,13 @@ body {
 
 .page-nav {
 	-webkit-transition: opacity 0.4s;
-	outline: 1px solid #2d4356;
-	background-color: #2d4356;
 	text-align: center;
+
+    /*outline: 1px solid #2d4356;*/
+    /*background-color: #2d4356;*/
+    /*GUS*/
+    outline: 1px solid #333;
+    background-color: #333;
 }
 .page-nav ul {
 	list-style: none;
@@ -114,21 +121,26 @@ body {
 	width: 100%;
 	height: 100%;
 	border-radius: 50%;
-	//background-color: white;
+	/*background-color: white;*/
 	content: '';
 	text-indent: 0;
 }
 .page-nav ul li a::after {
-	background-color: #14222E;
+	/*background-color: #14222E;*/
+    /*GUS*/
+    background-color: #414141;
 }
 .page-nav ul li.active a::after {
-	background-color: #2A94D6;
 	-webkit-animation: grow 0.4s;
+    background-color: #2A94D6;
 }
 
 .back-nav {
-	background-color: #2d4356;
 	height: 50px;
+
+    /*background-color: #2d4356;*/
+    /*GUS*/
+    background-color: #414141;
 }
 
 .back-nav .title {
