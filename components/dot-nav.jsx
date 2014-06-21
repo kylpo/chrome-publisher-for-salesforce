@@ -26,10 +26,10 @@ module.exports = React.createClass({
     launchPanel: function() {
         chrome.windows.create({
             "url": "popup.html",
-            "type": "panel",
-//            "type": "popup",
+//            "type": "panel",
+            "type": "popup",
             "width": 320,
-            "height": 500
+            "height": 450
         });
         window.close();
     },

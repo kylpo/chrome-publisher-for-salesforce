@@ -204,15 +204,16 @@ function getConnection(callback) {
  * @param {function(Object, Object=)} callback
  */
 function filterInitialActions(actions, callback) {
-    var filteredActions = actions.filter(function(action) {
-        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
-    });
-
-    if (!filteredActions) {
-        return callback(new Error("Filtering action list resulted in empty list"));
-    }
-
-    return callback(null, filteredActions);
+//    var filteredActions = actions.filter(function(action) {
+//        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
+//    });
+//
+//    if (!filteredActions) {
+//        return callback(new Error("Filtering action list resulted in empty list"));
+//    }
+//
+//    return callback(null, filteredActions);
+    return callback(null, actions);
 }
 
 /**

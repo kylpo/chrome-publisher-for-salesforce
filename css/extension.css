@@ -1,7 +1,9 @@
 body {
 	min-width: 320px;
-	min-height: 491px;
+	/*min-height: 491px;*/
+    max-height: 430px;
 	overflow-x: hidden;
+    /*overflow: hidden;*/
 	margin: 0px;
 	background-color: #999;
 	-webkit-perspective: 800px;

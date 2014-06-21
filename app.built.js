@@ -261,10 +261,10 @@ module.exports = React.createClass({displayName: 'exports',
     launchPanel: function() {
         chrome.windows.create({
             "url": "popup.html",
-            "type": "panel",
-//            "type": "popup",
+//            "type": "panel",
+            "type": "popup",
             "width": 320,
-            "height": 500
+            "height": 450
         });
         window.close();
     },
@@ -17961,7 +17961,18 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":35}],147:[function(require,module,exports){
-exports.clientId = "3MVG9A2kN3Bn17ht2lprRX4nTkwm7QlBuLZw21JUG1PJlur6Cvufy8RmczlCq6.qFMC.VwtlZkJudqWU6EbOG";
-exports.clientSecret = "65916123460919658";
+// Dev
 
+//exports.clientId = "3MVG9A2kN3Bn17ht2lprRX4nTkwm7QlBuLZw21JUG1PJlur6Cvufy8RmczlCq6.qFMC.VwtlZkJudqWU6EbOG";
+//exports.clientSecret = "65916123460919658";
+
+// Chrome
+
+//exports.clientId = "3MVG9xOCXq4ID1uH7Lg5RGQAxojLtiP1q302m4Ue22ccEZ5PZ_JbZ6zxbQ2xeP_PzD17GIiMjKPQTmyw3Wax0";
+//exports.clientSecret = "6863365691143140755";
+
+// Chrome Gus
+
+exports.clientId = "3MVG9SemV5D80oBf.xcqq43EFcqiy9zP5a.qA9SRm9DVxnAQuN1LqPVPnFBtaEyN3dcsLd39MoJxnNBe8Olbz";
+exports.clientSecret = "4383779144059246290";
 },{}]},{},[1,2,3,4,5,6,7,8,9,10,147])
