@@ -8,8 +8,8 @@ var ShareWith = require("./share-with.jsx");
 module.exports = React.createClass({
     getInitialState: function() {
     	chrome.tabs.query({
-			active: true
-//			currentWindow: true
+			active: true,
+			currentWindow: true
 		}, this.tabQueryResponse);
 		
         return {
@@ -54,8 +54,6 @@ module.exports = React.createClass({
         });
     },
     render: function() {
-
-//        <ShareWith shareTitle="Share Link" />
 		var url = this.state.url;
 		var title = this.state.title;
 
