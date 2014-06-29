@@ -16,6 +16,10 @@ module.exports = function (grunt) {
             client: {
                 src: ['components/*.jsx', 'secret.js'],
                 dest: 'app.built.js'
+            },
+            background: {
+            	src: 'js/background.js',
+            	dest: 'background.built.js'
             }
         }
     });
