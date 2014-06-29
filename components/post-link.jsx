@@ -7,6 +7,11 @@ var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
+    	chrome.tabs.query({
+			active: true
+//			currentWindow: true
+		}, this.tabQueryResponse);
+		
         return {
             title: "",
             url: "",
@@ -49,21 +54,20 @@ module.exports = React.createClass({
         });
     },
     render: function() {
-        chrome.tabs.query({
-			active: true
-//			currentWindow: true
-		}, this.tabQueryResponse);
 
 //        <ShareWith shareTitle="Share Link" />
+		var url = this.state.url;
+		var title = this.state.title;
+
         return (
 			<form className="post-link" onSubmit={this.handleSubmit}>
 				<div className="action-form-group">
 					<label>Link Url</label>
-					<input type="text" name="link-url" value={this.state.url} onChange={this.handleTitleChange}/>
+					<input type="text" name="link-url" value={url} onChange={this.handleUrlChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Name</label>
-					<input type="text" name="link-name" value={this.state.title} onChange={this.handleUrlChange}/>
+					<input type="text" name="link-name" value={title} onChange={this.handleTitleChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
