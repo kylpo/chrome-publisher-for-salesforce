@@ -47,6 +47,12 @@ body {
 	padding: 10px 20px;
 	width: 120px;
 }
+
+.action.is-disabled {
+    opacity: .35;
+    cursor: not-allowed;
+}
+
 .grid .action img {
 	height: 100px;
 	width: 100px;

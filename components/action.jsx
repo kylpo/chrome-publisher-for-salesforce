@@ -33,6 +33,7 @@ module.exports = React.createClass({
 	},
 
     render: function() {
+        var className = "action" + (this.props.action.isDisabled ? " is-disabled" : "");
         var icon = "icons/default_120.png";
         var iconColor = "849cb1";
 
@@ -62,7 +63,7 @@ module.exports = React.createClass({
         };
 
         return (
-        	<div className="action" onClick={this.props.onClick}>
+        	<div className={className} onClick={this.props.onClick}>
                 <img className="icon" src={icon} style={inlineStyle} />
                 <div className="title">{this.props.action.label}</div>
             </div>

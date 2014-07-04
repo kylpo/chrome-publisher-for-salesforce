@@ -46,11 +46,11 @@ module.exports = React.createClass({
         return (
             <div className="grid">
             	<div className="action-wrapper">
+                    <DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
 					<div className="actions">
 						{ pageActions }
 						<div className="clearfix" />
 					</div>
-            		<DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
             </div>
         );

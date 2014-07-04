@@ -6,7 +6,8 @@ var Storage = require("./storage.js"),
     clientSecret = require("../secret.js").clientSecret,
     Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret),
     localStateActions = null,
-    localStateConnection = null;
+    localStateConnection = null,
+    enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
 
 
 //TODO: watch for storage changes, and store changes in app state
@@ -28,6 +29,29 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 }
             });
             return true; // necessary to use sendResponse asynchronously
+
+        case "refreshActions":
+            getAndStoreActionsFromServer(function(err, actions) {
+                if (err) {
+                    console.error(err.description);
+                    sendResponse(null);
+                } else {
+                    sendResponse(actions);
+                }
+            });
+            return true; // necessary to use sendResponse asynchronously
+
+        case "reAuthorize":
+            getAndStoreConnection(function(err, connection) {
+                if (err) {
+                    console.error(err.description);
+                    sendResponse(null);
+                } else {
+                    sendResponse(connection);
+                }
+            });
+            return true; // necessary to use sendResponse asynchronously
+
 
         case "submitPost":
             createMessageObject(request.message, function(err, data) {
@@ -119,7 +143,7 @@ function submitPost(message, isRetry, callback) {
                             return callback(err);
                         }
 
-                        return submitPost(message, data, true, callback);
+                        return submitPost(message, true, callback);
                     });
                     break;
                 default:
@@ -204,16 +228,39 @@ function getConnection(callback) {
  * @param {function(Object, Object=)} callback
  */
 function filterInitialActions(actions, callback) {
+    var enabledActions = [];
+    var disabledActions = [];
+
+    actions.forEach(function(action) {
+        if (enabledActionsWhitelist.indexOf(action.name) >= 0) { // try action.name in enabledActionsWhitelist
+            enabledActions.push(action);
+        } else if (action.name === "FeedItem.MobileSmartActions") {
+            // skip this action
+        } else {
+            action["isDisabled"] = true;
+            disabledActions.push(action);
+        }
+    });
+
+    console.log(enabledActions);
+
+    console.log(disabledActions);
+
+    var filteredActions = enabledActions.concat(disabledActions);
+
+
 //    var filteredActions = actions.filter(function(action) {
+////        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
 //        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
 //    });
-//
-//    if (!filteredActions) {
-//        return callback(new Error("Filtering action list resulted in empty list"));
-//    }
-//
-//    return callback(null, filteredActions);
-    return callback(null, actions);
+
+    if (!filteredActions) {
+        return callback(new Error("Filtering action list resulted in empty list"));
+    }
+
+    return callback(null, filteredActions);
+//    return callback(null, enabledActions);
+//    return callback(null, actions);
 }
 
 /**
