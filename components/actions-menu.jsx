@@ -2,11 +2,13 @@
 
 'use strict';
 
-var React = require("react");
+var React = require("react/addons");
 
 module.exports = React.createClass({
     getInitialState: function() {
-        return { active : false };
+        return {
+            "isHidden": true
+        };
     },
     launchPanel: function() {
         chrome.windows.create({
@@ -14,7 +16,7 @@ module.exports = React.createClass({
 //            "type": "panel",
             "type": "popup",
             "width": 320,
-            "height": 500
+            "height": 559
         });
         window.close();
     },
@@ -36,15 +38,32 @@ module.exports = React.createClass({
             }
         });
     },
+    openMenu: function() {
+        this.setState({"isHidden": !this.state.isHidden})
+    },
     render: function() {
+        var cx = React.addons.classSet;
+        var menuClasses = cx({
+            "ActionsMenu-dropdownMenu": true,
+            'is-hidden': this.state.isHidden
+        });
+        var buttonClasses = cx({
+            "ActionsMenu-button": true,
+            "fa": true,
+            "fa-ellipsis-v": true,
+            'is-active': !this.state.isHidden
+        });
+//        <span className="icon-utility-share"/>
+//        <span className="icon-utility-refresh"/>
+//        <span className="icon-utility-logout"/>
         return (
             <div className="ActionsMenu">
-                <span className="fa fa-vertical-dots"/>
-                <div className="ActionsMenu-dropdown">
-                    <button onClick={this.launchPanel}>Pop</button>
-                    <button onClick={this.refreshActions}>Refresh Actions</button>
-                    <button onClick={this.clearAuth}>Re-Authorize</button>
-                </div>
+                <span className={buttonClasses} onClick={this.openMenu}/>
+                <ul className={menuClasses}>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.clearAuth}><span className="icon-utility-logout"/>  Logout</li>
+                </ul>
             </div>
             );
     }

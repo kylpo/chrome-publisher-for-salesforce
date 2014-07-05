@@ -34,7 +34,7 @@ module.exports = React.createClass({
 		}
 
         return (
-        	<div className="Toolbar page-nav">
+        	<div className="page-nav">
         		<ul>
         			{ dots }
         		</ul>

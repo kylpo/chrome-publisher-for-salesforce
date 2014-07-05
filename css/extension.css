@@ -96,14 +96,14 @@ body {
     outline: 1px solid #333;
     background-color: #333;
 }
-.page-nav ul {
+.page-nav > ul {
 	list-style: none;
 	margin: 20px 0 15px 0;
 	padding: 0;
 	display: inline-block;
 	position: relative;
 }
-.page-nav ul li {
+.page-nav > ul li {
 	position: relative;
 	float: left;
 	width: 10px;
@@ -112,7 +112,7 @@ body {
 	display: block;
 	margin: 0 10px;
 }
-.page-nav ul li a {
+.page-nav > ul li a {
 	background-color: transparent;
 	position: absolute;
 	top: 0;
@@ -122,7 +122,7 @@ body {
 	border-radius: 50%;
 	cursor: pointer;
 }
-.page-nav ul li a::before, .page-nav ul li a::after {
+.page-nav > ul li a::before, .page-nav ul li a::after {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -133,12 +133,12 @@ body {
 	content: '';
 	text-indent: 0;
 }
-.page-nav ul li a::after {
+.page-nav > ul li a::after {
 	/*background-color: #14222E;*/
     /*GUS*/
     background-color: #414141;
 }
-.page-nav ul li.active a::after {
+.page-nav > ul li.active a::after {
 	-webkit-animation: grow 0.4s;
     background-color: #2A94D6;
 }
@@ -239,6 +239,74 @@ body {
 
 .share-with .share-with-group button {
 	width: inherit;
+}
+
+.Toolbar {
+    /*outline: 1px solid #2d4356;*/
+    /*background-color: #2d4356;*/
+    /*GUS*/
+    outline: 1px solid #333;
+    background-color: #333;
+
+    text-align: right;
+}
+.ActionsMenu {
+    float: right;
+    position: relative;
+}
+.ActionsMenu-button {
+    padding: 15px 20px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+.ActionsMenu-button:hover {
+    /*background-color: #414141;*/
+}
+.ActionsMenu-button.is-active {
+    background-color: #2A94D6;
+}
+.ActionsMenu-button.is-active:hover {
+    /*color: white;*/
+}
+.ActionsMenu-dropdownMenu {
+    /*display: none;*/
+
+    text-align: left;
+    display: inline;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    bottom: 39px;
+    width: 150px;
+
+    color: white;
+    background-color: #2A94D6;
+}
+.ActionsMenu-dropdownMenu.is-hidden {
+    display: none;
+}
+.ActionsMenu-dropdownItem {
+    padding: 10px 15px;
+    /*outline: 1px solid #2d4356;*/
+    /*background-color: #2d4356;*/
+    /*GUS*/
+    /*outline: 1px solid #333;*/
+    /*background-color: #333;*/
+    /*border-bottom: 1px solid #414141;*/
+    cursor: pointer;
+}
+.ActionsMenu-dropdownItem:last-child {
+    border-bottom: none;
+}
+.ActionsMenu-dropdownItem:hover {
+    background-color: white;
+    color: #2A94D6;
+    /*outline: 1px solid white;*/
+    /*padding: 15px 20px;*/
+    /*cursor: pointer;*/
 }
 
 #share-with-who {

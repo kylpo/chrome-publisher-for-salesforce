@@ -3,8 +3,10 @@
 'use strict';
 
 var React = require("react");
+var Toolbar = require("./toolbar.jsx");
 var Action = require("./action.jsx");
 var DotNav = require("./dot-nav.jsx");
+
 
 module.exports = React.createClass({
 	propTypes: {
@@ -43,14 +45,15 @@ module.exports = React.createClass({
     		return <Action key={action.name} action={action} onClick={this.onActionClicked.bind(this, action)} />
         }, this);
 
+//        <Toolbar />
         return (
             <div className="grid">
             	<div className="action-wrapper">
-                    <DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
 					<div className="actions">
 						{ pageActions }
 						<div className="clearfix" />
 					</div>
+                    <DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>
             </div>
         );
