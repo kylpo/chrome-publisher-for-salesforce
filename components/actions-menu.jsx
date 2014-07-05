@@ -13,10 +13,10 @@ module.exports = React.createClass({
     launchPanel: function() {
         chrome.windows.create({
             "url": "popup.html",
-//            "type": "panel",
-            "type": "popup",
+            "type": "panel",
+//            "type": "popup",
             "width": 320,
-            "height": 559
+            "height": 521
         });
         window.close();
     },
@@ -30,7 +30,7 @@ module.exports = React.createClass({
         });
     },
     clearAuth: function() {
-        chrome.runtime.sendMessage({type: "reAuthorize"}, function(response) {
+        chrome.runtime.sendMessage({type: "logout"}, function(response) {
             if (response === null) {
                 console.error("Error re-authorizing");
             } else {
@@ -53,9 +53,7 @@ module.exports = React.createClass({
             "fa-ellipsis-v": true,
             'is-active': !this.state.isHidden
         });
-//        <span className="icon-utility-share"/>
-//        <span className="icon-utility-refresh"/>
-//        <span className="icon-utility-logout"/>
+
         return (
             <div className="ActionsMenu">
                 <span className={buttonClasses} onClick={this.openMenu}/>

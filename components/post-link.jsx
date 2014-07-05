@@ -2,7 +2,8 @@
 
 'use strict';
 
-var React = require("react");
+var React = require("react/addons");
+var PostInput = require("./inputs/post.jsx");
 var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({
@@ -54,28 +55,33 @@ module.exports = React.createClass({
 //			currentWindow: true
 		}, this.tabQueryResponse);
 
+        var cx = React.addons.classSet;
+        var submitClasses = cx({
+            "Form-submitButton": true,
+            'is-clickable': this.state.url !== "" && this.state.title !== ""
+        });
+
 //        <ShareWith shareTitle="Share Link" />
         return (
 			<form className="post-link" onSubmit={this.handleSubmit}>
 				<div className="action-form-group">
 					<label>Link Url</label>
-					<input type="text" name="link-url" value={this.state.url} onChange={this.handleTitleChange}/>
+					<input type="text" required name="link-url" value={this.state.url} onChange={this.handleTitleChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Name</label>
-					<input type="text" name="link-name" value={this.state.title} onChange={this.handleUrlChange}/>
+					<input type="text" required name="link-name" value={this.state.title} onChange={this.handleUrlChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
-					<input
-                    type="textarea"
-                    name="link-description"
+                    <PostInput
                     value={this.state.message}
-                    onChange={this.handleMessageChange}
+                    handleChange={this.handleMessageChange}
+                    handleSubmit={this.handleSubmit}
                     />
 				</div>
                 <div className="action-form-group">
-                    <button type="submit">Share Link</button>
+                    <button className={submitClasses} type="submit">Share Link</button>
                 </div>
 			</form>
         );

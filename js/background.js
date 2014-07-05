@@ -10,6 +10,7 @@ var Storage = require("./storage.js"),
     enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
 
 
+
 //TODO: watch for storage changes, and store changes in app state
 //chrome.storage.onChanged.addListener(function(object, areaName) {
 //
@@ -41,7 +42,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
-        case "reAuthorize":
+        case "logout":
             getAndStoreConnection(function(err, connection) {
                 if (err) {
                     console.error(err.description);
@@ -105,19 +106,95 @@ function launchNewTab(url) {
         chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
     })
 }
-function createMessageObject(message, callback) {
-    var messageObject = {
-        "body": {
-            "messageSegments": []
-        }
-    };
+//function createMessageObject(message, callback) {
+//    var messageObject = {
+//        "body": {
+//            "messageSegments": []
+//        }
+//    };
+//
+//    messageObject.body.messageSegments.push({
+//            "type": "text",
+//            "text": message
+//    });
+//    callback(null, messageObject);
+//}
 
-    messageObject.body.messageSegments.push({
-            "type": "text",
-            "text": message
+function createMessageObject(message, callback) {
+    var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
+
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        var messageObject = {
+            "body": {
+                "messageSegments": []
+            }
+        };
+
+        if (mentionRegex.test(message)) {
+            var segments = message.split(mentionRegex);
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+        } else {
+            messageObject.body.messageSegments.push({
+                "type": "text",
+                "text": message
+            });
+            callback(null, messageObject);
+        }
     });
-    callback(null, messageObject);
+
+        /**
+                * @param {Array} segments looks like "@[mention], mention, ..."
+                * @param messageObject
+                * @param {boolean} isMention
+                * @param callback
+                 */
+        function recursivelyBuildMessageWithMentions(segments, messageObject, connection, isMention, callback) {
+            var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
+            var segment = segments.shift();
+
+            if (segment === undefined) {
+                callback(null, messageObject);
+            } else if (segment === "") {
+                recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+            } else if (isMention) {
+                Api.getMentions(connection, segment, function (status, response) {
+                    if (status === null || status === undefined) {
+                        if (response.mentionCompletions.length > 0) {
+                            var recordId = response.mentionCompletions[0].recordId;
+                            // add mention messageSegment instead of text placeholder
+                            messageObject.body.messageSegments.push({
+                                "type": "mention",
+                                "id": recordId
+                            });
+                        } else {
+                            // lookup failed, so add @[mention] text instead of mention object
+                            messageObject.body.messageSegments.push({
+                                "type": "text",
+                                "text": "@[" + segment + "]"
+                            });
+                        }
+                    }
+
+                    recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+                }.bind(this));
+            } else if (mentionRegex.test(segment)) {
+                recursivelyBuildMessageWithMentions(segments, messageObject, connection, true, callback);
+            } else if (segment === "") {
+                recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+            } else {
+                messageObject.body.messageSegments.push({
+                    "type": "text",
+                    "text": segment
+                });
+                recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+            }
+        }
 }
+
 
 
 function submitPost(message, isRetry, callback) {

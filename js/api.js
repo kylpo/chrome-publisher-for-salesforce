@@ -62,8 +62,21 @@ exports.getDescribeAction = function(connection, url, callback) {
  * Perform xhrWithAuth POST with params to submit a Post
  *
  * @param {Object} connection
+ * @param {Object} message
  * @param {function(Object, Object=)} callback
  */
 exports.submitPost = function(connection, message, callback) {
     xhrWithAuth(callback, "POST", connection, API_PATH_PREFIX.concat("chatter/feeds/news/me/feed-items"), message);
+};
+
+/**
+ * Perform xhrWithAuth GET with params to retrieve mention completions
+ *
+ * @param {Object} connection
+ * @param {string} mention - text of a mention's name
+ * @param {function(Object, Object=)} callback
+ */
+exports.getMentions = function(connection, mention, callback) {
+    console.log(mention);
+    xhrWithAuth(callback, "GET", connection, API_PATH_PREFIX.concat("chatter/mentions/completions?q=" + encodeURIComponent(mention)));
 };

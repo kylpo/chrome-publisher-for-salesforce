@@ -207,16 +207,16 @@ body {
 	resize: none;
 }
 
-.action-form .action-form-group button {
-	border-width: 0px;
-	border-radius: 5px;
-	font-size: 16px;
-	background-color: #3f9fd9;
-	color: white;
-	padding: 7px;
-	display: block;
-	width: 100%;
-}
+/*.action-form .action-form-group button {*/
+	/*border-width: 0px;*/
+	/*border-radius: 5px;*/
+	/*font-size: 16px;*/
+	/*background-color: #3f9fd9;*/
+	/*color: white;*/
+	/*padding: 7px;*/
+	/*display: block;*/
+	/*width: 100%;*/
+/*}*/
 
 .action-form .action-form-group select {
 	padding: 5px;
@@ -307,6 +307,22 @@ body {
     /*outline: 1px solid white;*/
     /*padding: 15px 20px;*/
     /*cursor: pointer;*/
+}
+.Form-submitButton {
+    border-width: 0;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #999;
+    color: #333;
+    /*color: white;*/
+    padding: 7px;
+    display: block;
+    width: 100%;
+}
+.Form-submitButton.is-clickable {
+    background-color: #3f9fd9;
+    color: white;
+    cursor: pointer;
 }
 
 #share-with-who {
