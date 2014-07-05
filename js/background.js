@@ -7,7 +7,17 @@ var Storage = require("./storage.js"),
     Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret),
     localStateActions = null,
     localStateConnection = null,
-    enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
+    enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"],
+    personalActions = [
+        {
+            "name" : "Custom.TIL",
+            "label" : "#TIL"
+        },
+        {
+            "name" : "Custom.MyDay",
+            "label" : "#MyDay"
+        }
+    ];
 
 
 
@@ -106,19 +116,6 @@ function launchNewTab(url) {
         chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
     })
 }
-//function createMessageObject(message, callback) {
-//    var messageObject = {
-//        "body": {
-//            "messageSegments": []
-//        }
-//    };
-//
-//    messageObject.body.messageSegments.push({
-//            "type": "text",
-//            "text": message
-//    });
-//    callback(null, messageObject);
-//}
 
 function createMessageObject(message, callback) {
     var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
@@ -195,8 +192,6 @@ function createMessageObject(message, callback) {
         }
 }
 
-
-
 function submitPost(message, isRetry, callback) {
     getConnection( function(err, connection) {
         if (err) {
@@ -228,9 +223,7 @@ function submitPost(message, isRetry, callback) {
             }
         });
     });
-
 }
-
 
 /**
  * First check if actions exist in state
@@ -319,25 +312,14 @@ function filterInitialActions(actions, callback) {
         }
     });
 
-    console.log(enabledActions);
-
-    console.log(disabledActions);
-
-    var filteredActions = enabledActions.concat(disabledActions);
-
-
-//    var filteredActions = actions.filter(function(action) {
-////        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
-//        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
-//    });
+    var filteredActions = enabledActions.concat(personalActions).concat(disabledActions);
+//    var filteredActions = enabledActions.concat(disabledActions);
 
     if (!filteredActions) {
         return callback(new Error("Filtering action list resulted in empty list"));
     }
 
     return callback(null, filteredActions);
-//    return callback(null, enabledActions);
-//    return callback(null, actions);
 }
 
 /**

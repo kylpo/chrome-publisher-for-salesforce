@@ -25,6 +25,15 @@ module.exports = React.createClass({
         "New Note" : {
             "icon" : "icons/note_120.png",
             "iconColor" : "dcd861"
+        },
+        // HACK!!!
+        "#TIL" : {
+            "icon" : "icons/custom57_120.png",
+            "iconColor" : "4eb1cb"
+        },
+        "#MyDay" : {
+            "icon" : "icons/custom3_120.png",
+            "iconColor" : "4eb1cb"
         }
     },
 
