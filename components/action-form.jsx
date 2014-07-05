@@ -5,10 +5,15 @@
 var React = require("react");
 var PostText = require("./post-text.jsx");
 var PostLink = require("./post-link.jsx");
+var PersonalTIL = require("./personal-til.jsx");
 
 module.exports = React.createClass({
 	TEXT_POST: "FeedItem.TextPost",
 	LINK_POST: "FeedItem.LinkPost",
+    // HACK
+    PERSONAL_TIL: "Personal.TIL",
+    PERSONAL_MyDay: "Personal.MyDay",
+    // End HACK
 	propTypes: {
 		action: React.PropTypes.object
 	},
@@ -19,6 +24,8 @@ module.exports = React.createClass({
 			return <PostText />;
 		case this.LINK_POST:
 			return <PostLink />;
+        case this.PERSONAL_TIL:
+            return <PersonalTIL />;
 		default:
 			return <div className="not-supported"><div className="wrapper"><div>Quick Action</div><div className="emphasize">{ this.props.action && this.props.action.label }</div><div>Not Supported Yet</div></div></div>;
 		}

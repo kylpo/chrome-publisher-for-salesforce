@@ -27,10 +27,9 @@ module.exports = React.createClass({
 //        this.refs.textarea.getDOMNode().focus();
 //    },
     handleChange: function(event) {
-        console.log('change');
         this.setState({value: event.target.value});
     },
-    handleClickSubmit: function(event) {
+    handleClickSubmit: function() {
         if (this.state.value === "") return false;
     },
     render: function() {

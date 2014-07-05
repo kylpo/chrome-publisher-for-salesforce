@@ -9,7 +9,7 @@ module.exports = React.createClass({
     handleSubmit: function() {
         var options = {
             "type": "submitPost",
-            "message": this.state.value
+            "message": "Today I learned: " + this.state.value + "\n\n #[TIL]"
         };
 
         chrome.runtime.sendMessage(options, function(response) {
@@ -27,10 +27,9 @@ module.exports = React.createClass({
 //        this.refs.textarea.getDOMNode().focus();
 //    },
     handleChange: function(event) {
-        console.log('change');
         this.setState({value: event.target.value});
     },
-    handleClickSubmit: function(event) {
+    handleClickSubmit: function() {
         if (this.state.value === "") return false;
     },
     render: function() {
@@ -42,7 +41,7 @@ module.exports = React.createClass({
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
-                    <label>Post Text</label>
+                    <label>Today I learned...</label>
                     <PostInput
                     value={this.state.value}
                     handleChange={this.handleChange}

@@ -10,11 +10,11 @@ var Storage = require("./storage.js"),
     enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"],
     personalActions = [
         {
-            "name" : "Custom.TIL",
+            "name" : "Personal.TIL",
             "label" : "#TIL"
         },
         {
-            "name" : "Custom.MyDay",
+            "name" : "Personal.MyDay",
             "label" : "#MyDay"
         }
     ];
