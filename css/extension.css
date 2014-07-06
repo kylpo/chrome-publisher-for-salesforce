@@ -324,6 +324,40 @@ body {
     color: white;
     cursor: pointer;
 }
+.RadioButton {
+    display: none;
+    margin: 10px;
+}
+.RadioButton-label {
+    display: inline-block;
+    margin: -2px;
+    padding: 4px 12px;
+    /*background-color: #3f9fd9;*/
+}
+
+.ButtonGroup {
+    text-align: center;
+}
+
+.ButtonGroup-button {
+    display: inline-block;
+    /*border-width: 0;*/
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid #999;
+    color: #333;
+    background-color: white;
+    padding: 7px;
+    margin: 5px 15px;
+    outline: none;
+    cursor: pointer;
+}
+
+.ButtonGroup-button.is-active {
+    background-color: #3f9fd9;
+    color: white;
+    /*outline: none;*/
+}
 
 #share-with-who {
 	flex-grow: 1;
