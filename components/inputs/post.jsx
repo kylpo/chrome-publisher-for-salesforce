@@ -3,7 +3,6 @@
 'use strict';
 
 var React = require("react/addons");
-//var Api = require("../../js/api.js");
 
 module.exports = React.createClass({
     getDefaultProps: function() {
@@ -28,28 +27,16 @@ module.exports = React.createClass({
             e.preventDefault();
             this.props.handleSubmit();
             return false;
-
         }
     },
 
-//    getPostObject: function() {
-//        return {
-//            "type": "submitPost",
-//            "message": this.state.value
-//        };
-//    },
-
-
-
     render: function() {
-//        value={this.state.value}
         return (
             <textarea
             onChange={this.props.handleChange}
             ref="textarea"
             autosize
             rows={this.props.rows}
-
             onKeyDown={this.handleKeyDown}
             />
         );

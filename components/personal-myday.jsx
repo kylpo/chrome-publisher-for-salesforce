@@ -9,7 +9,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             done: "",
-            notDone: "",
+//            notDone: "",
             tomorrow: "",
             mood: ""
         };
@@ -34,9 +34,9 @@ module.exports = React.createClass({
         if (this.state.done !== "") {
             message = message.concat("\n\nDone:\n" + this.state.done);
         }
-        if (this.state.notDone !== "") {
-            message = message.concat("\n\nNot done:\n" + this.state.notDone);
-        }
+//        if (this.state.notDone !== "") {
+//            message = message.concat("\n\nNot done:\n" + this.state.notDone);
+//        }
         if (this.state.tomorrow !== "") {
             message = message.concat("\n\nHope to do tomorrow:\n" + this.state.tomorrow);
         }
@@ -53,9 +53,9 @@ module.exports = React.createClass({
     handleChangeDone: function(event) {
         this.setState({done: event.target.value});
     },
-    handleChangeNotDone: function(event) {
-        this.setState({notDone: event.target.value});
-    },
+//    handleChangeNotDone: function(event) {
+//        this.setState({notDone: event.target.value});
+//    },
     handleChangeTomorrow: function(event) {
         this.setState({tomorrow: event.target.value});
     },
@@ -85,6 +85,16 @@ module.exports = React.createClass({
             "Form-submitButton": true,
             'is-clickable': this.state.done !== "" || this.state.notDone !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
         });
+
+//        <div className="action-form-group">
+//            <label>What did not get done?</label>
+//            <PostInput
+//            value={this.state.notDone}
+//            rows="4"
+//            handleChange={this.handleChangeNotDone}
+//            handleSubmit={this.handleSubmit}
+//            />
+//        </div>
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
@@ -96,15 +106,7 @@ module.exports = React.createClass({
                     handleSubmit={this.handleSubmit}
                     />
                 </div>
-                <div className="action-form-group">
-                    <label>What did not get done?</label>
-                    <PostInput
-                    value={this.state.notDone}
-                    rows="4"
-                    handleChange={this.handleChangeNotDone}
-                    handleSubmit={this.handleSubmit}
-                    />
-                </div>
+
                 <div className="action-form-group">
                     <label>What do you hope to do tomorrow?</label>
                     <PostInput

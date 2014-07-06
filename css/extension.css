@@ -98,7 +98,7 @@ body {
 }
 .page-nav > ul {
 	list-style: none;
-	margin: 20px 0 15px 0;
+	margin: 20px 0 15px 44px; /*44px right to make up for menuActions on right*/
 	padding: 0;
 	display: inline-block;
 	position: relative;
@@ -323,16 +323,6 @@ body {
     background-color: #3f9fd9;
     color: white;
     cursor: pointer;
-}
-.RadioButton {
-    display: none;
-    margin: 10px;
-}
-.RadioButton-label {
-    display: inline-block;
-    margin: -2px;
-    padding: 4px 12px;
-    /*background-color: #3f9fd9;*/
 }
 
 .ButtonGroup {
