@@ -71,19 +71,22 @@ module.exports = React.createClass({
         var cx = React.addons.classSet;
         var happyButtonClasses = cx({
             "ButtonGroup-button": true,
+            "skin-Button": true,
             'is-active': this.state.mood === ":)"
         });
         var neutralButtonClasses = cx({
             "ButtonGroup-button": true,
+            "skin-Button": true,
             'is-active': this.state.mood === ":|"
         });
         var unhappyButtonClasses = cx({
             "ButtonGroup-button": true,
+            "skin-Button": true,
             'is-active': this.state.mood === ":("
         });
         var submitClasses = cx({
             "Form-submitButton": true,
-            'is-clickable': this.state.done !== "" || this.state.notDone !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
+            'is-clickable': this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
         });
 
 //        <div className="action-form-group">
@@ -118,7 +121,7 @@ module.exports = React.createClass({
                 </div>
                 <div className="action-form-group">
                     <label>Overall mood</label>
-                    <div className="ButtonGroup">
+                    <div className="ButtonGroup skin-Button">
                         <button type="button" className={happyButtonClasses} value=":)" onClick={this.handleChangeMood}>:)</button>
                         <button type="button" className={neutralButtonClasses} value=":|" onClick={this.handleChangeMood}>:|</button>
                         <button type="button" className={unhappyButtonClasses} value=":(" onClick={this.handleChangeMood}>:(</button>

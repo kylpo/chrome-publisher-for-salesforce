@@ -308,6 +308,14 @@ body {
     /*padding: 15px 20px;*/
     /*cursor: pointer;*/
 }
+
+.AfterSubmit {
+    text-align: center;
+}
+.AfterSubmit-title {
+    font-size: 24px;
+}
+
 .Form-submitButton {
     border-width: 0;
     border-radius: 5px;
@@ -325,13 +333,7 @@ body {
     cursor: pointer;
 }
 
-.ButtonGroup {
-    text-align: center;
-}
-
-.ButtonGroup-button {
-    display: inline-block;
-    /*border-width: 0;*/
+.skin-Button {
     border-radius: 5px;
     font-size: 16px;
     border: 1px solid #999;
@@ -342,11 +344,31 @@ body {
     outline: none;
     cursor: pointer;
 }
-
-.ButtonGroup-button.is-active {
+.skin-Button.is-active {
     background-color: #3f9fd9;
     color: white;
+}
+
+.ButtonGroup {
+    text-align: center;
+}
+
+.ButtonGroup-button {
+    display: inline-block;
+    /*border-width: 0;*/
+}
+
+/*.ButtonGroup-button.is-active {*/
+    /*background-color: #3f9fd9;*/
+    /*color: white;*/
     /*outline: none;*/
+/*}*/
+
+/* vertically and horizontally center */
+.LoadingIndicator {
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
 
 #share-with-who {
