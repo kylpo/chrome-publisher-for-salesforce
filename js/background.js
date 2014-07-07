@@ -89,11 +89,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 submitPost(data, false, function (err, data) {
                     if (err) {
                         console.error(err.description);
-                        return;
-//                        return sendResponse(null);
+                        return sendResponse(null);
                     }
-
-                    launchNewTab(localStateConnection.host + "/" + data.id);
+                    return sendResponse(data);
                 });
             });
             return true; // necessary to use sendResponse asynchronously

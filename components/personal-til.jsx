@@ -6,19 +6,23 @@ var React = require("react/addons");
 var PostInput = require("./inputs/post.jsx");
 
 module.exports = React.createClass({
-    handleSubmit: function() {
+    handleSubmit: function(e) {
+        e.preventDefault();
+        this.props.onLoading();
+
         var options = {
             "type": "submitPost",
             "message": "Today I learned: " + this.state.value + "\n\n #[TIL]"
         };
 
         chrome.runtime.sendMessage(options, function(response) {
+            this.props.onAfterSubmit(response);
 //            if (response === null) {
 //                console.error("Error getting submitting Post");
 //            } else {
 //                console.log(response);
 //            }
-        });
+        }.bind(this));
     },
     getInitialState: function() {
         return {value: ""};

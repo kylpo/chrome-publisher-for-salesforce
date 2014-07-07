@@ -14,19 +14,18 @@ module.exports = React.createClass({
             mood: ""
         };
     },
-    handleSubmit: function() {
+    handleSubmit: function(e) {
+        e.preventDefault();
+        this.props.onLoading();
+
         var options = {
             "type": "submitPost",
             "message": this.getMessage()
         };
 
         chrome.runtime.sendMessage(options, function(response) {
-//            if (response === null) {
-//                console.error("Error getting submitting Post");
-//            } else {
-//                console.log(response);
-//            }
-        });
+            this.props.onAfterSubmit(response);
+        }.bind(this));
     },
     getMessage: function() {
         var message = "";

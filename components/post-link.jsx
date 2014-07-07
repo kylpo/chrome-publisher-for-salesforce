@@ -30,7 +30,10 @@ module.exports = React.createClass({
     handleMessageChange: function(event) {
         this.setState({message: event.target.value});
     },
-    handleSubmit: function() {
+    handleSubmit: function(e) {
+        e.preventDefault();
+        this.props.onLoading();
+
         var options = {
             "type": "submitLink",
             "message": this.state.message,
@@ -42,12 +45,13 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function(response) {
+            this.props.onAfterSubmit(response);
 //            if (response === null) {
 //                console.error("Error getting submitting Post");
 //            } else {
 //                console.log(response);
 //            }
-        });
+        }.bind(this));
     },
     render: function() {
         chrome.tabs.query({
