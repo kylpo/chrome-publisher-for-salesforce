@@ -10,12 +10,14 @@ module.exports = React.createClass({
             "rows": "8"
         }
     },
-//////    componentDidMount: function() {
-//////        this.refs.textarea.getDOMNode().focus();
-//////    },
+//    componentDidMount: function() {
+//        this.refs.textarea.getDOMNode().focus();
+//    },
     handleKeyDown: function(e) {
         // Shift + Enter
         if (e.keyCode === 13 && e.shiftKey) {
+            // Stop enter from a creating a new line
+            e.preventDefault();
             this.props.handleSubmit(e);
             return false;
         }

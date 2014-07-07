@@ -3,4 +3,4 @@ node_modules
 .project
 app.built.js
 background.built.js
-secret.js
+config.js

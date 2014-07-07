@@ -1,10 +1,9 @@
 //todo: input an options object, including clientId, secret, response_type, display, etc
-module.exports = function(clientId, clientSecret) {
+module.exports = function(clientId, clientSecret, host) {
     var module = {};
 
     module.authenticate = function(callback) {
-        var host = "https://login.salesforce.com";
-//        var host = "https://gus.my.salesforce.com";
+
         var redirectUri = chrome.identity.getRedirectURL() + "provider_cb";
         var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 

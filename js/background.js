@@ -2,9 +2,10 @@
 
 var Storage = require("./storage.js");
 var Api = require("./api.js");
-var clientId = require("../secret.js").clientId;
-var clientSecret = require("../secret.js").clientSecret;
-var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret);
+var clientId = require("../config.js").clientId;
+var clientSecret = require("../config.js").clientSecret;
+var host = require("../config.js").host;
+var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
 var localStateActions = null;
 var localStateConnection = null;
 var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
