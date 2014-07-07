@@ -25,7 +25,7 @@ module.exports = React.createClass({
         }
 
         return (
-            <div>
+            <div className="AfterSubmit">
             {message}
             {newTab}
             </div>

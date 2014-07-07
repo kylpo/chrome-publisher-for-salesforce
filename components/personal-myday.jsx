@@ -32,16 +32,16 @@ module.exports = React.createClass({
         var message = "";
 
         if (this.state.done !== "") {
-            message = message.concat("\n\nDone:\n" + this.state.done);
+            message = message.concat("\n\n--What I accomplished today--\n" + this.state.done);
         }
 //        if (this.state.notDone !== "") {
 //            message = message.concat("\n\nNot done:\n" + this.state.notDone);
 //        }
         if (this.state.tomorrow !== "") {
-            message = message.concat("\n\nHope to do tomorrow:\n" + this.state.tomorrow);
+            message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.state.tomorrow);
         }
         if (this.state.mood !== "") {
-            message = message.concat("\n\nHow I felt about the day:\n" + this.state.mood);
+            message = message.concat("\n\n--Overall mood for the day--\n" + this.state.mood);
         }
 
         return "#[MyDay]" + message;
@@ -63,7 +63,7 @@ module.exports = React.createClass({
         this.setState({mood: (this.state.mood === event.target.value ? "" : event.target.value)});
     },
     handleClickSubmit: function() {
-        if (this.state.done === "" && this.state.notDone === "" && this.state.tomorrow === "" && this.state.mood === "") {
+        if (this.state.done === "" && this.state.tomorrow === "" && this.state.mood === "") {
             return false;
         }
     },
@@ -120,8 +120,8 @@ module.exports = React.createClass({
                     />
                 </div>
                 <div className="action-form-group">
-                    <label>Overall mood</label>
-                    <div className="ButtonGroup skin-Button">
+                    <label>Overall mood for the day</label>
+                    <div className="ButtonGroup">
                         <button type="button" className={happyButtonClasses} value=":)" onClick={this.handleChangeMood}>:)</button>
                         <button type="button" className={neutralButtonClasses} value=":|" onClick={this.handleChangeMood}>:|</button>
                         <button type="button" className={unhappyButtonClasses} value=":(" onClick={this.handleChangeMood}>:(</button>
