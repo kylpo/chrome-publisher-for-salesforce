@@ -10,22 +10,13 @@ module.exports = React.createClass({
             "rows": "8"
         }
     },
-//    getInitialState: function() {
-//        return {value: ""};
-//    },
 //////    componentDidMount: function() {
 //////        this.refs.textarea.getDOMNode().focus();
 //////    },
-//    handleChange: function(event) {
-//        console.log('change');
-//        this.setState({value: event.target.value});
-//    },
     handleKeyDown: function(e) {
         // Shift + Enter
         if (e.keyCode === 13 && e.shiftKey) {
-            // Stop enter from a creating a new line
-            e.preventDefault();
-            this.props.handleSubmit();
+            this.props.handleSubmit(e);
             return false;
         }
     },

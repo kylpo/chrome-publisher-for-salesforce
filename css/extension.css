@@ -355,6 +355,8 @@ body {
 
 .ButtonGroup-button {
     display: inline-block;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
     /*border-width: 0;*/
 }
 
