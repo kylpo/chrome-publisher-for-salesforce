@@ -1,9 +1,7 @@
-//todo: input an options object, including clientId, secret, response_type, display, etc
 module.exports = function(clientId, clientSecret, host) {
     var module = {};
 
     module.authenticate = function(callback) {
-
         var redirectUri = chrome.identity.getRedirectURL() + "provider_cb";
         var redirectRe = new RegExp(redirectUri + '[#\?](.*)');
 
