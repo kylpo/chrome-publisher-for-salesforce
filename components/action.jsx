@@ -25,6 +25,15 @@ module.exports = React.createClass({
         "New Note" : {
             "icon" : "icons/note_120.png",
             "iconColor" : "dcd861"
+        },
+        // HACK!!!
+        "#TIL" : {
+            "icon" : "icons/custom57_120.png",
+            "iconColor" : "4eb1cb"
+        },
+        "#MyDay" : {
+            "icon" : "icons/custom3_120.png",
+            "iconColor" : "4eb1cb"
         }
     },
 
@@ -33,6 +42,7 @@ module.exports = React.createClass({
 	},
 
     render: function() {
+        var className = "action" + (this.props.action.isDisabled ? " is-disabled" : "");
         var icon = "icons/default_120.png";
         var iconColor = "849cb1";
 
@@ -62,7 +72,7 @@ module.exports = React.createClass({
         };
 
         return (
-        	<div className="action" onClick={this.props.onClick}>
+        	<div className={className} onClick={this.props.onClick}>
                 <img className="icon" src={icon} style={inlineStyle} />
                 <div className="title">{this.props.action.label}</div>
             </div>

@@ -1,13 +1,24 @@
 'use strict';
 
-var Storage = require("./storage.js"),
-    Api = require("./api.js"),
-    clientId = require("../secret.js").clientId,
-    clientSecret = require("../secret.js").clientSecret,
-    Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret),
-    localStateActions = null,
-    localStateConnection = null;
-
+var Storage = require("./storage.js");
+var Api = require("./api.js");
+var clientId = require("../config.js").clientId;
+var clientSecret = require("../config.js").clientSecret;
+var host = require("../config.js").host;
+var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
+var localStateActions = null;
+var localStateConnection = null;
+var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
+var personalActions = [
+        {
+            "name" : "Personal.TIL",
+            "label" : "#TIL"
+        },
+        {
+            "name" : "Personal.MyDay",
+            "label" : "#MyDay"
+        }
+    ];
 
 //TODO: watch for storage changes, and store changes in app state
 //chrome.storage.onChanged.addListener(function(object, areaName) {
@@ -29,6 +40,28 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
+        case "refreshActions":
+            getAndStoreActionsFromServer(function(err, actions) {
+                if (err) {
+                    console.error(err.description);
+                    sendResponse(null);
+                } else {
+                    sendResponse(actions);
+                }
+            });
+            return true; // necessary to use sendResponse asynchronously
+
+        case "logout":
+            getAndStoreConnection(function(err, connection) {
+                if (err) {
+                    console.error(err.description);
+                    sendResponse(null);
+                } else {
+                    sendResponse(connection);
+                }
+            });
+            return true; // necessary to use sendResponse asynchronously
+
         case "submitPost":
             createMessageObject(request.message, function(err, data) {
                 if (err) {
@@ -39,11 +72,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 submitPost(data, false, function (err, data) {
                     if (err) {
                         console.error(err.description);
-                        return;
-//                        return sendResponse(null);
+                        return sendResponse(null);
                     }
-
-                    launchNewTab(localStateConnection.host + "/" + data.id);
+                    return sendResponse(data);
                 });
             });
             return true; // necessary to use sendResponse asynchronously
@@ -55,17 +86,19 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                data.attachment = request.attachment
+                data.attachment = request.attachment;
                 submitPost(data, false, function (err, data) {
                     if (err) {
                         console.error(err.description);
-                        return;
-//                        return sendResponse(null);
+                        return sendResponse(null);
                     }
-
-                    launchNewTab(localStateConnection.host + "/" + data.id);
+                    return sendResponse(data);
                 });
             });
+            return true; // necessary to use sendResponse asynchronously
+
+        case "launchNewTab":
+            launchNewTab(localStateConnection.host + "/" + request.id);
             return true; // necessary to use sendResponse asynchronously
 
         default:
@@ -81,20 +114,82 @@ function launchNewTab(url) {
         chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
     })
 }
+
 function createMessageObject(message, callback) {
-    var messageObject = {
-        "body": {
-            "messageSegments": []
+    var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
+
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
         }
-    };
 
-    messageObject.body.messageSegments.push({
-            "type": "text",
-            "text": message
+        var messageObject = {
+            "body": {
+                "messageSegments": []
+            }
+        };
+
+        if (mentionRegex.test(message)) {
+            var segments = message.split(mentionRegex);
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+        } else {
+            messageObject.body.messageSegments.push({
+                "type": "text",
+                "text": message
+            });
+            callback(null, messageObject);
+        }
     });
-    callback(null, messageObject);
-}
 
+    /**
+     * @param {Array} segments looks like "@[mention], mention, ..."
+     * @param messageObject
+     * @param connection
+     * @param {boolean} isMention
+     * @param callback
+     */
+    function recursivelyBuildMessageWithMentions(segments, messageObject, connection, isMention, callback) {
+        var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
+        var segment = segments.shift();
+
+        if (segment === undefined) {
+            callback(null, messageObject);
+        } else if (segment === "") {
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+        } else if (isMention) {
+            Api.getMentions(connection, segment, function (status, response) {
+                if (status === null || status === undefined) {
+                    if (response.mentionCompletions.length > 0) {
+                        var recordId = response.mentionCompletions[0].recordId;
+                        // add mention messageSegment instead of text placeholder
+                        messageObject.body.messageSegments.push({
+                            "type": "mention",
+                            "id": recordId
+                        });
+                    } else {
+                        // lookup failed, so add @[mention] text instead of mention object
+                        messageObject.body.messageSegments.push({
+                            "type": "text",
+                            "text": "@[" + segment + "]"
+                        });
+                    }
+                }
+
+                recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+            }.bind(this));
+        } else if (mentionRegex.test(segment)) {
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, true, callback);
+        } else if (segment === "") {
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+        } else {
+            messageObject.body.messageSegments.push({
+                "type": "text",
+                "text": segment
+            });
+            recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
+        }
+    }
+}
 
 function submitPost(message, isRetry, callback) {
     getConnection( function(err, connection) {
@@ -119,7 +214,7 @@ function submitPost(message, isRetry, callback) {
                             return callback(err);
                         }
 
-                        return submitPost(message, data, true, callback);
+                        return submitPost(message, true, callback);
                     });
                     break;
                 default:
@@ -127,9 +222,7 @@ function submitPost(message, isRetry, callback) {
             }
         });
     });
-
 }
-
 
 /**
  * First check if actions exist in state
@@ -204,16 +297,28 @@ function getConnection(callback) {
  * @param {function(Object, Object=)} callback
  */
 function filterInitialActions(actions, callback) {
-//    var filteredActions = actions.filter(function(action) {
-//        return action.type === "Post" && action.name !== "FeedItem.MobileSmartActions";
-//    });
-//
-//    if (!filteredActions) {
-//        return callback(new Error("Filtering action list resulted in empty list"));
-//    }
-//
-//    return callback(null, filteredActions);
-    return callback(null, actions);
+    var enabledActions = [];
+    var disabledActions = [];
+
+    actions.forEach(function(action) {
+        if (enabledActionsWhitelist.indexOf(action.name) >= 0) { // try action.name in enabledActionsWhitelist
+            enabledActions.push(action);
+        } else if (action.name === "FeedItem.MobileSmartActions") {
+            // skip this action
+        } else {
+            action["isDisabled"] = true;
+            disabledActions.push(action);
+        }
+    });
+
+    var filteredActions = enabledActions.concat(personalActions).concat(disabledActions);
+//    var filteredActions = enabledActions.concat(disabledActions);
+
+    if (!filteredActions) {
+        return callback(new Error("Filtering action list resulted in empty list"));
+    }
+
+    return callback(null, filteredActions);
 }
 
 /**

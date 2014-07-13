@@ -12,7 +12,7 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitPost",
-            "message": this.state.value
+            "message": "Today I learned: " + this.state.value + "\n\n #[TIL]"
         };
 
         chrome.runtime.sendMessage(options, function(response) {
@@ -20,6 +20,7 @@ module.exports = React.createClass({
 //            if (response === null) {
 //                console.error("Error getting submitting Post");
 //            } else {
+//                console.log(response);
 //            }
         }.bind(this));
     },
@@ -41,11 +42,10 @@ module.exports = React.createClass({
             "Form-submitButton": true,
             'is-clickable': this.state.value !== ""
         });
-
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
-                    <label>Post Text</label>
+                    <label>Today I learned...</label>
                     <PostInput
                     value={this.state.value}
                     handleChange={this.handleChange}
@@ -56,6 +56,6 @@ module.exports = React.createClass({
                     <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Submit Post</button>
                 </div>
             </form>
-        );
+            );
     }
 });

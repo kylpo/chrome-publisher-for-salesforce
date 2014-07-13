@@ -2,7 +2,8 @@
 
 'use strict';
 
-var React = require("react");
+var React = require("react/addons");
+var PostInput = require("./inputs/post.jsx");
 var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({
@@ -34,7 +35,10 @@ module.exports = React.createClass({
     handleMessageChange: function(event) {
         this.setState({message: event.target.value});
     },
-    handleSubmit: function() {
+    handleSubmit: function(e) {
+        e.preventDefault();
+        this.props.onLoading();
+
         var options = {
             "type": "submitLink",
             "message": this.state.message,
@@ -46,38 +50,44 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function(response) {
+            this.props.onAfterSubmit(response);
 //            if (response === null) {
 //                console.error("Error getting submitting Post");
 //            } else {
 //                console.log(response);
 //            }
-        });
+        }.bind(this));
     },
     render: function() {
 		var url = this.state.url;
 		var title = this.state.title;
+		
+        var cx = React.addons.classSet;
+        var submitClasses = cx({
+            "Form-submitButton": true,
+            'is-clickable': this.state.url !== "" && this.state.title !== ""
+        });
 
         return (
 			<form className="post-link" onSubmit={this.handleSubmit}>
 				<div className="action-form-group">
 					<label>Link Url</label>
-					<input type="text" name="link-url" value={url} onChange={this.handleUrlChange}/>
+					<input type="text" required name="link-url" value={this.state.url} onChange={this.handleTitleChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Name</label>
-					<input type="text" name="link-name" value={title} onChange={this.handleTitleChange}/>
+					<input type="text" required name="link-name" value={this.state.title} onChange={this.handleUrlChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
-					<input
-                    type="textarea"
-                    name="link-description"
+                    <PostInput
                     value={this.state.message}
-                    onChange={this.handleMessageChange}
+                    handleChange={this.handleMessageChange}
+                    handleSubmit={this.handleSubmit}
                     />
 				</div>
                 <div className="action-form-group">
-                    <button type="submit">Share Link</button>
+                    <button className={submitClasses} type="submit">Share Link</button>
                 </div>
 			</form>
         );

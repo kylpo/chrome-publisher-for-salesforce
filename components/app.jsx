@@ -16,6 +16,27 @@ var App = React.createClass({
 			selectedAction: null
 		}
 	},
+    componentDidMount: function() {
+        document.addEventListener('keydown', this.handleEscapeKey, true);
+    },
+    componentWillUnmount: function() {
+        document.removeEventListener('keydown', this.handleEscapeKey, true);
+    },
+    handleEscapeKey: function(e) {
+        if (e.keyCode === 27) {
+            if (e.target.nodeName === "BODY") {
+                if (this.state.flipped === true) {
+                    e.preventDefault();
+                    this.onBackClicked();
+                    return false;
+                }
+            } else {
+                e.preventDefault();
+                e.target.blur();
+                return false;
+            }
+        }
+    },
 	handleActionSelected: function(action) {
 		console.log("handling action: " + action.label);
 		this.setState({
@@ -39,6 +60,7 @@ var App = React.createClass({
 			});
 		}.bind(this), 400);
 	},
+
     render: function() {
 		var backTitle = this.state.selectedAction == null ? "" : this.state.selectedAction.label;
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
@@ -47,7 +69,7 @@ var App = React.createClass({
     		<ActionForm action={this.state.selectedAction} />
     	];
         return (
-        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped} />
+        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>
         );
     }
 });
@@ -58,6 +80,7 @@ chrome.runtime.sendMessage({type: "getActions"}, function(response) {
     } else {
         console.log(response);
         React.renderComponent(<App items={response}/>, document.body);
+//        window.onKeyDown = this.handleEscapeKey;
     }
 });
 
