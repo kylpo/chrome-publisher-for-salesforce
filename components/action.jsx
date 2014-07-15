@@ -29,11 +29,11 @@ module.exports = React.createClass({
         // HACK!!!
         "#TIL" : {
             "icon" : "icons/custom57_120.png",
-            "iconColor" : "4eb1cb"
+            "iconColor" : "849cb1"
         },
         "#MyDay" : {
             "icon" : "icons/custom3_120.png",
-            "iconColor" : "4eb1cb"
+            "iconColor" : "849cb1"
         }
     },
 
