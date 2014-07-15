@@ -8,6 +8,11 @@ var ShareWith = require("./share-with.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
+    	chrome.tabs.query({
+			active: true,
+			currentWindow: true
+		}, this.tabQueryResponse);
+		
         return {
             title: "",
             url: "",
@@ -54,18 +59,15 @@ module.exports = React.createClass({
         }.bind(this));
     },
     render: function() {
-        chrome.tabs.query({
-			active: true
-//			currentWindow: true
-		}, this.tabQueryResponse);
-
+		var url = this.state.url;
+		var title = this.state.title;
+		
         var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
             'is-clickable': this.state.url !== "" && this.state.title !== ""
         });
 
-//        <ShareWith shareTitle="Share Link" />
         return (
 			<form className="post-link" onSubmit={this.handleSubmit}>
 				<div className="action-form-group">
