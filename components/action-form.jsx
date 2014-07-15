@@ -32,6 +32,9 @@ module.exports = React.createClass({
     onAfterSubmit: function(response) {
         this.setState({"isLoading": false, "response": response});
     },
+    restoreActionForm: function() {
+        this.setState({"isLoading": false, "response": null});
+    },
 	getActionForm: function() {
 		var name = this.props.action && this.props.action.name;
 		switch(name) {
@@ -53,7 +56,7 @@ module.exports = React.createClass({
         if (this.state.isLoading) {
             display = <LoadingIndicator/>;
         } else if (this.state.response != null) {
-            display = <AfterSubmit response={this.state.response} />
+            display = <AfterSubmit response={this.state.response} restoreActionForm={this.restoreActionForm} backToGrid={this.props.backToGrid}/>
         } else {
             display = this.getActionForm();
         }

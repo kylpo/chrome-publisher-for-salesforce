@@ -15,6 +15,11 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options);
+
+        // Necessary to reset to action form for popout mode
+        this.props.backToGrid(function() {
+            this.props.restoreActionForm();
+        }.bind(this));
     },
     render: function() {
         var message = "Failed creating";

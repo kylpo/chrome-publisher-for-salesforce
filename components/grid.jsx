@@ -30,11 +30,11 @@ module.exports = React.createClass({
 		return Math.ceil(this.props.actions.length / this.state.pageSize);
 	},
 	onActionClicked: function(action) {
-		console.log("Action selected: " + action.label);
+//		console.log("Action selected: " + action.label);
 		this.props.onActionSelected(action);
 	},
 	onPageChanged: function(page) {
-		console.log("Page changed to: " + page);
+//		console.log("Page changed to: " + page);
 		this.setState({ page: page });
 	},
     render: function() {

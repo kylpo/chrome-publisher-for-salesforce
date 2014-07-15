@@ -8,7 +8,7 @@ var host = require("../config.js").host;
 var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
 var localStateActions = null;
 var localStateConnection = null;
-var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost"];
+var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "NewNote"];
 var personalActions = [
         {
             "name" : "Personal.TIL",

@@ -38,15 +38,13 @@ var App = React.createClass({
         }
     },
 	handleActionSelected: function(action) {
-		console.log("handling action: " + action.label);
 		this.setState({
 			flipped: true,
 			unflipped: false,
 			selectedAction: action
 		});
 	},
-	onBackClicked: function() {
-		console.log("handling back pressed");
+	onBackClicked: function(callback) {
 		this.setState({
 			flipped: false,
 			unflipped: true
@@ -58,6 +56,10 @@ var App = React.createClass({
 			this.setState({
 				selectedAction: null
 			});
+
+            if (callback) {
+                callback();
+            }
 		}.bind(this), 400);
 	},
 
@@ -66,7 +68,7 @@ var App = React.createClass({
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm action={this.state.selectedAction} />
+    		<ActionForm action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
     	];
         return (
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>
@@ -80,7 +82,6 @@ chrome.runtime.sendMessage({type: "getActions"}, function(response) {
     } else {
         console.log(response);
         React.renderComponent(<App items={response}/>, document.body);
-//        window.onKeyDown = this.handleEscapeKey;
     }
 });
 
