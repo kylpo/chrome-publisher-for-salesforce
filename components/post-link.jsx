@@ -58,10 +58,7 @@ module.exports = React.createClass({
 //            }
         }.bind(this));
     },
-    render: function() {
-		var url = this.state.url;
-		var title = this.state.title;
-		
+    render: function() {		
         var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
@@ -72,11 +69,11 @@ module.exports = React.createClass({
 			<form className="post-link" onSubmit={this.handleSubmit}>
 				<div className="action-form-group">
 					<label>Link Url</label>
-					<input type="text" required name="link-url" value={this.state.url} onChange={this.handleTitleChange}/>
+					<input type="text" required name="link-url" value={this.state.url} onChange={this.handleUrlChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Name</label>
-					<input type="text" required name="link-name" value={this.state.title} onChange={this.handleUrlChange}/>
+					<input type="text" required name="link-name" value={this.state.title} onChange={this.handleTitleChange}/>
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
