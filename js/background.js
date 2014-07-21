@@ -127,31 +127,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             launchNewTab(localStateConnection.host + "/" + request.id);
             return true; // necessary to use sendResponse asynchronously
 
-        case "chooseFile":
-            var fileChooser = document.createElement('input');
-            fileChooser.type = 'file';
-
-            /* Wrap it in a form for resetting */
-            var form = document.createElement('form');
-            form.appendChild(fileChooser);
-
-//            fileChooser.addEventListener('change', function () {
-//                var file = fileChooser.files[0];
-//                var formData = new FormData();
-//                formData.append(file.name, file);
-//
-//                var xhr = new XMLHttpRequest();
-//                xhr.open('POST', uploadURL, true);
-//                xhr.addEventListener('readystatechange', function (evt) {
-//                    console.log('ReadyState: ' + xhr.readyState,
-//                            'Status: ' + xhr.status);
-//                });
-//
-//                xhr.send(formData);
-//                form.reset();   // <-- Resets the input so we do get a `change` event,
-//                //     even if the user chooses the same file
-//            });
-            fileChooser.click();
+        case "delete":
+            deletePost(request.id, false, function(){});
             return true; // necessary to use sendResponse asynchronously
 
         default:
@@ -271,7 +248,40 @@ function submitPost(message, isRetry, callback) {
                     });
                     break;
                 default:
-                    return callback(new Error("getActions errored with: " + status));
+                    return callback(new Error("submitPost errored with: " + status));
+            }
+        });
+    });
+}
+
+function deletePost(id, isRetry, callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.deletePost(connection, id, function (status, data) {
+            switch (status) {
+                case null:
+                case undefined:
+                    // success
+                    callback(null, data);
+                    break;
+                case 401:
+                    if (isRetry) {
+                        return callback(new Error("Invalid refresh token on retry"));
+                    }
+
+                    getAndStoreRefreshedConnection(connection, function (err, data) {
+                        if (err) {
+                            return callback(err);
+                        }
+
+                        return deletePost(id, true, callback);
+                    });
+                    break;
+                default:
+                    return callback(new Error("deletePost errored with: " + status));
             }
         });
     });

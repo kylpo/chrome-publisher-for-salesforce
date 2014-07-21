@@ -70,6 +70,17 @@ exports.submitPost = function(connection, message, callback) {
 };
 
 /**
+ * Perform xhrWithAuth DELETE with params to delete a Post
+ *
+ * @param {Object} connection
+ * @param {String} id
+ * @param {function(Object, Object=)} callback
+ */
+exports.deletePost = function(connection, id, callback) {
+    xhrWithAuth(callback, "DELETE", connection, API_PATH_PREFIX.concat("chatter/feed-items/").concat(id));
+};
+
+/**
  * Perform xhrWithAuth GET with params to retrieve mention completions
  *
  * @param {Object} connection
