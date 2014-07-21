@@ -3,7 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./inputs/post.jsx");
+var PostInput = require("./../inputs/post.jsx");
 
 module.exports = React.createClass({
     handleSubmit: function(e) {

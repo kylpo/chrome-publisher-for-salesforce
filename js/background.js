@@ -8,7 +8,8 @@ var host = require("../config.js").host;
 var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
 var localStateActions = null;
 var localStateConnection = null;
-var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+var actionsBlacklist = ["FeedItem.MobileSmartActions"];
 var personalActions = [
         {
             "name" : "Personal.TIL",
@@ -24,6 +25,24 @@ var personalActions = [
 //chrome.storage.onChanged.addListener(function(object, areaName) {
 //
 //});
+
+function init() {
+    chrome.runtime.getPlatformInfo(function(info) {
+        if (info.os === "mac") {
+            // Feed item ContentPost is not available because of a bug in Chrome when launching file chooser
+            // see https://code.google.com/p/chromium/issues/detail?id=61632
+            actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+            actionsBlacklist.push("FeedItem.ContentPost");
+        }
+    });
+}
+
+init();
+
+chrome.runtime.onStartup.addListener(function () {
+    console.log("HERE");
+});
+
 
 // This essentially acts as a router for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -106,6 +125,33 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
         case "launchNewTab":
             launchNewTab(localStateConnection.host + "/" + request.id);
+            return true; // necessary to use sendResponse asynchronously
+
+        case "chooseFile":
+            var fileChooser = document.createElement('input');
+            fileChooser.type = 'file';
+
+            /* Wrap it in a form for resetting */
+            var form = document.createElement('form');
+            form.appendChild(fileChooser);
+
+//            fileChooser.addEventListener('change', function () {
+//                var file = fileChooser.files[0];
+//                var formData = new FormData();
+//                formData.append(file.name, file);
+//
+//                var xhr = new XMLHttpRequest();
+//                xhr.open('POST', uploadURL, true);
+//                xhr.addEventListener('readystatechange', function (evt) {
+//                    console.log('ReadyState: ' + xhr.readyState,
+//                            'Status: ' + xhr.status);
+//                });
+//
+//                xhr.send(formData);
+//                form.reset();   // <-- Resets the input so we do get a `change` event,
+//                //     even if the user chooses the same file
+//            });
+            fileChooser.click();
             return true; // necessary to use sendResponse asynchronously
 
         default:
@@ -308,9 +354,9 @@ function filterInitialActions(actions, callback) {
     var disabledActions = [];
 
     actions.forEach(function(action) {
-        if (enabledActionsWhitelist.indexOf(action.name) >= 0) { // try action.name in enabledActionsWhitelist
+        if (actionsWhitelist.indexOf(action.name) >= 0) { // try action.name in actionsWhitelist
             enabledActions.push(action);
-        } else if (action.name === "FeedItem.MobileSmartActions") {
+        } else if (actionsBlacklist.indexOf(action.name) >= 0) {
             // skip this action
         } else {
             action["isDisabled"] = true;

@@ -3,8 +3,8 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./inputs/post.jsx");
-var ShareWith = require("./share-with.jsx");
+var PostInput = require("./../inputs/post.jsx");
+var ShareWith = require("./../share-with.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
