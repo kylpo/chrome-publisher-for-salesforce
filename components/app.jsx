@@ -2,11 +2,12 @@
 
 'use strict';
 
-var React = require("react"),
-    CardFlip = require("./card-flip.jsx"),
-    Grid = require("./grid.jsx"),
-    BackNav = require("./back-nav.jsx"),
-    ActionForm = require("./action-form.jsx");
+var React = require("react");
+var CardFlip = require("./card-flip.jsx");
+var Grid = require("./grid.jsx");
+var BackNav = require("./back-nav.jsx");
+var ActionForm = require("./action-form.jsx");
+var AuthorizePage = require("./authorize-page.jsx");
 
 var App = React.createClass({
 	getInitialState: function() {
@@ -78,7 +79,8 @@ var App = React.createClass({
 
 chrome.runtime.sendMessage({type: "getActions"}, function(response) {
     if (response === null) {
-        console.error("Error getting actions to client");
+        React.renderComponent(<AuthorizePage/>, document.body);
+//        console.error("Error getting actions to client");
     } else {
         console.log(response);
         React.renderComponent(<App items={response}/>, document.body);

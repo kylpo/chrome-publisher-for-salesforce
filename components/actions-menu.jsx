@@ -29,7 +29,7 @@ module.exports = React.createClass({
             }
         });
     },
-    clearAuth: function() {
+    logout: function() {
         chrome.runtime.sendMessage({type: "logout"}, function() {
 //            if (response === null) {
 //                console.error("Error re-authorizing");
@@ -60,7 +60,7 @@ module.exports = React.createClass({
                 <ul className={menuClasses}>
                     <li className="ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
                     <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
-                    <li className="ActionsMenu-dropdownItem" onClick={this.clearAuth}><span className="icon-utility-logout"/>  Logout</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.logout}><span className="icon-utility-logout"/>  Logout</li>
                 </ul>
             </div>
             );

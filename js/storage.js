@@ -8,7 +8,7 @@ exports.getConnection = function getConnection(callback) {
     chrome.storage.sync.get("connection", function (items) {
         if (chrome.runtime.lastError) {
             callback(new Error(chrome.runtime.lastError));
-        } else if (items && items.hasOwnProperty(CONNECTION_KEY)) {
+        } else if (items && items[CONNECTION_KEY] !== null) {
             callback(null, items[CONNECTION_KEY]);
         } else {
             callback(new Error("Connection not found in chrome.storage.sync"));

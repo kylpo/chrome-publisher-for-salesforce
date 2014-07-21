@@ -39,11 +39,6 @@ function init() {
 
 init();
 
-chrome.runtime.onStartup.addListener(function () {
-    console.log("HERE");
-});
-
-
 // This essentially acts as a router for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.type) {
@@ -70,6 +65,25 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
+        case "authorize":
+            getAndStoreConnection(function(err, connection) {
+                if (err) {
+                    console.error(err.description);
+                }
+
+                sendResponse();
+
+                getAndStoreActionsFromServer(function(err, actions) {
+                    if (err) {
+                        console.error(err.description);
+//                        sendResponse(null);
+                    } else {
+//                        sendResponse(actions);
+                    }
+                });
+            });
+            return true; // necessary to use sendResponse asynchronously
+
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
@@ -78,14 +92,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     sendResponse();
                 })
             });
-//            getAndStoreConnection(function(err, connection) {
-//                if (err) {
-//                    console.error(err.description);
-//                    sendResponse(null);
-//                } else {
-//                    sendResponse(connection);
-//                }
-//            });
             return true; // necessary to use sendResponse asynchronously
 
         case "submitPost":
@@ -305,7 +311,8 @@ function getActions(callback) {
         if (err || actions === null) {
             getAndStoreActionsFromServer(function(err, actions) {
                 if (err) {
-                    return callback(err);
+//                    return callback(err);
+                    return callback(null, null);
                 } else {
                     return callback(null, actions);
                 }
@@ -338,14 +345,14 @@ function getConnection(callback) {
 
     Storage.getConnection(function(err, connection) {
         if (err || connection === null) {
-            getAndStoreConnection(function(err, data) {
-                if (err) {
+//            getAndStoreConnection(function(err, data) {
+//                if (err) {
                     return callback(err);
-                } else {
-                    localStateConnection = data;
-                    return callback(null, data);
-                }
-            });
+//                } else {
+//                    localStateConnection = data;
+//                    return callback(null, data);
+//                }
+//            });
         } else {
             localStateConnection = connection;
             return callback(null, connection);
