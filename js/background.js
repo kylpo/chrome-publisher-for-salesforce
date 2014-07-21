@@ -8,7 +8,7 @@ var host = require("../config.js").host;
 var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
 var localStateActions = null;
 var localStateConnection = null;
-var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "NewNote"];
+var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
 var personalActions = [
         {
             "name" : "Personal.TIL",
@@ -52,14 +52,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true; // necessary to use sendResponse asynchronously
 
         case "logout":
-            getAndStoreConnection(function(err, connection) {
-                if (err) {
-                    console.error(err.description);
-                    sendResponse(null);
-                } else {
-                    sendResponse(connection);
-                }
+            Storage.clearConnection(function() {
+                localStateConnection = null;
+                Storage.clearActions(function() {
+                    localStateActions = null;
+                    sendResponse();
+                })
             });
+//            getAndStoreConnection(function(err, connection) {
+//                if (err) {
+//                    console.error(err.description);
+//                    sendResponse(null);
+//                } else {
+//                    sendResponse(connection);
+//                }
+//            });
             return true; // necessary to use sendResponse asynchronously
 
         case "submitPost":
@@ -239,7 +246,7 @@ function getActions(callback) {
     }
 
     Storage.getActions(function(err, actions) {
-        if (err) {
+        if (err || actions === null) {
             getAndStoreActionsFromServer(function(err, actions) {
                 if (err) {
                     return callback(err);
@@ -274,7 +281,7 @@ function getConnection(callback) {
     }
 
     Storage.getConnection(function(err, connection) {
-        if (err) {
+        if (err || connection === null) {
             getAndStoreConnection(function(err, data) {
                 if (err) {
                     return callback(err);

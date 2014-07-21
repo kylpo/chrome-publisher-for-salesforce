@@ -30,12 +30,12 @@ module.exports = React.createClass({
         });
     },
     clearAuth: function() {
-        chrome.runtime.sendMessage({type: "logout"}, function(response) {
-            if (response === null) {
-                console.error("Error re-authorizing");
-            } else {
+        chrome.runtime.sendMessage({type: "logout"}, function() {
+//            if (response === null) {
+//                console.error("Error re-authorizing");
+//            } else {
                 window.location.reload();
-            }
+//            }
         });
     },
     openMenu: function() {

@@ -47,6 +47,15 @@ exports.upsertConnection = function(newConnection, callback) {
     })
 };
 
+exports.clearConnection = function(callback) {
+    var connectionObj = {};
+    connectionObj[CONNECTION_KEY] = null;
+
+    chrome.storage.sync.set(connectionObj, function() {
+        return callback();
+    });
+};
+
 exports.getActions = function(callback) {
     chrome.storage.local.get(ACTIONS_KEY, function (items) {
         if (chrome.runtime.lastError) {
@@ -64,5 +73,14 @@ exports.setActions = function(actions) {
     actionsObj[ACTIONS_KEY] = actions;
 
     chrome.storage.local.set(actionsObj);
+};
+
+exports.clearActions = function(callback) {
+    var actionsObj = {};
+    actionsObj[ACTIONS_KEY] = null;
+
+    chrome.storage.local.set(actionsObj, function() {
+        return callback();
+    });
 };
 
