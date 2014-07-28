@@ -10,6 +10,12 @@ module.exports = React.createClass({
             "rows": "8"
         }
     },
+    getInitialState: function() {
+        return {
+            "showCompletions": false,
+            "completionValues": null
+        }
+    },
 //    componentDidMount: function() {
 //        this.refs.textarea.getDOMNode().focus();
 //    },
@@ -21,17 +27,31 @@ module.exports = React.createClass({
             this.props.handleSubmit(e);
             return false;
         }
+        // @
+        else if (e.keyCode === 16 && e.shiftKey) {
+
+            return false;
+        }
     },
 
     render: function() {
+        var completions = null;
+
+        if (this.state.showCompletions) {
+            completions = <completions values={this.state.completionValues}/>;
+        }
+
         return (
-            <textarea
-            onChange={this.props.handleChange}
-            ref="textarea"
-            autosize
-            rows={this.props.rows}
-            onKeyDown={this.handleKeyDown}
-            />
+            <div>
+                <textarea
+                onChange={this.props.handleChange}
+                ref="textarea"
+                autosize
+                rows={this.props.rows}
+                onKeyDown={this.handleKeyDown}
+                />
+                {completions}
+            </div>
         );
     }
 });

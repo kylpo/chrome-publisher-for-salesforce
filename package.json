@@ -9,8 +9,9 @@
   },
   "license": "MIT",
   "dependencies": {
-	  "react-tools": "~0.10.0",
-	  "react": "~0.10.0"
+    "react-tools": "~0.10.0",
+    "react": "~0.10.0",
+    "salesforce-chrome-oauth": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.6.0",

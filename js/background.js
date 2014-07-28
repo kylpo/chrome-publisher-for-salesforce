@@ -5,7 +5,7 @@ var Api = require("./api.js");
 var clientId = require("../config.js").clientId;
 var clientSecret = require("../config.js").clientSecret;
 var host = require("../config.js").host;
-var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
+var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 var localStateActions = null;
 var localStateConnection = null;
 var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
@@ -84,6 +84,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
+        case "getMentions":
+            getMentions(null, function(err, data) {
+                sendResponse(data);
+            });
+
+            return true; // necessary to use sendResponse asynchronously
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
@@ -130,7 +136,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true; // necessary to use sendResponse asynchronously
 
         case "launchNewTab":
-            launchNewTab(localStateConnection.host + "/" + request.id);
+            launchNewTab(localStateConnection.instance_url + "/" + request.id);
             return true; // necessary to use sendResponse asynchronously
 
         case "delete":
@@ -149,6 +155,34 @@ function launchNewTab(url) {
         //TODO , '"index": currentTab.index + 1' isn't consistently working. Sometimes it opens in position 1
         chrome.tabs.create({"url": url, "openerTabId": currentTab.id});
     })
+}
+
+function getMentions(startingString, callback) {
+    var placeholderMentions = [
+        {
+            additionalLabel: null,
+            description: null,
+            name: "luigi",
+            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+            recordId: "005i00000049lwbAAA"
+        },
+        {
+            additionalLabel: null,
+            description: null,
+            name: "mario",
+            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+            recordId: "005i00000049lwqAAA"
+        },
+        {
+            additionalLabel: null,
+            description: null,
+            name: "mmario",
+            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+            recordId: "005i00000049lwvAAA"
+        }
+        ];
+
+    callback(null, placeholderMentions);
 }
 
 function createMessageObject(message, callback) {
@@ -195,6 +229,7 @@ function createMessageObject(message, callback) {
         } else if (isMention) {
             Api.getMentions(connection, segment, function (status, response) {
                 if (status === null || status === undefined) {
+                    console.log(response.mentionCompletions);
                     if (response.mentionCompletions.length > 0) {
                         var recordId = response.mentionCompletions[0].recordId;
                         // add mention messageSegment instead of text placeholder

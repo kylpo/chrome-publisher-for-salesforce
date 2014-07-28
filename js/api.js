@@ -13,7 +13,7 @@ var API_PATH_PREFIX = "/services/data/v29.0/";
 function xhrWithAuth(callback, method, connection, url, data) {
     var xhr = new XMLHttpRequest();
     xhr.onload = requestComplete;
-    xhr.open(method, connection.host + url, true);
+    xhr.open(method, connection.instance_url + url, true);
     xhr.setRequestHeader('Authorization', 'Bearer ' + connection.access_token);
     if (data) {
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -88,6 +88,5 @@ exports.deletePost = function(connection, id, callback) {
  * @param {function(Object, Object=)} callback
  */
 exports.getMentions = function(connection, mention, callback) {
-    console.log(mention);
     xhrWithAuth(callback, "GET", connection, API_PATH_PREFIX.concat("chatter/mentions/completions?q=" + encodeURIComponent(mention)));
 };

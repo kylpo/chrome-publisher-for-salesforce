@@ -3,7 +3,6 @@
 var ACTIONS_KEY = "actions";
 var CONNECTION_KEY = "connection";
 
-
 exports.getConnection = function getConnection(callback) {
     chrome.storage.sync.get("connection", function (items) {
         if (chrome.runtime.lastError) {
@@ -16,7 +15,6 @@ exports.getConnection = function getConnection(callback) {
     });
 };
 
-
 exports.upsertConnection = function(newConnection, callback) {
     exports.getConnection(function(err, data) {
         if (err) {
@@ -26,20 +24,15 @@ exports.upsertConnection = function(newConnection, callback) {
             chrome.storage.sync.set(connectionObj, function() {
                 return callback(null, newConnection);
             });
-        } else if (data && data.hasOwnProperty("refresh_token") && data.hasOwnProperty("host")) {
-
-            // Update the access_token field only
-            var updatedConnection = {
-                "access_token": newConnection.access_token,
-                "host": data.host,
-                "refresh_token": data.refresh_token
-            };
+        } else if (data != null && data.hasOwnProperty("refresh_token")) {
+            // Add refresh_token to new connection
+            newConnection.refresh_token = data.refresh_token;
 
             var updatedConnectionObj = {};
-            updatedConnectionObj[CONNECTION_KEY] = updatedConnection;
+            updatedConnectionObj[CONNECTION_KEY] = newConnection;
 
             chrome.storage.sync.set(updatedConnectionObj, function() {
-                return callback(null, updatedConnection);
+                return callback(null, newConnection);
             });
         } else {
             return callback(new Error("Error upserting new connecton: " + newConnection));
