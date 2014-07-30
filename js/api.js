@@ -1,92 +1,51 @@
 'use strict';
 
-var API_PATH_PREFIX = "/services/data/v29.0/";
+var Api = require("salesforce-api-using-access-token");
 
-/**
- * Given an accessToken, this will perform xhr requests to salesforce
- *
- * @param {function(Object, Object=)} callback
- * @param {string} method
- * @param {Object} connection
- * @param {string} url
- */
-function xhrWithAuth(callback, method, connection, url, data) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = requestComplete;
-    xhr.open(method, connection.instance_url + url, true);
-    xhr.setRequestHeader('Authorization', 'Bearer ' + connection.access_token);
-    if (data) {
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(JSON.stringify(data));
-    } else {
-        xhr.send();
+module.exports = function(refreshToken, upsertConnection) {
+    var module = {};
+
+    function apiCallWithRetryAndRefreshToken(action, args, responseCallback) {
+        var getAndStoreRefreshedConnection = function getAndStoreRefreshedConnection(callback) {
+            refreshToken(args[0], function(err, data) {
+                if (err) {
+                    return callback(null);
+                }
+
+                // args[0] == connection
+                args[0] = data;
+                upsertConnection(data, function(err, data) {
+                    if (err) {
+                        return callback(null);
+                    }
+
+                    return callback(args);
+                });
+            });
+        };
+
+        Api.apiCallWithRetry(action, args, getAndStoreRefreshedConnection, responseCallback);
     }
 
-    function requestComplete() {
-        // did not succeed
-        if (this.status < 200 || this.status >= 300) {
-            callback(this.status);
-        } else {
-            // did succeed
-            if (this.response.length > 0) {
-                callback(null, JSON.parse(this.response));
-            } else {
-                callback(null);
-            }
-        }
-    }
-}
+    module.getMentions = function getMentions(connection, mention, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getMentions, [connection, mention], callback);
+    };
 
-/**
- * Perform xhrWithAuth GET with params to retrieve actions
- *
- * @param {Object} connection
- * @param {function(Object, Object=)} callback
- */
-exports.getActions = function(connection, callback) {
-    xhrWithAuth(callback, "GET", connection, API_PATH_PREFIX.concat("sobjects/Global/quickActions"));
-};
+    module.submitPost = function submitPost(connection, message, callback) {
+        apiCallWithRetryAndRefreshToken(Api.submitPost, [connection, message], callback);
+    };
 
-/**
- * Perform xhrWithAuth GET with params to retrieve the description of a specific action
- *
- * @param {Object} connection
- * @param {string} url - a specific action's Describe url
- * @param {function(Object, Object=)} callback
-  */
-exports.getDescribeAction = function(connection, url, callback) {
-    xhrWithAuth(callback, "GET", connection, url);
-};
+    module.getActions = function getActions(connection, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getActions, [connection], callback);
+    };
 
-/**
- * Perform xhrWithAuth POST with params to submit a Post
- *
- * @param {Object} connection
- * @param {Object} message
- * @param {function(Object, Object=)} callback
- */
-exports.submitPost = function(connection, message, callback) {
-    xhrWithAuth(callback, "POST", connection, API_PATH_PREFIX.concat("chatter/feeds/news/me/feed-items"), message);
-};
+    module.getDescribeAction = function getDescribeAction(connection, url, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getDescribeAction, [connection, url], callback);
+    };
 
-/**
- * Perform xhrWithAuth DELETE with params to delete a Post
- *
- * @param {Object} connection
- * @param {String} id
- * @param {function(Object, Object=)} callback
- */
-exports.deletePost = function(connection, id, callback) {
-    xhrWithAuth(callback, "DELETE", connection, API_PATH_PREFIX.concat("chatter/feed-items/").concat(id));
-};
+    module.deletePost = function deletePost(connection, id, callback) {
+        apiCallWithRetryAndRefreshToken(Api.deletePost, [connection, id], callback);
+    };
 
-/**
- * Perform xhrWithAuth GET with params to retrieve mention completions
- *
- * @param {Object} connection
- * @param {string} mention - text of a mention's name
- * @param {function(Object, Object=)} callback
- */
-exports.getMentions = function(connection, mention, callback) {
-    xhrWithAuth(callback, "GET", connection, API_PATH_PREFIX.concat("chatter/mentions/completions?q=" + encodeURIComponent(mention)));
+    return module;
 };

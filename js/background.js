@@ -1,11 +1,12 @@
 'use strict';
 
-var Storage = require("./storage.js");
-var Api = require("./api.js");
 var clientId = require("../config.js").clientId;
 var clientSecret = require("../config.js").clientSecret;
 var host = require("../config.js").host;
 var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
+
+var Storage = require("./storage.js");
+var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
 var localStateActions = null;
 var localStateConnection = null;
 var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
@@ -84,12 +85,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
-        case "getMentions":
-            getMentions(null, function(err, data) {
-                sendResponse(data);
-            });
-
-            return true; // necessary to use sendResponse asynchronously
+//        case "getMentions":
+//            getMentions(null, function(err, data) {
+//                sendResponse(data);
+//            });
+//
+//            return true; // necessary to use sendResponse asynchronously
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
@@ -107,7 +108,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                submitPost(data, false, function (err, data) {
+                submitPost(data, function (err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
@@ -125,7 +126,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 }
 
                 data.attachment = request.attachment;
-                submitPost(data, false, function (err, data) {
+                submitPost(data, function (err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
@@ -140,7 +141,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true; // necessary to use sendResponse asynchronously
 
         case "delete":
-            deletePost(request.id, false, function(){});
+            deletePost(request.id, function(){});
             return true; // necessary to use sendResponse asynchronously
 
         default:
@@ -157,33 +158,33 @@ function launchNewTab(url) {
     })
 }
 
-function getMentions(startingString, callback) {
-    var placeholderMentions = [
-        {
-            additionalLabel: null,
-            description: null,
-            name: "luigi",
-            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-            recordId: "005i00000049lwbAAA"
-        },
-        {
-            additionalLabel: null,
-            description: null,
-            name: "mario",
-            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-            recordId: "005i00000049lwqAAA"
-        },
-        {
-            additionalLabel: null,
-            description: null,
-            name: "mmario",
-            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-            recordId: "005i00000049lwvAAA"
-        }
-        ];
-
-    callback(null, placeholderMentions);
-}
+//function getMentions(startingString, callback) {
+//    var placeholderMentions = [
+//        {
+//            additionalLabel: null,
+//            description: null,
+//            name: "luigi",
+//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+//            recordId: "005i00000049lwbAAA"
+//        },
+//        {
+//            additionalLabel: null,
+//            description: null,
+//            name: "mario",
+//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+//            recordId: "005i00000049lwqAAA"
+//        },
+//        {
+//            additionalLabel: null,
+//            description: null,
+//            name: "mmario",
+//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
+//            recordId: "005i00000049lwvAAA"
+//        }
+//        ];
+//
+//    callback(null, placeholderMentions);
+//}
 
 function createMessageObject(message, callback) {
     var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
@@ -262,69 +263,23 @@ function createMessageObject(message, callback) {
     }
 }
 
-function submitPost(message, isRetry, callback) {
+function submitPost(message, callback) {
     getConnection( function(err, connection) {
         if (err) {
             return callback(err);
         }
 
-        Api.submitPost(connection, message, function (status, data) {
-            switch (status) {
-                case null:
-                case undefined:
-                    // success
-                    callback(null, data);
-                    break;
-                case 401:
-                    if (isRetry) {
-                        return callback(new Error("Invalid refresh token on retry"));
-                    }
-
-                    getAndStoreRefreshedConnection(connection, function (err, data) {
-                        if (err) {
-                            return callback(err);
-                        }
-
-                        return submitPost(message, true, callback);
-                    });
-                    break;
-                default:
-                    return callback(new Error("submitPost errored with: " + status));
-            }
-        });
+        Api.submitPost(connection, message, callback);
     });
 }
 
-function deletePost(id, isRetry, callback) {
+function deletePost(id, callback) {
     getConnection( function(err, connection) {
         if (err) {
             return callback(err);
         }
 
-        Api.deletePost(connection, id, function (status, data) {
-            switch (status) {
-                case null:
-                case undefined:
-                    // success
-                    callback(null, data);
-                    break;
-                case 401:
-                    if (isRetry) {
-                        return callback(new Error("Invalid refresh token on retry"));
-                    }
-
-                    getAndStoreRefreshedConnection(connection, function (err, data) {
-                        if (err) {
-                            return callback(err);
-                        }
-
-                        return deletePost(id, true, callback);
-                    });
-                    break;
-                default:
-                    return callback(new Error("deletePost errored with: " + status));
-            }
-        });
+        Api.deletePost(connection, id, callback);
     });
 }
 
@@ -443,14 +398,14 @@ function getAndStoreActionsFromServer(callback) {
             return callback(err);
         }
 
-        getActionsFromServer(connection, false, function (err, actions) {
+        getDescribedActionsFromServer(connection, function(err, actions) {
             if (err) {
                 return callback(err);
             }
 
             Storage.setActions(actions);
 
-            filterInitialActions(actions, function (err, filteredActions) {
+            filterInitialActions(actions, function(err, filteredActions) {
                 if (err) {
                     return callback(err);
                 }
@@ -483,64 +438,20 @@ function getAndStoreConnection(callback) {
 }
 
 /**
- * Needed when the oauth token expires. This will ask for another.
- * 1. request new token
- * 2. store it in local storage
- * 3. callback with updated connection or error
+ * 1. use api to get actions
+ * 2. populate actions with describe data
+ * 3. callback with actions or error
  *
- * @param connection
+ * @param {Object} connection
  * @param {function(Object, Object=)} callback
  */
-function getAndStoreRefreshedConnection(connection, callback) {
-    Auth.refreshToken(connection, function(err, data) {
+function getDescribedActionsFromServer(connection, callback) {
+    Api.getActions(connection, function (err, data) {
         if (err) {
             return callback(err);
         }
 
-        Storage.upsertConnection(data, function(err, data) {
-            if (err) {
-                return callback(err);
-            }
-
-            localStateConnection = data;
-            return callback(null, data);
-        });
-    });
-}
-
-/**
- * 1. use api to get actions
- *   if token has exired, refresh it and run method again with isRetry set to true
- * 2. callback with actions or error
- *
- * @param {Object} connection
- * @param {boolean} isRetry - used to make sure this is only called a maximum of 2 times
- * @param {function(Object, Object=)} callback
- */
-function getActionsFromServer(connection, isRetry, callback) {
-    Api.getActions(connection, function (status, data) {
-        switch (status) {
-            case null:
-            case undefined:
-                // Success
-                populateActionsWithDescribeData(data, 0, connection, callback);
-                break;
-            case 401:
-                if (isRetry) {
-                    return callback(new Error("Invalid refresh token on retry"));
-                }
-
-                getAndStoreRefreshedConnection(connection, function (err, data) {
-                    if (err) {
-                        return callback(err);
-                    }
-
-                    getActionsFromServer(data, true, callback);
-                });
-                break;
-            default:
-                return callback(new Error("getActions errored with: " + err));
-        }
+        populateActionsWithDescribeData(data, 0, connection, callback);
     });
 }
 

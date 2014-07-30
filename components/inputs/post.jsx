@@ -28,10 +28,10 @@ module.exports = React.createClass({
             return false;
         }
         // @
-        else if (e.keyCode === 16 && e.shiftKey) {
-
-            return false;
-        }
+//        else if (e.keyCode === 16 && e.shiftKey) {
+//
+//            return false;
+//        }
     },
 
     render: function() {
