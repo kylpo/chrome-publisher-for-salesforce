@@ -5,6 +5,7 @@
 var React = require("react");
 var PostText = require("./post-text.jsx");
 var PostLink = require("./post-link.jsx");
+var PostFile = require("./post-file.jsx");
 var PersonalTIL = require("./personal-til.jsx");
 var PersonalMyDay = require("./personal-myday.jsx");
 var AfterSubmit = require("./after-submit.jsx");
@@ -13,6 +14,7 @@ var LoadingIndicator = require("./loading-indicator.jsx");
 module.exports = React.createClass({
 	TEXT_POST: "FeedItem.TextPost",
 	LINK_POST: "FeedItem.LinkPost",
+	FILE_POST: "FeedItem.ContentPost",
     // HACK
     PERSONAL_TIL: "Personal.TIL",
     PERSONAL_MYDAY: "Personal.MyDay",
@@ -42,6 +44,8 @@ module.exports = React.createClass({
 			return <PostText onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
 		case this.LINK_POST:
 			return <PostLink onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
+		case this.FILE_POST:
+			return <PostFile onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>; 
         case this.PERSONAL_TIL:
             return <PersonalTIL onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.PERSONAL_MYDAY:

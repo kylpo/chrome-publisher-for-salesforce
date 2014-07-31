@@ -2,10 +2,8 @@
 
 var Storage = require("./storage.js");
 var Api = require("./api.js");
-var clientId = require("../config.js").clientId;
-var clientSecret = require("../config.js").clientSecret;
-var host = require("../config.js").host;
-var Auth = require("./salesforceChromeOAuth.js")(clientId, clientSecret, host);
+var Config = require("../config.js");
+var Auth = require("./salesforceChromeOAuth.js")(Config.clientId, Config.clientSecret, Config.host);
 var localStateActions = null;
 var localStateConnection = null;
 var enabledActionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "NewNote"];
@@ -101,6 +99,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             launchNewTab(localStateConnection.host + "/" + request.id);
             return true; // necessary to use sendResponse asynchronously
 
+		case "postFile":
+			getConnection( function(err, connection) {
+		        if (err) {
+		            return callback(err);
+		        }
+		        
+		        console.log("Posting file: ", request.file);
+		        
+		        Api.postFile(connection, request.file, function(status, response) {
+		        	console.log("Response received from post file: ", status);
+		        	console.log("Response: ", response);
+		        });
+		    });
+			return true;
+			
         default:
             break;
     }
