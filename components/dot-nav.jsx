@@ -34,7 +34,7 @@ module.exports = React.createClass({
 		}
 
         return (
-        	<div className="page-nav">
+        	<div className="sfqa-page-nav">
         		<ul>
         			{ dots }
         		</ul>

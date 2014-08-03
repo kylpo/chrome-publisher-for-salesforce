@@ -20,7 +20,7 @@ module.exports = React.createClass({
 	},
     render: function() {	
         return (
-        	<div className="back-nav">
+        	<div className="sfqa-back-nav">
 				<div className="icon icon-utility-back" onClick={this.onBackClicked.bind(this)}>
 				</div>
 				<div className="title">

@@ -24,8 +24,7 @@
     },
 
     "browser_action": {
-        "default_icon": "icon-flat.png",
-        "default_popup": "popup.html"
+        "default_icon": "icon-flat.png"
     },
 
     "commands": {
@@ -35,5 +34,11 @@
             },
             "global" : true
         }
-    }
+    },
+	
+	"content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["./content.built.js"],
+		"css": ["./style.css"]
+	}]
 }

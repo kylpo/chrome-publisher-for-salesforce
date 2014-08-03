@@ -33,10 +33,10 @@ module.exports = React.createClass({
 		var disableShareEntity = this.state.shareWith === this.MY_FOLLOWERS;
 		var placeholder = this.getPlaceholderFor(this.state.shareWith);
         return (
-			<div className="share-with">
+			<div className="sfqa-share-with">
 				<div className="action-form-group">
 					<div className="share-with-group">
-						<label className="share">Share with</label>
+						<label className="sfqa-share">Share with</label>
 						<select id="share-with-who" onChange={ this.onShareWithChange }>
 							<option value={ this.MY_FOLLOWERS }>{ this.MY_FOLLOWERS }</option>
 							<option value={ this.GROUP }>{ this.GROUP }</option>

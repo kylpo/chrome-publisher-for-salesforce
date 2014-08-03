@@ -36,13 +36,13 @@ module.exports = React.createClass({
         var message = "Failed creating";
 
         if (this.props.response) {
-            message = <p className="AfterSubmit-title">Successfully created!</p>;
-            var undo = <button className="AfterSubmit-button skin-Button" onClick={this.handleUndo}>Undo</button>;
-            var newTab = <button className="AfterSubmit-button skin-Button is-active" onClick={this.onClickNewTab}>Open in new tab</button>;
+            message = <p className="sfqa-AfterSubmit-title">Successfully created!</p>;
+            var undo = <button className="sfqa-AfterSubmit-button skin-Button" onClick={this.handleUndo}>Undo</button>;
+            var newTab = <button className="sfqa-AfterSubmit-button skin-Button is-active" onClick={this.onClickNewTab}>Open in new tab</button>;
         }
 
         return (
-            <div className="AfterSubmit">
+            <div className="sfqa-AfterSubmit">
             {message}
             {undo}
             {newTab}

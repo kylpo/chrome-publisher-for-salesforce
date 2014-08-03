@@ -41,6 +41,8 @@ init();
 
 // This essentially acts as a router for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	console.log('Message received on background js');
+	
     switch (request.type) {
 
         case "getActions":
@@ -539,3 +541,11 @@ function populateActionsWithDescribeData(actions, position, connection, callback
         populateActionsWithDescribeData(actions, position + 1, connection, callback)
     }
 }
+
+(function( undefined ) {
+	chrome.browserAction.onClicked.addListener( function( tab ) {
+		console.log("Browser action clicked");
+		
+		chrome.tabs.sendMessage( tab.id, { message: 'browserAction' } );
+	});
+})();

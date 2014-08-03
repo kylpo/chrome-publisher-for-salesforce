@@ -1,5 +1,5 @@
 chrome.contextMenus.create({
-	title: "Share Link",
+	title: "Share on Salesforce",
 	contexts: ["link"],
 	onclick: function() {
 		console.log("Launching Salesforce Quick Actions");

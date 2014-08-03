@@ -42,7 +42,7 @@ module.exports = React.createClass({
 	},
 
     render: function() {
-        var className = "action" + (this.props.action.isDisabled ? " is-disabled" : "");
+        var className = "sfqa-action" + (this.props.action.isDisabled ? " is-disabled" : "");
         var icon = "icons/default_120.png";
         var iconColor = "849cb1";
 
@@ -70,10 +70,12 @@ module.exports = React.createClass({
         var inlineStyle = {
             "background-color": "#".concat(iconColor)
         };
+		
+		var iconUrl = chrome.extension.getURL(icon);
 
         return (
         	<div className={className} onClick={this.props.onClick}>
-                <img className="icon" src={icon} style={inlineStyle} />
+                <img className="icon" src={iconUrl} style={inlineStyle} />
                 <div className="title">{this.props.action.label}</div>
             </div>
             );
