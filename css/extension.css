@@ -14,9 +14,9 @@ body {
 	position: relative;
 	-webkit-transform-style: preserve-3d;
 
-    background-color: #344a5f;
+    /*background-color: #344a5f;*/
     /*GUS*/
-    /*background-color: #414141;*/
+    background-color: #414141;
 }
 .card[data-flipped=true] {
 	-webkit-animation: away-and-back 0.4s;
@@ -45,9 +45,10 @@ body {
 	float: left;
 	padding: 10px 20px;
 	width: 120px;
-    outline: 1px solid #2d4356;
+
+    /*outline: 1px solid #2d4356;*/
     /*GUS*/
-    /*outline: 1px solid #333;*/
+    outline: 1px solid #333;
 }
 
 .action.is-disabled {
@@ -92,11 +93,11 @@ body {
 	-webkit-transition: opacity 0.4s;
 	text-align: center;
 
-    outline: 1px solid #2d4356;
-    background-color: #2d4356;
+    /*outline: 1px solid #2d4356;*/
+    /*background-color: #2d4356;*/
     /*GUS*/
-    /*outline: 1px solid #333;*/
-    /*background-color: #333;*/
+    outline: 1px solid #333;
+    background-color: #333;
 }
 .page-nav > ul {
 	list-style: none;
@@ -136,9 +137,9 @@ body {
 	text-indent: 0;
 }
 .page-nav > ul li a::after {
-	background-color: #14222E;
+	/*background-color: #14222E;*/
     /*GUS*/
-    /*background-color: #414141;*/
+    background-color: #414141;
 }
 .page-nav > ul li.active a::after {
 	-webkit-animation: grow 0.4s;
@@ -148,9 +149,9 @@ body {
 .back-nav {
 	height: 50px;
 
-    background-color: #2d4356;
+    /*background-color: #2d4356;*/
     /*GUS*/
-    /*background-color: #414141;*/
+    background-color: #414141;
 }
 
 .back-nav .title {
@@ -244,11 +245,11 @@ body {
 }
 
 .Toolbar {
-    outline: 1px solid #2d4356;
-    background-color: #2d4356;
+    /*outline: 1px solid #2d4356;*/
+    /*background-color: #2d4356;*/
     /*GUS*/
-    /*outline: 1px solid #333;*/
-    /*background-color: #333;*/
+    outline: 1px solid #333;
+    background-color: #333;
 
     text-align: right;
 }
@@ -292,12 +293,6 @@ body {
 }
 .ActionsMenu-dropdownItem {
     padding: 10px 15px;
-    /*outline: 1px solid #2d4356;*/
-    /*background-color: #2d4356;*/
-    /*GUS*/
-    /*outline: 1px solid #333;*/
-    /*background-color: #333;*/
-    /*border-bottom: 1px solid #414141;*/
     cursor: pointer;
 }
 .ActionsMenu-dropdownItem:last-child {
