@@ -8,6 +8,7 @@ var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 var Storage = require("./storage.js");
 var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
 var localStateActions = null;
+var localStateMentions = null;
 var localStateConnection = null;
 var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
 var actionsBlacklist = ["FeedItem.MobileSmartActions"];
@@ -40,10 +41,11 @@ function init() {
 
 init();
 
-// This essentially acts as a router for what function to call
+// This essentially acts as a dispatcher for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.type) {
 
+    // Note: 'return true' in each case where you want to use sendResponse asynchronously
+    switch (request.type) {
         case "getActions":
             getActions(function(err, actions) {
                 if (err) {
@@ -53,7 +55,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     sendResponse(actions);
                 }
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "refreshActions":
             getAndStoreActionsFromServer(function(err, actions) {
@@ -64,7 +66,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     sendResponse(actions);
                 }
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "authorize":
             getAndStoreConnection(function(err, connection) {
@@ -83,21 +85,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     }
                 });
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "getMentions":
             getMentions(request.query, function(err, data) {
                 sendResponse(data);
             });
 
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "getTopics":
             getTopics(request.query, function(err, data) {
                 sendResponse(data);
             });
 
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "logout":
             Storage.clearConnection(function() {
@@ -107,7 +109,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     sendResponse();
                 })
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "submitPost":
             createMessageObject(request.message, function(err, data) {
@@ -124,7 +126,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(data);
                 });
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "submitLink":
             createMessageObject(request.message, function(err, data) {
@@ -142,15 +144,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(data);
                 });
             });
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "launchNewTab":
             launchNewTab(localStateConnection.instance_url + "/" + request.id);
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         case "delete":
             deletePost(request.id, function(){});
-            return true; // necessary to use sendResponse asynchronously
+            return true;
 
         default:
             break;
