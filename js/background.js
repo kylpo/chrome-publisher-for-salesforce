@@ -85,12 +85,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true; // necessary to use sendResponse asynchronously
 
-//        case "getMentions":
-//            getMentions(null, function(err, data) {
-//                sendResponse(data);
-//            });
-//
-//            return true; // necessary to use sendResponse asynchronously
+        case "getMentions":
+            getMentions(request.query, function(err, data) {
+                sendResponse(data);
+            });
+
+            return true; // necessary to use sendResponse asynchronously
+
+        case "getTopics":
+            getTopics(request.query, function(err, data) {
+                sendResponse(data);
+            });
+
+            return true; // necessary to use sendResponse asynchronously
+
         case "logout":
             Storage.clearConnection(function() {
                 localStateConnection = null;
@@ -158,34 +166,6 @@ function launchNewTab(url) {
     })
 }
 
-//function getMentions(startingString, callback) {
-//    var placeholderMentions = [
-//        {
-//            additionalLabel: null,
-//            description: null,
-//            name: "luigi",
-//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-//            recordId: "005i00000049lwbAAA"
-//        },
-//        {
-//            additionalLabel: null,
-//            description: null,
-//            name: "mario",
-//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-//            recordId: "005i00000049lwqAAA"
-//        },
-//        {
-//            additionalLabel: null,
-//            description: null,
-//            name: "mmario",
-//            photoUrl: "https://c.na15.content.force.com/profilephoto/005/T",
-//            recordId: "005i00000049lwvAAA"
-//        }
-//        ];
-//
-//    callback(null, placeholderMentions);
-//}
-
 function createMessageObject(message, callback) {
     var mentionRegex = new RegExp(/(@\[(.+?)\])/); //@[mention] anywhere
 
@@ -228,7 +208,7 @@ function createMessageObject(message, callback) {
         } else if (segment === "") {
             recursivelyBuildMessageWithMentions(segments, messageObject, connection, false, callback);
         } else if (isMention) {
-            Api.getMentions(connection, segment, function (status, response) {
+            Api.getMentionCompletions(connection, segment, function (status, response) {
                 if (status === null || status === undefined) {
                     console.log(response.mentionCompletions);
                     if (response.mentionCompletions.length > 0) {
@@ -280,6 +260,26 @@ function deletePost(id, callback) {
         }
 
         Api.deletePost(connection, id, callback);
+    });
+}
+
+function getMentions(query, callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.getMentionCompletions(connection, query, callback);
+    });
+}
+
+function getTopics(query, callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.getTopicCompletions(connection, query, callback);
     });
 }
 
@@ -335,14 +335,7 @@ function getConnection(callback) {
 
     Storage.getConnection(function(err, connection) {
         if (err || connection === null) {
-//            getAndStoreConnection(function(err, data) {
-//                if (err) {
-                    return callback(err);
-//                } else {
-//                    localStateConnection = data;
-//                    return callback(null, data);
-//                }
-//            });
+            return callback(err);
         } else {
             localStateConnection = connection;
             return callback(null, connection);

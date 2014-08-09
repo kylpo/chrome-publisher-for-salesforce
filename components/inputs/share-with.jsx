@@ -43,7 +43,7 @@ module.exports = React.createClass({
 							<option value={ this.INDIVIDUAL }>{ this.INDIVIDUAL }</option>
 						</select>
 					</div>
-					<div className="share-with-group">
+					<div className="share-with-group">f
 						<input type="text" name="share-with-entity" disabled={ disableShareEntity } placeholder={ placeholder } />
 						<button id="share">{ this.props.shareTitle }</button>
 					</div>

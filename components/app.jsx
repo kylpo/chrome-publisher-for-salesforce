@@ -45,7 +45,7 @@ var App = React.createClass({
 			selectedAction: action
 		});
 	},
-	onBackClicked: function(callback) {
+	onBackClicked: function() {
 		this.setState({
 			flipped: false,
 			unflipped: true
@@ -58,9 +58,8 @@ var App = React.createClass({
 				selectedAction: null
 			});
 
-            if (callback) {
-                callback();
-            }
+            this.refs.actionForm.resetActionForm();
+
 		}.bind(this), 400);
 	},
 
@@ -69,7 +68,7 @@ var App = React.createClass({
     	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
+    		<ActionForm ref="actionForm" action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
     	];
         return (
         	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>

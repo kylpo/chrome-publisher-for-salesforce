@@ -28,13 +28,21 @@ module.exports = React.createClass({
             "response": null
         };
     },
+//    componentWillReceiveProps: function(nextProps) {
+//        this.restoreActionForm();
+//        console.log("now");
+//    },
+//    componentDidUpdate: function() {
+//        this.restoreActionForm();
+////        console.log("now");
+//    },
     onLoading: function() {
         this.setState({"isLoading": true});
     },
     onAfterSubmit: function(response) {
         this.setState({"isLoading": false, "response": response});
     },
-    restoreActionForm: function() {
+    resetActionForm: function() {
         this.setState({"isLoading": false, "response": null});
     },
 	getActionForm: function() {
@@ -45,7 +53,6 @@ module.exports = React.createClass({
 		case this.LINK_POST:
 			return <PostLink onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.FILE_POST:
-            console.log(this);
             return <PostFile onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.PERSONAL_TIL:
             return <PersonalTIL onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
@@ -61,7 +68,7 @@ module.exports = React.createClass({
         if (this.state.isLoading) {
             display = <LoadingIndicator/>;
         } else if (this.state.response != null) {
-            display = <AfterSubmit response={this.state.response} restoreActionForm={this.restoreActionForm} backToGrid={this.props.backToGrid}/>
+            display = <AfterSubmit response={this.state.response} resetActionForm={this.resetActionForm} backToGrid={this.props.backToGrid}/>
         } else {
             display = this.getActionForm();
         }

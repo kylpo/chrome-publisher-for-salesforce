@@ -4,7 +4,7 @@
 
 var React = require("react/addons");
 var PostInput = require("./../inputs/post.jsx");
-var ShareWith = require("./../share-with.jsx");
+var ShareWith = require("./../inputs/share-with.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -32,8 +32,8 @@ module.exports = React.createClass({
     handleUrlChange: function(event) {
         this.setState({url: event.target.value});
     },
-    handleMessageChange: function(event) {
-        this.setState({message: event.target.value});
+    handleMessageChange: function() {
+        this.setState({message: this.refs.postInput.getValue()});
     },
     handleSubmit: function(e) {
         e.preventDefault();
@@ -41,7 +41,7 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitLink",
-            "message": this.state.message,
+            "message": this.refs.postInput.getValue(),
             "attachment": {
                 "attachmentType" : "Link",
                 "url" : this.state.url,
@@ -78,7 +78,7 @@ module.exports = React.createClass({
 				<div className="action-form-group">
 					<label>Link Description</label>
                     <PostInput
-                    value={this.state.message}
+                    ref="postInput"
                     handleChange={this.handleMessageChange}
                     handleSubmit={this.handleSubmit}
                     />

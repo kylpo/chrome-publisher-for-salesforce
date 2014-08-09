@@ -27,8 +27,12 @@ module.exports = function(refreshToken, upsertConnection) {
         Api.apiCallWithRetry(action, args, getAndStoreRefreshedConnection, responseCallback);
     }
 
-    module.getMentions = function getMentions(connection, mention, callback) {
-        apiCallWithRetryAndRefreshToken(Api.getMentions, [connection, mention], callback);
+    module.getMentionCompletions = function getMentionCompletions(connection, query, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getMentionCompletions, [connection, query], callback);
+    };
+
+    module.getTopicCompletions = function getTopicCompletions(connection, query, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getTopicCompletions, [connection, query], callback);
     };
 
     module.submitPost = function submitPost(connection, message, callback) {

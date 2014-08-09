@@ -12,7 +12,8 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitPost",
-            "message": this.state.value
+            "message": this.refs.postInput.getValue()
+//            "message": this.state.value
         };
 
         chrome.runtime.sendMessage(options, function(response) {
@@ -26,11 +27,8 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {value: ""};
     },
-//    componentDidMount: function() {
-//        this.refs.textarea.getDOMNode().focus();
-//    },
-    handleChange: function(event) {
-        this.setState({value: event.target.value});
+    handleChange: function() {
+        this.setState({value: this.refs.postInput.getValue()});
     },
     handleClickSubmit: function() {
         if (this.state.value === "") return false;
@@ -47,7 +45,7 @@ module.exports = React.createClass({
                 <div className="action-form-group">
                     <label>Post Text</label>
                     <PostInput
-                    value={this.state.value}
+                        ref="postInput"
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     />

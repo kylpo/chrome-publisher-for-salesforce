@@ -31,13 +31,13 @@ module.exports = React.createClass({
         var message = "";
 
         if (this.state.done !== "") {
-            message = message.concat("\n\n--What I accomplished today--\n" + this.state.done);
+            message = message.concat("\n\n--What I accomplished today--\n" + this.refs.postInputDone.getValue());
         }
 //        if (this.state.notDone !== "") {
 //            message = message.concat("\n\nNot done:\n" + this.state.notDone);
 //        }
         if (this.state.tomorrow !== "") {
-            message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.state.tomorrow);
+            message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.refs.postInputTomorrow.getValue());
         }
         if (this.state.mood !== "") {
             message = message.concat("\n\n--Overall mood for the day--\n" + this.state.mood);
@@ -50,13 +50,13 @@ module.exports = React.createClass({
 //        this.refs.textarea.getDOMNode().focus();
 //    },
     handleChangeDone: function(event) {
-        this.setState({done: event.target.value});
+        this.setState({done: this.refs.postInputDone.getValue()});
     },
 //    handleChangeNotDone: function(event) {
 //        this.setState({notDone: event.target.value});
 //    },
     handleChangeTomorrow: function(event) {
-        this.setState({tomorrow: event.target.value});
+        this.setState({tomorrow: this.refs.postInputTomorrow.getValue()});
     },
     handleChangeMood: function(event) {
         this.setState({mood: (this.state.mood === event.target.value ? "" : event.target.value)});
@@ -102,7 +102,7 @@ module.exports = React.createClass({
                 <div className="action-form-group">
                     <label>What did you accomplish today?</label>
                     <PostInput
-                    value={this.state.done}
+                    ref="postInputDone"
                     rows="4"
                     handleChange={this.handleChangeDone}
                     handleSubmit={this.handleSubmit}
@@ -112,7 +112,7 @@ module.exports = React.createClass({
                 <div className="action-form-group">
                     <label>What do you hope to do tomorrow?</label>
                     <PostInput
-                    value={this.state.tomorrow}
+                    ref="postInputTomorrow"
                     rows="4"
                     handleChange={this.handleChangeTomorrow}
                     handleSubmit={this.handleSubmit}

@@ -5,9 +5,6 @@
 var React = require("react/addons");
 
 module.exports = React.createClass({
-    getDefaultProps: function() {
-
-    },
     onClickNewTab: function() {
         var options = {
             "type": "launchNewTab",
@@ -28,9 +25,7 @@ module.exports = React.createClass({
         chrome.runtime.sendMessage(options);
 
         // Necessary to reset to action form for popout mode
-        this.props.backToGrid(function() {
-            this.props.restoreActionForm();
-        }.bind(this));
+        this.props.backToGrid();
     },
     render: function() {
         var message = "Failed creating";
