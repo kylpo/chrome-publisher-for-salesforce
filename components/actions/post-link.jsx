@@ -41,7 +41,7 @@ module.exports = React.createClass({
         this.props.onLoading();
 
         var options = {
-            "type": "submitLink",
+            "type": "submitPostWithAttachment",
             "message": this.refs.postInput.getValue(),
             "to": this.refs.shareWith.getVal(),
             "attachment": {

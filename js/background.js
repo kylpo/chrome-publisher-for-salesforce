@@ -49,7 +49,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "getActions":
             getActions(function(err, actions) {
                 if (err) {
-                    console.error(err.description);
+                    console.error(err.message);
                     sendResponse(null);
                 } else {
                     sendResponse(actions);
@@ -60,7 +60,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "refreshActions":
             getAndStoreActionsFromServer(function(err, actions) {
                 if (err) {
-                    console.error(err.description);
+                    console.error(err.message);
                     sendResponse(null);
                 } else {
                     sendResponse(actions);
@@ -71,14 +71,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "authorize":
             getAndStoreConnection(function(err, connection) {
                 if (err) {
-                    console.error(err.description);
+                    console.error(err.message);
                 }
 
                 sendResponse();
 
                 getAndStoreActionsFromServer(function(err, actions) {
                     if (err) {
-                        console.error(err.description);
+                        console.error(err.message);
 //                        sendResponse(null);
                     } else {
 //                        sendResponse(actions);
@@ -114,13 +114,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case "submitPost":
             createMessageObject(request.message, function(err, data) {
                 if (err) {
-                    console.error(err.description);
+                    console.error(err.message);
                     return sendResponse(null);
                 }
 
                 submitPost(request.to, data, function (err, data) {
                     if (err) {
-                        console.error(err.description);
+                        console.error(err.message);
                         return sendResponse(null);
                     }
                     return sendResponse(data);
@@ -128,17 +128,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             return true;
 
-        case "submitLink":
+        case "submitPostWithAttachment":
             createMessageObject(request.message, function(err, data) {
                 if (err) {
-                    console.error(err.description);
+                    console.error(err.message);
                     return sendResponse(null);
                 }
 
                 data.attachment = request.attachment;
                 submitPost(request.to, data, function (err, data) {
                     if (err) {
-                        console.error(err.description);
+                        console.error(err.message);
                         return sendResponse(null);
                     }
                     return sendResponse(data);

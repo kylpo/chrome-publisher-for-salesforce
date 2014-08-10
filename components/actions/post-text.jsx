@@ -12,8 +12,6 @@ module.exports = React.createClass({
         e.preventDefault();
         this.props.onLoading();
 
-        console.log(this.refs.shareWith.getVal());
-        debugger;
         var options = {
             "type": "submitPost",
             "message": this.refs.postInput.getValue(),

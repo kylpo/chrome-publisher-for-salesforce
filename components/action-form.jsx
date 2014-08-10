@@ -6,6 +6,7 @@ var React = require("react");
 var PostText = require("./actions/post-text.jsx");
 var PostLink = require("./actions/post-link.jsx");
 var PostFile = require("./actions/post-file.jsx");
+var PostPoll = require("./actions/post-poll.jsx");
 var PersonalTIL = require("./actions/personal-til.jsx");
 var PersonalMyDay = require("./actions/personal-myday.jsx");
 var AfterSubmit = require("./after-submit.jsx");
@@ -15,6 +16,7 @@ module.exports = React.createClass({
 	TEXT_POST: "FeedItem.TextPost",
 	LINK_POST: "FeedItem.LinkPost",
     FILE_POST: "FeedItem.ContentPost",
+    POLL_POST: "FeedItem.PollPost",
     // HACK
     PERSONAL_TIL: "Personal.TIL",
     PERSONAL_MYDAY: "Personal.MyDay",
@@ -28,14 +30,6 @@ module.exports = React.createClass({
             "response": null
         };
     },
-//    componentWillReceiveProps: function(nextProps) {
-//        this.restoreActionForm();
-//        console.log("now");
-//    },
-//    componentDidUpdate: function() {
-//        this.restoreActionForm();
-////        console.log("now");
-//    },
     onLoading: function() {
         this.setState({"isLoading": true});
     },
@@ -54,6 +48,8 @@ module.exports = React.createClass({
 			return <PostLink onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.FILE_POST:
             return <PostFile onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
+        case this.POLL_POST:
+            return <PostPoll onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.PERSONAL_TIL:
             return <PersonalTIL onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.PERSONAL_MYDAY:

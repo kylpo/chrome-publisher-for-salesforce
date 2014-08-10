@@ -117,15 +117,13 @@ module.exports = React.createClass({
 
     render: function() {
         return (
-            <div>
-                <textarea
-                onChange={this.props.handleChange}
-                ref="textarea"
-                autosize
-                rows={this.props.rows}
-                onKeyDown={this.handleKeyDown}
-                />
-            </div>
+            <textarea
+            onChange={this.props.handleChange}
+            ref="textarea"
+            autosize
+            rows={this.props.rows}
+            onKeyDown={this.handleKeyDown}
+            />
         );
     }
 });
