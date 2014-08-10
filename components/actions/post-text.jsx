@@ -4,16 +4,20 @@
 
 var React = require("react/addons");
 var PostInput = require("./../inputs/post.jsx");
+var ShareWith = require("./../inputs/share-with.jsx");
+var cx = React.addons.classSet;
 
 module.exports = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
         this.props.onLoading();
 
+        console.log(this.refs.shareWith.getVal());
+        debugger;
         var options = {
             "type": "submitPost",
-            "message": this.refs.postInput.getValue()
-//            "message": this.state.value
+            "message": this.refs.postInput.getValue(),
+            "to": this.refs.shareWith.getVal()
         };
 
         chrome.runtime.sendMessage(options, function(response) {
@@ -34,7 +38,7 @@ module.exports = React.createClass({
         if (this.state.value === "") return false;
     },
     render: function() {
-        var cx = React.addons.classSet;
+//        var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
             'is-clickable': this.state.value !== ""
@@ -50,6 +54,7 @@ module.exports = React.createClass({
                     handleSubmit={this.handleSubmit}
                     />
                 </div>
+                <ShareWith ref="shareWith"/>
                 <div className="action-form-group">
                     <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Submit Post</button>
                 </div>

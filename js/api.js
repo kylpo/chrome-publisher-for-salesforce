@@ -39,6 +39,10 @@ module.exports = function(refreshToken, upsertConnection) {
         apiCallWithRetryAndRefreshToken(Api.submitPost, [connection, message], callback);
     };
 
+    module.submitPostTo= function submitPostToRecord(connection, recordId, message, callback) {
+        apiCallWithRetryAndRefreshToken(Api.submitPostToRecord, [connection, recordId, message], callback);
+    };
+
     module.getActions = function getActions(connection, callback) {
         apiCallWithRetryAndRefreshToken(Api.getActions, [connection], callback);
     };

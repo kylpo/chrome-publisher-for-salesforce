@@ -118,7 +118,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                     return sendResponse(null);
                 }
 
-                submitPost(data, function (err, data) {
+                submitPost(request.to, data, function (err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
@@ -136,7 +136,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 }
 
                 data.attachment = request.attachment;
-                submitPost(data, function (err, data) {
+                submitPost(request.to, data, function (err, data) {
                     if (err) {
                         console.error(err.description);
                         return sendResponse(null);
@@ -245,13 +245,18 @@ function createMessageObject(message, callback) {
     }
 }
 
-function submitPost(message, callback) {
+function submitPost(to, message, callback) {
     getConnection( function(err, connection) {
         if (err) {
             return callback(err);
         }
 
-        Api.submitPost(connection, message, callback);
+        if (to !== "") {
+            Api.submitPostTo(connection, to, message, callback);
+        } else {
+            Api.submitPost(connection, message, callback);
+        }
+
     });
 }
 

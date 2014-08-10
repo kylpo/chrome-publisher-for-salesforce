@@ -5,6 +5,7 @@
 var React = require("react/addons");
 var PostInput = require("./../inputs/post.jsx");
 var ShareWith = require("./../inputs/share-with.jsx");
+var cx = React.addons.classSet;
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -42,6 +43,7 @@ module.exports = React.createClass({
         var options = {
             "type": "submitLink",
             "message": this.refs.postInput.getValue(),
+            "to": this.refs.shareWith.getVal(),
             "attachment": {
                 "attachmentType" : "Link",
                 "url" : this.state.url,
@@ -83,6 +85,7 @@ module.exports = React.createClass({
                     handleSubmit={this.handleSubmit}
                     />
 				</div>
+                <ShareWith ref="shareWith"/>
                 <div className="action-form-group">
                     <button className={submitClasses} type="submit">Share Link</button>
                 </div>
