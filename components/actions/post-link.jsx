@@ -8,16 +8,16 @@ var ShareWith = require("./../share-with.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
-    	chrome.tabs.query({
-			active: true,
-			currentWindow: true
-		}, this.tabQueryResponse);
+    	//chrome.tabs.query({
+		//	active: true,
+		//	currentWindow: true
+		//}, this.tabQueryResponse);
 		
         return {
             title: "",
             url: "",
             message: ''
-        }
+        };
     },
 	tabQueryResponse: function(arrayOfTabs) {
 		var activeTab = arrayOfTabs[0];
@@ -61,7 +61,7 @@ module.exports = React.createClass({
     render: function() {		
         var cx = React.addons.classSet;
         var submitClasses = cx({
-            "Form-submitButton": true,
+            "sfqa-Form-submitButton": true,
             'is-clickable': this.state.url !== "" && this.state.title !== ""
         });
 

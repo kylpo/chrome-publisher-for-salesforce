@@ -10,9 +10,10 @@ module.exports = React.createClass({
             "rows": "8"
         }
     },
-//    componentDidMount: function() {
-//        this.refs.textarea.getDOMNode().focus();
-//    },
+    componentDidMount: function() {
+		console.log("Component mounted");
+        this.refs.postField.getDOMNode().focus();
+    },
     handleKeyDown: function(e) {
         // Shift + Enter
         if (e.keyCode === 13 && e.shiftKey) {
@@ -27,7 +28,7 @@ module.exports = React.createClass({
         return (
             <textarea
             onChange={this.props.handleChange}
-            ref="textarea"
+            ref="postField"
             autosize
             rows={this.props.rows}
             onKeyDown={this.handleKeyDown}

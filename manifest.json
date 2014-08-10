@@ -18,6 +18,12 @@
 		"contextMenus",
         "storage"
     ],
+	
+	"web_accessible_resources": [
+		"icons/*.png",
+		"fonts/sf1/styles.css",
+		"fonts/sf1/fonts/*.*"
+	],
 
     "background": {
         "scripts": ["background.built.js", "contexts.js"]
@@ -39,6 +45,6 @@
 	"content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
 		"js": ["./content.built.js"],
-		"css": ["./style.css"]
+		"css": ["./style.css", "./fonts/sf1/style.css"]
 	}]
 }

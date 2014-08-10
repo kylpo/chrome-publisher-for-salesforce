@@ -39,7 +39,7 @@ module.exports = React.createClass({
     render: function() {
         var cx = React.addons.classSet;
         var submitClasses = cx({
-            "Form-submitButton": true,
+            "sfqa-Form-submitButton": true,
             'is-clickable': this.state.value !== ""
         });
         return (
