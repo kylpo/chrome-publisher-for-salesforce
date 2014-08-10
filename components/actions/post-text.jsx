@@ -55,9 +55,7 @@ module.exports = React.createClass({
                     />
                 </div>
                 <ShareWith ref="shareWith"/>
-                <div className="action-form-group">
-                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
-                </div>
+                <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
             </form>
         );
     }

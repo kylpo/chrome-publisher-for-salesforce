@@ -355,37 +355,32 @@ input:focus, textarea:focus {
 }
 
 .Form-submitButton {
-    /*border-width: 0;*/
-    /*border-radius: 5px;*/
-    /*font-size: 16px;*/
-    /*background-color: #F0F1F2;*/
-    /*color: #999;*/
-    /*color: white;*/
-    /*padding: 7px;*/
     display: block;
-    width: 100%;
-    margin: 0;
+    /*width: 100%;*/
+    /*float: right;*/
+    margin: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
     color: #dfe0e1;
     cursor: default;
-    /*display: none;*/
+
     visibility:hidden;
     opacity:0;
     transition:visibility 0s linear 0.5s,opacity 0.5s linear;
 }
 .Form-submitButton.is-clickable {
-    /*display: block;*/
-    visibility:visible;
-    opacity:1;
-    transition-delay:0s;
     background-color: #3f9fd9;
     color: white;
     cursor: pointer;
 
+    visibility:visible;
+    opacity:1;
+    transition-delay:0s;
 }
 
-
 .ButtonGroup {
-    text-align: center;
+    /*text-align: center;*/
 }
 
 .ButtonGroup-button {
@@ -413,7 +408,9 @@ input:focus, textarea:focus {
 }
 
 label.share {
-	display: inline-block;
+    width: 9%;
+    float: left;
+    line-height: 28px;
 }
 
 .not-supported {
@@ -433,6 +430,42 @@ label.share {
 .not-supported .wrapper{
 	display: table-cell;
 	vertical-align: middle;
+}
+
+/****** select2 overrides ********/
+#s2id_share-with-who {
+    width: 91%;
+}
+#s2id_share-with-who:focus {
+    outline: none;
+}
+/*.select2-choice.select2-default{*/
+.select2-container .select2-choice{
+    background-image: none;
+    background-color: #e8eaeb;
+    color: black !important;
+    font-size: 12px;
+    outline: none;
+}
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {
+    border-color: #cfd0d2;
+    background-image: none;
+    background-color: white;
+}
+.select2-dropdown-open .select2-choice {
+    background-image: none;
+    background-color: white;
+}
+.select2-drop-active {
+    border-color: #cfd0d2;
+}
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-ajax-error, .select2-results .select2-selection-limit {
+    background: white;
+}
+.select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
+    border-color: #cfd0d2;
+    background-image: none;
+    background-color: white;
 }
 
 @-webkit-keyframes grow {

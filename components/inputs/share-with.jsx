@@ -26,7 +26,7 @@ module.exports = React.createClass({
                     } else {
                         options.callback({results: response.mentionCompletions});
                     }
-                });
+                });f
             }.bind(this),
             id: function(object) {
                 return object.recordId;
@@ -40,7 +40,8 @@ module.exports = React.createClass({
             formatSearching: function() {
                 return "Searching...";
             },
-            width: '100%'
+            allowClear: true
+//            width: '100%'
         });
     },
     render: function() {

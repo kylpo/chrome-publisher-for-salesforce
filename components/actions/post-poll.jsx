@@ -100,9 +100,7 @@ module.exports = React.createClass({
                     <Input value={this.state.value4} handleChange={this.handleInput4Change} handleSubmit={this.handleSubmit}/>
                 </div>
                 <ShareWith ref="shareWith" minimumInputLength="2" groupOnly={true}/>
-                <div className="action-form-group">
-                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Poll</button>
-                </div>
+                <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Poll</button>
             </form>
             );
     }
