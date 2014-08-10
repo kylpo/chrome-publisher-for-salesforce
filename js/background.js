@@ -80,6 +80,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         console.error(err.description);
 //                        sendResponse(null);
                     } else {
+						console.log("Logged in");
+						chrome.tabs.query({}, function(tabs) {
+							var message = { type: 'authorized' };
+							for( var i = 0; i < tabs.length; ++i ) {
+								chrome.tabs.sendMessage(tabs[i].id, message);
+							}
+						});
 //                        sendResponse(actions);
                     }
                 });
@@ -92,6 +99,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 Storage.clearActions(function() {
                     localStateActions = null;
                     sendResponse();
+					console.log("Logged out");
+					chrome.tabs.query({}, function(tabs) {
+						var message = { type: 'loggedout' };
+						for( var i = 0; i < tabs.length; ++i ) {
+							chrome.tabs.sendMessage(tabs[i].id, message);
+						}
+					});
                 })
             });
             return true; // necessary to use sendResponse asynchronously
@@ -546,6 +560,6 @@ function populateActionsWithDescribeData(actions, position, connection, callback
 	chrome.browserAction.onClicked.addListener( function( tab ) {
 		console.log("Browser action clicked");
 		
-		chrome.tabs.sendMessage( tab.id, { message: 'browserAction' } );
+		chrome.tabs.sendMessage( tab.id, { type: 'browserAction' } );
 	});
 })();

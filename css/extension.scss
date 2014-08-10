@@ -7,10 +7,9 @@
 	overflow: visible;
 }
 .sfqa-sidebar {
-	background-color: white;
-	border-left: 1px solid black;
-	overflow: hidden;
+	margin-top: 44px;
 	height: 100%;
+	padding-right: 22px;
 	transition: width 0.4s, opacity 0.4s;
 }
 .sfqa-sidebar[data-open=false] {
@@ -23,6 +22,8 @@
 }
 .sfqa-inner {
 	width: 320px;
+	box-shadow: 5px 5px 5px #888888;
+	border: 1px solid black;
 }
 
 .sfqa-card {

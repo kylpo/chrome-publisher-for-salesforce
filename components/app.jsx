@@ -7,6 +7,7 @@ var CardFlip = require("./card-flip.jsx");
 var Grid = require("./grid.jsx");
 var BackNav = require("./back-nav.jsx");
 var ActionForm = require("./action-form.jsx");
+var AuthorizePage = require("./authorize-page.jsx");
 
 module.exports = React.createClass({
 	getInitialState: function() {
@@ -70,8 +71,13 @@ module.exports = React.createClass({
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
     		<ActionForm action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
     	];
+		
+		var component = <CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>;
+		if ( this.props.items == null ) {
+			component = <AuthorizePage />;
+		}
         return (
-        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>
+        	component
         );
     }
 });

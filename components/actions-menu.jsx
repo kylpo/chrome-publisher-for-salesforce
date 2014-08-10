@@ -34,7 +34,7 @@ module.exports = React.createClass({
 //            if (response === null) {
 //                console.error("Error re-authorizing");
 //            } else {
-                window.location.reload();
+//                window.location.reload();
 //            }
         });
     },

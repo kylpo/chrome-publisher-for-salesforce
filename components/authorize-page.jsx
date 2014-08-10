@@ -11,7 +11,7 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function() {
-            window.close();
+            //window.close();
         });
     },
     render: function() {
