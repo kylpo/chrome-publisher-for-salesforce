@@ -85,6 +85,8 @@ module.exports = React.createClass({
         });
         var submitClasses = cx({
             "Form-submitButton": true,
+            "skin-Button": true,
+            "is-active": true,
             'is-clickable': this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
         });
 
@@ -103,7 +105,6 @@ module.exports = React.createClass({
                     <label>What did you accomplish today?</label>
                     <PostInput
                     ref="postInputDone"
-                    rows="4"
                     handleChange={this.handleChangeDone}
                     handleSubmit={this.handleSubmit}
                     />
@@ -113,7 +114,6 @@ module.exports = React.createClass({
                     <label>What do you hope to do tomorrow?</label>
                     <PostInput
                     ref="postInputTomorrow"
-                    rows="4"
                     handleChange={this.handleChangeTomorrow}
                     handleSubmit={this.handleSubmit}
                     />
@@ -127,7 +127,7 @@ module.exports = React.createClass({
                     </div>
                 </div>
                 <div className="action-form-group">
-                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Submit Post</button>
+                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
                 </div>
             </form>
             );

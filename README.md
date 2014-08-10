@@ -4,6 +4,7 @@ QuickActionsForSalesforce
 To generate bg bundle:
 browserify js/background.js > background.built.js
 
+npm install salesforce-api-using-access-token@latest --save
 
 Lessons learned:
 - chrome.runtime.sendMessage can only pass a callback with 1 param. This means

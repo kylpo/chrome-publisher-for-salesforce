@@ -66,6 +66,8 @@ module.exports = React.createClass({
     render: function() {
         var submitClasses = cx({
             "Form-submitButton": true,
+            "skin-Button": true,
+            "is-active": true,
             'is-clickable': this.hasRequiredFields()
         });
 
@@ -99,7 +101,7 @@ module.exports = React.createClass({
                 </div>
                 <ShareWith ref="shareWith" minimumInputLength="2" groupOnly={true}/>
                 <div className="action-form-group">
-                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Submit Post</button>
+                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Poll</button>
                 </div>
             </form>
             );

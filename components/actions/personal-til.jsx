@@ -4,6 +4,7 @@
 
 var React = require("react/addons");
 var PostInput = require("./../inputs/post.jsx");
+var cx = React.addons.classSet;
 
 module.exports = React.createClass({
     handleSubmit: function(e) {
@@ -34,9 +35,10 @@ module.exports = React.createClass({
         if (this.state.value === "") return false;
     },
     render: function() {
-        var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
+            "skin-Button": true,
+            "is-active": true,
             'is-clickable': this.state.value !== ""
         });
         return (
@@ -45,12 +47,13 @@ module.exports = React.createClass({
                     <label>Today I learned...</label>
                     <PostInput
                     ref="postInput"
+                    rows="20"
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     />
                 </div>
                 <div className="action-form-group">
-                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Submit Post</button>
+                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
                 </div>
             </form>
             );

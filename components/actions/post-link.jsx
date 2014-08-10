@@ -67,6 +67,8 @@ module.exports = React.createClass({
         var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
+            "skin-Button": true,
+            "is-active": true,
             'is-clickable': this.hasRequiredFields()
         });
 
@@ -84,6 +86,7 @@ module.exports = React.createClass({
 					<label>Link Description</label>
                     <PostInput
                     ref="postInput"
+                    rows="12"
                     handleChange={this.handleMessageChange}
                     handleSubmit={this.handleSubmit}
                     />

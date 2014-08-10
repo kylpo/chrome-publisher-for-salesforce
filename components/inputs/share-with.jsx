@@ -40,7 +40,7 @@ module.exports = React.createClass({
             formatSearching: function() {
                 return "Searching...";
             },
-            width: '250px'
+            width: '100%'
         });
     },
     render: function() {
