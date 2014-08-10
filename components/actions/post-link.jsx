@@ -60,11 +60,14 @@ module.exports = React.createClass({
 //            }
         }.bind(this));
     },
+    hasRequiredFields: function() {
+        return this.state.url !== "" && this.state.title !== "";
+    },
     render: function() {		
         var cx = React.addons.classSet;
         var submitClasses = cx({
             "Form-submitButton": true,
-            'is-clickable': this.state.url !== "" && this.state.title !== ""
+            'is-clickable': this.hasRequiredFields()
         });
 
         return (
@@ -87,7 +90,7 @@ module.exports = React.createClass({
 				</div>
                 <ShareWith ref="shareWith"/>
                 <div className="action-form-group">
-                    <button className={submitClasses} type="submit">Share Link</button>
+                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Link</button>
                 </div>
 			</form>
         );

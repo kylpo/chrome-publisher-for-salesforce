@@ -13,15 +13,13 @@ module.exports = React.createClass({
         e.preventDefault();
         this.props.onLoading();
 
-        var pollChoices = this.getPollChoices();
-
         var options = {
             "type": "submitPostWithAttachment",
             "message": this.refs.postInput.getValue(),
             "to": this.refs.shareWith.getVal(),
             "attachment": {
                 "attachmentType" : "Poll",
-                "pollChoices" : pollChoices
+                "pollChoices" : this.getPollChoices()
             }
         };
 
@@ -62,22 +60,23 @@ module.exports = React.createClass({
     handleInput4Change: function(event) {
         this.setState({value4: event.target.value});
     },
-    handleClickSubmit: function() {
-        if (this.state.message === "") return false;
+    hasRequiredFields: function() {
+        return this.state.message !== "" && this.getPollChoices().length >= 2;
     },
     render: function() {
         var submitClasses = cx({
             "Form-submitButton": true,
-            'is-clickable': this.state.message !== "" && this.getPollChoices().length >= 2
+            'is-clickable': this.hasRequiredFields()
         });
 
         return (
-            <form className="post-text">
+            <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
-                    <label>Post Text</label>
+                    <label>Question</label>
                     <PostInput
                     ref="postInput"
                     rows="4"
+                    placeholder="What would you like to ask?"
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     />
@@ -98,9 +97,9 @@ module.exports = React.createClass({
                     <label>Choice 4</label>
                     <Input value={this.state.value4} handleChange={this.handleInput4Change} handleSubmit={this.handleSubmit}/>
                 </div>
-                <ShareWith ref="shareWith"/>
+                <ShareWith ref="shareWith" minimumInputLength="2" groupOnly={true}/>
                 <div className="action-form-group">
-                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Submit Post</button>
+                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Submit Post</button>
                 </div>
             </form>
             );

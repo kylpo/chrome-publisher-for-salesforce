@@ -31,6 +31,10 @@ module.exports = function(refreshToken, upsertConnection) {
         apiCallWithRetryAndRefreshToken(Api.getMentionCompletions, [connection, query], callback);
     };
 
+    module.getGroupMentionCompletions = function getGroupMentionCompletions(connection, query, callback) {
+        apiCallWithRetryAndRefreshToken(Api.getGroupMentionCompletions, [connection, query], callback);
+    };
+
     module.getTopicCompletions = function getTopicCompletions(connection, query, callback) {
         apiCallWithRetryAndRefreshToken(Api.getTopicCompletions, [connection, query], callback);
     };

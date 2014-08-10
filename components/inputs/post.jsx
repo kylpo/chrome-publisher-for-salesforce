@@ -7,7 +7,8 @@ var React = require("react/addons");
 module.exports = React.createClass({
     getDefaultProps: function() {
         return {
-            "rows": "8"
+            "rows": "8",
+            "placeholder": ""
         }
     },
     getInitialState: function() {
@@ -121,6 +122,7 @@ module.exports = React.createClass({
             onChange={this.props.handleChange}
             ref="textarea"
             autosize
+            placeholder={this.props.placeholder}
             rows={this.props.rows}
             onKeyDown={this.handleKeyDown}
             />

@@ -88,9 +88,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             return true;
 
         case "getMentions":
-            getMentions(request.query, function(err, data) {
-                sendResponse(data);
-            });
+            if (request.groupOnly) {
+                getGroupMentions(request.query, function(err, data) {
+                    sendResponse(data);
+                });
+            } else {
+                getMentions(request.query, function(err, data) {
+                    sendResponse(data);
+                });
+            }
 
             return true;
 
@@ -251,7 +257,7 @@ function submitPost(to, message, callback) {
             return callback(err);
         }
 
-        if (to !== "") {
+        if (to != null && to !== "") {
             Api.submitPostTo(connection, to, message, callback);
         } else {
             Api.submitPost(connection, message, callback);
@@ -279,6 +285,17 @@ function getMentions(query, callback) {
         Api.getMentionCompletions(connection, query, callback);
     });
 }
+
+function getGroupMentions(query, callback) {
+    getConnection( function(err, connection) {
+        if (err) {
+            return callback(err);
+        }
+
+        Api.getGroupMentionCompletions(connection, query, callback);
+    });
+}
+
 
 function getTopics(query, callback) {
     getConnection( function(err, connection) {

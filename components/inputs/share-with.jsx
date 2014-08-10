@@ -10,18 +10,24 @@ module.exports = React.createClass({
     getVal: function() {
         return $(this.refs.shareWithWho.getDOMNode()).select2("val");
     },
+    getDefaultProps: function() {
+        return {
+            minimumInputLength: 1,
+            groupOnly: false
+        };
+    },
     componentDidMount: function() {
         $(this.refs.shareWithWho.getDOMNode()).select2({
-            minimumInputLength: 1,
+            minimumInputLength: this.props.minimumInputLength,
             query: function(options) {
-                chrome.runtime.sendMessage({type: "getMentions", query: options.term}, function(response) {
+                chrome.runtime.sendMessage({type: "getMentions", query: options.term, groupOnly: this.props.groupOnly}, function(response) {
                     if (response === null) {
                         console.error("Error refreshing actions to client");
                     } else {
                         options.callback({results: response.mentionCompletions});
                     }
                 });
-            },
+            }.bind(this),
             id: function(object) {
                 return object.recordId;
             },
