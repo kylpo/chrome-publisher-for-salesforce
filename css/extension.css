@@ -38,10 +38,16 @@ input:focus, textarea:focus {
     outline: none;
     cursor: pointer;
 }
+.skin-Button:active {
+    background: #edeff0;
+}
 .skin-Button.is-active {
-    background-color: #3f9fd9;
-    broder: none;
+    background: #2a94d6;
+    border-color: #2a94d6;
     color: white;
+}
+.skin-Button.is-active:active {
+    background: #1378b7;
 }
 
 .card {
@@ -356,12 +362,13 @@ input:focus, textarea:focus {
 
 .Form-submitButton {
     display: block;
-    /*width: 100%;*/
+    width: calc(100% - 20px);
     /*float: right;*/
     margin: 10px;
     position: fixed;
     bottom: 0;
     right: 0;
+    left: 0;
     color: #dfe0e1;
     cursor: default;
 
@@ -370,7 +377,7 @@ input:focus, textarea:focus {
     transition:visibility 0s linear 0.5s,opacity 0.5s linear;
 }
 .Form-submitButton.is-clickable {
-    background-color: #3f9fd9;
+    background-color: #2a94d6;
     color: white;
     cursor: pointer;
 
@@ -380,7 +387,7 @@ input:focus, textarea:focus {
 }
 
 .ButtonGroup {
-    /*text-align: center;*/
+    text-align: center;
 }
 
 .ButtonGroup-button {
