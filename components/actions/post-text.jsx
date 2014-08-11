@@ -3,7 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./../inputs/post.jsx");
+var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
 var ShareWith = require("./../inputs/share-with.jsx");
 var cx = React.addons.classSet;
 
@@ -14,8 +14,8 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitPost",
-            "message": this.refs.postInput.getValue(),
-            "to": this.refs.shareWith.getVal()
+            "message": this.refs.textarea.getValue(),
+            "to": this.refs.shareWith.getValue()
         };
 
         chrome.runtime.sendMessage(options, function(response) {
@@ -26,7 +26,7 @@ module.exports = React.createClass({
         return {value: ""};
     },
     handleChange: function() {
-        this.setState({value: this.refs.postInput.getValue()});
+        this.setState({value: this.refs.textarea.getValue()});
     },
     handleClickSubmit: function() {
         if (this.state.value === "") return false;
@@ -43,8 +43,8 @@ module.exports = React.createClass({
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
                     <label>Post Text</label>
-                    <PostInput
-                        ref="postInput"
+                    <CompletionTextarea
+                        ref="textarea"
                         rows="20"
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}

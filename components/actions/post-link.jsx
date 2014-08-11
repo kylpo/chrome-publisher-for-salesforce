@@ -3,7 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./../inputs/post.jsx");
+var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
 var ShareWith = require("./../inputs/share-with.jsx");
 var cx = React.addons.classSet;
 
@@ -34,7 +34,7 @@ module.exports = React.createClass({
         this.setState({url: event.target.value});
     },
     handleMessageChange: function() {
-        this.setState({message: this.refs.postInput.getValue()});
+        this.setState({message: this.refs.textarea.getValue()});
     },
     handleSubmit: function(e) {
         e.preventDefault();
@@ -42,8 +42,8 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitPostWithAttachment",
-            "message": this.refs.postInput.getValue(),
-            "to": this.refs.shareWith.getVal(),
+            "message": this.refs.textarea.getValue(),
+            "to": this.refs.shareWith.getValue(),
             "attachment": {
                 "attachmentType" : "Link",
                 "url" : this.state.url,
@@ -79,8 +79,8 @@ module.exports = React.createClass({
 				</div>
 				<div className="action-form-group">
 					<label>Link Description</label>
-                    <PostInput
-                    ref="postInput"
+                    <CompletionTextarea
+                    ref="textarea"
                     rows="12"
                     handleChange={this.handleMessageChange}
                     handleSubmit={this.handleSubmit}

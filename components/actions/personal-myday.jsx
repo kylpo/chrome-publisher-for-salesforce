@@ -3,7 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./../inputs/post.jsx");
+var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -31,13 +31,13 @@ module.exports = React.createClass({
         var message = "";
 
         if (this.state.done !== "") {
-            message = message.concat("\n\n--What I accomplished today--\n" + this.refs.postInputDone.getValue());
+            message = message.concat("\n\n--What I accomplished today--\n" + this.refs.textareaDone.getValue());
         }
 //        if (this.state.notDone !== "") {
 //            message = message.concat("\n\nNot done:\n" + this.state.notDone);
 //        }
         if (this.state.tomorrow !== "") {
-            message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.refs.postInputTomorrow.getValue());
+            message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.refs.textareaTomorrow.getValue());
         }
         if (this.state.mood !== "") {
             message = message.concat("\n\n--Overall mood for the day--\n" + this.state.mood);
@@ -47,13 +47,13 @@ module.exports = React.createClass({
     },
 
     handleChangeDone: function(event) {
-        this.setState({done: this.refs.postInputDone.getValue()});
+        this.setState({done: this.refs.textareaDone.getValue()});
     },
 //    handleChangeNotDone: function(event) {
 //        this.setState({notDone: event.target.value});
 //    },
     handleChangeTomorrow: function(event) {
-        this.setState({tomorrow: this.refs.postInputTomorrow.getValue()});
+        this.setState({tomorrow: this.refs.textareaTomorrow.getValue()});
     },
     handleChangeMood: function(event) {
         this.setState({mood: (this.state.mood === event.target.value ? "" : event.target.value)});
@@ -89,7 +89,7 @@ module.exports = React.createClass({
 
 //        <div className="action-form-group">
 //            <label>What did not get done?</label>
-//            <PostInput
+//            <CompletionTextarea
 //            value={this.state.notDone}
 //            rows="4"
 //            handleChange={this.handleChangeNotDone}
@@ -100,8 +100,8 @@ module.exports = React.createClass({
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
                     <label>What did you accomplish today?</label>
-                    <PostInput
-                    ref="postInputDone"
+                    <CompletionTextarea
+                    ref="textareaDone"
                     handleChange={this.handleChangeDone}
                     handleSubmit={this.handleSubmit}
                     />
@@ -109,8 +109,8 @@ module.exports = React.createClass({
 
                 <div className="action-form-group">
                     <label>What do you hope to do tomorrow?</label>
-                    <PostInput
-                    ref="postInputTomorrow"
+                    <CompletionTextarea
+                    ref="textareaTomorrow"
                     shouldFocus={false}
                     handleChange={this.handleChangeTomorrow}
                     handleSubmit={this.handleSubmit}

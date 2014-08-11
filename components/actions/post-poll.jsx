@@ -3,7 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
-var PostInput = require("./../inputs/post.jsx");
+var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
 var Input = require("./../inputs/input.jsx");
 var ShareWith = require("./../inputs/share-with.jsx");
 var cx = React.addons.classSet;
@@ -15,8 +15,8 @@ module.exports = React.createClass({
 
         var options = {
             "type": "submitPostWithAttachment",
-            "message": this.refs.postInput.getValue(),
-            "to": this.refs.shareWith.getVal(),
+            "message": this.refs.textarea.getValue(),
+            "to": this.refs.shareWith.getValue(),
             "attachment": {
                 "attachmentType" : "Poll",
                 "pollChoices" : this.getPollChoices()
@@ -42,7 +42,7 @@ module.exports = React.createClass({
             })
     },
     handleChange: function() {
-        this.setState({message: this.refs.postInput.getValue()});
+        this.setState({message: this.refs.textarea.getValue()});
     },
     handleInput1Change: function(event) {
         this.setState({value1: event.target.value});
@@ -71,8 +71,8 @@ module.exports = React.createClass({
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
                     <label>Question</label>
-                    <PostInput
-                    ref="postInput"
+                    <CompletionTextarea
+                    ref="textarea"
                     rows="4"
                     placeholder="What would you like to ask?"
                     handleChange={this.handleChange}

@@ -7,7 +7,7 @@ var React = require("react");
 module.exports = React.createClass({
 	MY_FOLLOWERS: "My Followers",
 	LABEL: "To",
-    getVal: function() {
+    getValue: function() {
         return $(this.refs.shareWithWho.getDOMNode()).select2("val");
     },
     getDefaultProps: function() {
