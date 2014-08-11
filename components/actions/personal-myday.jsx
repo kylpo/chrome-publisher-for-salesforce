@@ -16,6 +16,11 @@ module.exports = React.createClass({
     },
     handleSubmit: function(e) {
         e.preventDefault();
+
+        if (!this._hasRequiredFields()) {
+            return false;
+        }
+
         this.props.onLoading();
 
         var options = {
@@ -63,6 +68,9 @@ module.exports = React.createClass({
             return false;
         }
     },
+    _hasRequiredFields: function() {
+        return this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== "";
+    },
     render: function() {
         var cx = React.addons.classSet;
         var happyButtonClasses = cx({
@@ -84,7 +92,7 @@ module.exports = React.createClass({
             "Form-submitButton": true,
             "skin-Button": true,
             "is-active": true,
-            'is-clickable': this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
+            'is-clickable': this._hasRequiredFields()
         });
 
 //        <div className="action-form-group">
@@ -124,9 +132,7 @@ module.exports = React.createClass({
                         <button type="button" className={unhappyButtonClasses} value=":(" onClick={this.handleChangeMood}>:(</button>
                     </div>
                 </div>
-                <div className="action-form-group">
-                    <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
-                </div>
+                <button className={submitClasses} type="submit">Share Post</button>
             </form>
             );
     }

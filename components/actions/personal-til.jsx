@@ -10,6 +10,11 @@ var cx = React.addons.classSet;
 module.exports = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
+
+        if (!this._hasRequiredFields()) {
+            return false;
+        }
+
         this.props.onLoading();
 
         var options = {
@@ -31,12 +36,15 @@ module.exports = React.createClass({
     handleClickSubmit: function() {
         if (this.state.value === "") return false;
     },
+    _hasRequiredFields: function() {
+        return this.state.value !== "";
+    },
     render: function() {
         var submitClasses = cx({
             "Form-submitButton": true,
             "skin-Button": true,
             "is-active": true,
-            'is-clickable': this.state.value !== ""
+            'is-clickable': this._hasRequiredFields()
         });
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
@@ -50,7 +58,7 @@ module.exports = React.createClass({
                     />
                 </div>
                 <ShareWith ref="shareWith" minimumInputLength="2" groupOnly={true}/>
-                <button className={submitClasses} type="submit" onClick={this.handleClickSubmit}>Share Post</button>
+                <button className={submitClasses} type="submit">Share Post</button>
             </form>
             );
     }

@@ -38,6 +38,11 @@ module.exports = React.createClass({
     },
     handleSubmit: function(e) {
         e.preventDefault();
+
+        if (!this._hasRequiredFields()) {
+            return false;
+        }
+
         this.props.onLoading();
 
         var options = {
@@ -55,8 +60,8 @@ module.exports = React.createClass({
             this.props.onAfterSubmit(response);
         }.bind(this));
     },
-    hasRequiredFields: function() {
-        return this.state.url !== "" && this.state.title !== "";
+    _hasRequiredFields: function() {
+        return this.state.url !== "";
     },
     render: function() {		
         var cx = React.addons.classSet;
@@ -64,7 +69,7 @@ module.exports = React.createClass({
             "Form-submitButton": true,
             "skin-Button": true,
             "is-active": true,
-            'is-clickable': this.hasRequiredFields()
+            'is-clickable': this._hasRequiredFields()
         });
 
         return (
@@ -87,9 +92,7 @@ module.exports = React.createClass({
                     />
 				</div>
                 <ShareWith ref="shareWith"/>
-                <div className="action-form-group">
-                    <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Link</button>
-                </div>
+                <button className={submitClasses} type="submit">Share Link</button>
 			</form>
         );
     }

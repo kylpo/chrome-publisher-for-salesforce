@@ -11,6 +11,11 @@ var cx = React.addons.classSet;
 module.exports = React.createClass({
     handleSubmit: function(e) {
         e.preventDefault();
+
+        if (!this._hasRequiredFields()) {
+            return false;
+        }
+
         this.props.onLoading();
 
         var options = {
@@ -56,7 +61,7 @@ module.exports = React.createClass({
     handleInput4Change: function(event) {
         this.setState({value4: event.target.value});
     },
-    hasRequiredFields: function() {
+    _hasRequiredFields: function() {
         return this.state.message !== "" && this.getPollChoices().length >= 2;
     },
     render: function() {
@@ -64,7 +69,7 @@ module.exports = React.createClass({
             "Form-submitButton": true,
             "skin-Button": true,
             "is-active": true,
-            'is-clickable': this.hasRequiredFields()
+            'is-clickable': this._hasRequiredFields()
         });
 
         return (
@@ -96,7 +101,7 @@ module.exports = React.createClass({
                     <Input value={this.state.value4} handleChange={this.handleInput4Change} handleSubmit={this.handleSubmit}/>
                 </div>
                 <ShareWith ref="shareWith" minimumInputLength="2" groupOnly={true}/>
-                <button className={submitClasses} type="submit" disabled={!this.hasRequiredFields()}>Share Poll</button>
+                <button className={submitClasses} type="submit">Share Poll</button>
             </form>
             );
     }
