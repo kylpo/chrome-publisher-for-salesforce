@@ -8,7 +8,8 @@ module.exports = React.createClass({
     getDefaultProps: function() {
         return {
             "rows": "8",
-            "placeholder": ""
+            "placeholder": "",
+            "shouldFocus": true
         }
     },
     getInitialState: function() {
@@ -18,6 +19,10 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function() {
+        if (this.props.shouldFocus) {
+            this.refs.textarea.getDOMNode().focus();
+        }
+
         $(this.refs.textarea.getDOMNode()).atwho({
             at: "@",
             callbacks: {

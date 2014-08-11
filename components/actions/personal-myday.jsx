@@ -111,6 +111,7 @@ module.exports = React.createClass({
                     <label>What do you hope to do tomorrow?</label>
                     <PostInput
                     ref="postInputTomorrow"
+                    shouldFocus={false}
                     handleChange={this.handleChangeTomorrow}
                     handleSubmit={this.handleSubmit}
                     />
