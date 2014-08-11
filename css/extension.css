@@ -12,6 +12,7 @@ body {
 }
 input, textarea {
     background-color: #e8eaeb;
+    color: #525354;
     border-color: #cfd0d2;
     border-radius: 5px;
     border-width: 1px;
@@ -30,7 +31,7 @@ input:focus, textarea:focus {
     font-size: 16px;
     font-weight: 700;
     border: 1px solid #dfe0e1;
-    color: #333;
+    color: #525354;
     background-color: white;
     padding: 7px;
     margin: 5px 15px;
@@ -484,7 +485,7 @@ label.share {
 .select2-container .select2-choice{
     background-image: none;
     background-color: #e8eaeb;
-    color: black !important;
+    color: #525354 !important;
     font-size: 12px;
     outline: none;
 }
