@@ -5,7 +5,7 @@
 var React = require("react/addons");
 var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
 var ShareWith = require("./../inputs/share-with.jsx");
-var cx = React.addons.classSet;
+var SubmitButton = require("./../inputs/submit-button.jsx");
 
 module.exports = React.createClass({
     handleSubmit: function(e) {
@@ -37,13 +37,6 @@ module.exports = React.createClass({
         return this.state.value !== "";
     },
     render: function() {
-        var submitClasses = cx({
-            "Form-submitButton": true,
-            "skin-Button": true,
-            "is-active": true,
-            'is-clickable': this._hasRequiredFields()
-        });
-
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">
@@ -56,7 +49,7 @@ module.exports = React.createClass({
                     />
                 </div>
                 <ShareWith ref="shareWith"/>
-                <button className={submitClasses} type="submit">Share Post</button>
+                <SubmitButton hasRequiredFields={this._hasRequiredFields()} text="Share Post"/>
             </form>
         );
     }

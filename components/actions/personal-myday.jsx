@@ -4,6 +4,8 @@
 
 var React = require("react/addons");
 var CompletionTextarea = require("./../inputs/textarea-with-completions.jsx");
+var SubmitButton = require("./../inputs/submit-button.jsx");
+var cx = React.addons.classSet;
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -72,7 +74,6 @@ module.exports = React.createClass({
         return this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== "";
     },
     render: function() {
-        var cx = React.addons.classSet;
         var happyButtonClasses = cx({
             "ButtonGroup-button": true,
             "skin-Button": true,
@@ -87,12 +88,6 @@ module.exports = React.createClass({
             "ButtonGroup-button": true,
             "skin-Button": true,
             'is-active': this.state.mood === ":("
-        });
-        var submitClasses = cx({
-            "Form-submitButton": true,
-            "skin-Button": true,
-            "is-active": true,
-            'is-clickable': this._hasRequiredFields()
         });
 
 //        <div className="action-form-group">
@@ -114,7 +109,6 @@ module.exports = React.createClass({
                     handleSubmit={this.handleSubmit}
                     />
                 </div>
-
                 <div className="action-form-group">
                     <label>What do you hope to do tomorrow?</label>
                     <CompletionTextarea
@@ -132,7 +126,7 @@ module.exports = React.createClass({
                         <button type="button" className={unhappyButtonClasses} value=":(" onClick={this.handleChangeMood}>:(</button>
                     </div>
                 </div>
-                <button className={submitClasses} type="submit">Share Post</button>
+                <SubmitButton hasRequiredFields={this._hasRequiredFields()} text="Share Post"/>
             </form>
             );
     }
