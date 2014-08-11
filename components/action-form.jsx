@@ -64,7 +64,7 @@ module.exports = React.createClass({
         if (this.state.isLoading) {
             display = <LoadingIndicator/>;
         } else if (this.state.response != null) {
-            display = <AfterSubmit response={this.state.response} resetActionForm={this.resetActionForm} backToGrid={this.props.backToGrid}/>
+            display = <AfterSubmit response={this.state.response} action={this.props.action} resetActionForm={this.resetActionForm} backToGrid={this.props.backToGrid}/>
         } else {
             display = this.getActionForm();
         }

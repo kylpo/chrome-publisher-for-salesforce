@@ -13,6 +13,9 @@ module.exports = React.createClass({
 
         this.sendMessage(options);
     },
+    onClose: function() {
+        window.close();
+    },
     handleUndo: function() {
         var options = {
             "type": "delete",
@@ -28,19 +31,38 @@ module.exports = React.createClass({
         this.props.backToGrid();
     },
     render: function() {
-        var message = "Failed creating";
+        var titleImage = "";
+        var title = "";
+        var subTitle = "";
+        var resourceLink = "";
+        var buttons = "";
+        var undoButton = "";
+        var openButton = "";
+//        var closeButton = <button className="AfterSubmit-button AfterSubmit-button--close" onClick={this.onClose}>Close</button>;
 
         if (this.props.response) {
-            message = <p className="AfterSubmit-title">Successfully created!</p>;
-            var undo = <button className="AfterSubmit-button skin-Button" onClick={this.handleUndo}>Undo</button>;
-            var newTab = <button className="AfterSubmit-button skin-Button is-active" onClick={this.onClickNewTab}>Open in new tab</button>;
+            titleImage = <div className="AfterSubmit-titleImage AfterSubmit-titleImage--success icon icon-utility-success"/>;
+            title = <div className="AfterSubmit-title">Success</div>;
+            subTitle = <div className="AfterSubmit-subtitle">You just created a <strong>{this.props.action.label}</strong>.</div>;
+            buttons = (
+                <div className="AfterSubmit-buttons">
+                    <button className="AfterSubmit-button skin-Button is-error" onClick={this.handleUndo}><span className="fa fa-undo"/> Undo</button>
+                    <button className="AfterSubmit-button AfterSubmit-button--fullWidth skin-Button is-active" onClick={this.onClickNewTab}><span className="icon icon-utility-share"/> Open</button>
+                </div>
+            );
+        } else {
+            titleImage = <div className="AfterSubmit-titleImage AfterSubmit-titleImage--error icon icon-utility-error"/>;
+            title = <div className="AfterSubmit-title">Error</div>;
+            subTitle = <div className="AfterSubmit-subtitle">Your <strong>{this.props.action.label}</strong> was not created.</div>;
         }
 
         return (
             <div className="AfterSubmit">
-            {message}
-            {undo}
-            {newTab}
+            {titleImage}
+            {title}
+            {subTitle}
+            {resourceLink}
+            {buttons}
             </div>
             );
     }

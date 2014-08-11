@@ -41,7 +41,6 @@ module.exports = React.createClass({
                 return "Searching...";
             },
             allowClear: true
-//            width: '100%'
         });
     },
     render: function() {

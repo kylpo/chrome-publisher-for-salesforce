@@ -4,12 +4,11 @@ body {
     max-height: 430px;
 	overflow-x: hidden;
     /*overflow: hidden;*/
-	margin: 0px;
+	margin: 0;
+    color: #525354;
 	background-color: #999;
 	-webkit-perspective: 800px;
 	font-family: ProximaNova, Arial, sans-serif;
-/*'Open Sans', sans-serif;*/
-
 }
 input, textarea {
     background-color: #e8eaeb;
@@ -45,6 +44,9 @@ input:focus, textarea:focus {
     background: #2a94d6;
     border-color: #2a94d6;
     color: white;
+}
+.skin-Button.is-error:hover {
+    color: #CF5C60;
 }
 .skin-Button.is-active:active {
     background: #1378b7;
@@ -236,6 +238,7 @@ input:focus, textarea:focus {
 .action-form .action-form-group label {
 	display: block;
     color: #6e7e8a;
+    /*color: #647687;*/
 }
 
 .action-form .action-form-group input, .action-form .action-form-group textarea {
@@ -348,8 +351,38 @@ input:focus, textarea:focus {
 .AfterSubmit {
     text-align: center;
 }
+.AfterSubmit-titleImage {
+    font-size: 80px;
+    margin: 20px 0;
+    color: #2A94D6;
+}
+.AfterSubmit-titleImage--success {
+    color: #4AB471;
+}
+.AfterSubmit-titleImage--error {
+    color: #CF5C60;
+}
 .AfterSubmit-title {
-    font-size: 24px;
+    font-size: 22px;
+    margin: 10px 0;
+}
+.AfterSubmit-subtitle {
+    /*color: #666;*/
+    color: #6e7e8a;
+    margin: 10px 0;
+}
+.AfterSubmit-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.AfterSubmit-button {
+    margin: 10px;
+    width: 50%;
+}
+.AfterSubmit-button--fullWidth {
+    width: calc(100% - 20px);
 }
 
 .Authorize {
