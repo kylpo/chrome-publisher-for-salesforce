@@ -43,7 +43,7 @@ module.exports = React.createClass({
         if (this.props.response) {
             titleImage = <div className="AfterSubmit-titleImage AfterSubmit-titleImage--success icon icon-utility-success"/>;
             title = <div className="AfterSubmit-title">Success</div>;
-            subTitle = <div className="AfterSubmit-subtitle">You just created a <strong>{this.props.action.label}</strong>.</div>;
+            subTitle = <div className="AfterSubmit-subtitle">You just created a <strong>{this.props.label}</strong>.</div>;
             buttons = (
                 <div className="AfterSubmit-buttons">
                     <button className="AfterSubmit-button skin-Button is-error" onClick={this.handleUndo}><span className="fa fa-undo"/> Undo</button>
@@ -53,7 +53,7 @@ module.exports = React.createClass({
         } else {
             titleImage = <div className="AfterSubmit-titleImage AfterSubmit-titleImage--error icon icon-utility-error"/>;
             title = <div className="AfterSubmit-title">Error</div>;
-            subTitle = <div className="AfterSubmit-subtitle">Your <strong>{this.props.action.label}</strong> was not created.</div>;
+            subTitle = <div className="AfterSubmit-subtitle">Your <strong>{this.props.label}</strong> was not created.</div>;
         }
 
         return (
