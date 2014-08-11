@@ -7,25 +7,13 @@ var PostInput = require("./../inputs/post.jsx");
 var ShareWith = require("./../share-with.jsx");
 
 module.exports = React.createClass({
-    getInitialState: function() {
-    	//chrome.tabs.query({
-		//	active: true,
-		//	currentWindow: true
-		//}, this.tabQueryResponse);
-		
+    getInitialState: function() {		
         return {
-            title: "",
-            url: "",
+            title: window.document.title,
+            url: window.location.toString(),
             message: ''
         };
     },
-	tabQueryResponse: function(arrayOfTabs) {
-		var activeTab = arrayOfTabs[0];
-		this.setState({
-			title: activeTab.title,
-			url: activeTab.url
-		});
-	},
     handleTitleChange: function(event) {
         this.setState({title: event.target.value});
     },
