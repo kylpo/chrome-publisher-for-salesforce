@@ -53,11 +53,6 @@ module.exports = React.createClass({
 
         chrome.runtime.sendMessage(options, function(response) {
             this.props.onAfterSubmit(response);
-//            if (response === null) {
-//                console.error("Error getting submitting Post");
-//            } else {
-//                console.log(response);
-//            }
         }.bind(this));
     },
     hasRequiredFields: function() {

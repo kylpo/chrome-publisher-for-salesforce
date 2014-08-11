@@ -27,6 +27,7 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             "isLoading": false,
+            "shouldShowAfterSubmit": false,
             "response": null
         };
     },
@@ -34,10 +35,10 @@ module.exports = React.createClass({
         this.setState({"isLoading": true});
     },
     onAfterSubmit: function(response) {
-        this.setState({"isLoading": false, "response": response});
+        this.setState({"isLoading": false, "shouldShowAfterSubmit": true, "response": response});
     },
     resetActionForm: function() {
-        this.setState({"isLoading": false, "response": null});
+        this.setState({"isLoading": false, "shouldShowAfterSubmit": false, "response": null});
     },
 	getActionForm: function() {
 		var name = this.props.action && this.props.action.name;
@@ -64,7 +65,7 @@ module.exports = React.createClass({
 
         if (this.state.isLoading) {
             display = <LoadingIndicator/>;
-        } else if (this.state.response != null) {
+        } else if (this.state.shouldShowAfterSubmit) {
             display = <AfterSubmit response={this.state.response} label={label} resetActionForm={this.resetActionForm} backToGrid={this.props.backToGrid}/>
         } else {
             display = this.getActionForm();

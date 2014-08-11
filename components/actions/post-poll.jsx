@@ -25,10 +25,6 @@ module.exports = React.createClass({
 
         chrome.runtime.sendMessage(options, function(response) {
             this.props.onAfterSubmit(response);
-//            if (response === null) {
-//                console.error("Error getting submitting Post");
-//            } else {
-//            }
         }.bind(this));
     },
     getInitialState: function() {

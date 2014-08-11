@@ -46,9 +46,6 @@ module.exports = React.createClass({
         return "#[MyDay]" + message;
     },
 
-//    componentDidMount: function() {
-//        this.refs.textarea.getDOMNode().focus();
-//    },
     handleChangeDone: function(event) {
         this.setState({done: this.refs.postInputDone.getValue()});
     },
