@@ -3,7 +3,7 @@
 
     "name": "Quick Actions for Gus",
     "description": "Perform Salesforce's Quick Actions from a browser extension!",
-    "version": "0.0.4",
+    "version": "0.0.6",
 	
 	"icons": {
 		"16": "gus-icon.png",
