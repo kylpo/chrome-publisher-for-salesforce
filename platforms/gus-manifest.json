@@ -12,9 +12,8 @@
 	},
 
     "permissions": [
-        "https://*.salesforce.com/",
         "identity",
-		"tabs",
+		"activeTab",
 		"contextMenus",
         "storage"
     ],
