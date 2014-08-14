@@ -12,6 +12,7 @@
 	},
 
     "permissions": [
+        "https://*.salesforce.com/",
         "identity",
 		"activeTab",
 		"contextMenus",
