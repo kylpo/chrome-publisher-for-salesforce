@@ -47,7 +47,7 @@ module.exports = React.createClass({
             buttons = (
                 <div className="AfterSubmit-buttons">
                     <button className="AfterSubmit-button skin-Button is-error" onClick={this.handleUndo}><span className="fa fa-undo"/> Undo</button>
-                    <button className="AfterSubmit-button AfterSubmit-button--fullWidth skin-Button is-active" onClick={this.onClickNewTab}><span className="icon icon-utility-share"/> Open</button>
+                    <button className="AfterSubmit-button skin-Button is-active" onClick={this.onClickNewTab}><span className="icon icon-utility-share"/> Open</button>
                 </div>
             );
         } else {
