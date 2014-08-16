@@ -20,15 +20,15 @@
     ],
 	
 	"web_accessible_resources": [
-		"icons/*.png",
-		"fonts/sf1/styles.css",
-		"fonts/sf1/fonts/*.*",
-		"fonts/font-awesome-4.1.0/css/font-awesome.min.css",
-		"fonts/font-awesome-4.1.0/fonts/*.*"
+		"build/icons/*.png",
+		"build/fonts/sf1/styles.css",
+		"build/fonts/sf1/fonts/*.*",
+		"build/fonts/font-awesome-4.1.0/css/font-awesome.min.css",
+		"build/fonts/font-awesome-4.1.0/fonts/*.*"
 	],
 
     "background": {
-        "scripts": ["background.built.js", "contexts.js"]
+        "scripts": ["./build/background.built.js"]
     },
 
     "browser_action": {
@@ -46,7 +46,7 @@
 	
 	"content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
-		"js": ["./content.built.js"],
-		"css": ["./style.css", "./fonts/sf1/style.css", "./fonts/font-awesome-4.1.0/css/font-awesome.min.css"]
+		"js": ["./build/content.built.js"],
+		"css": ["./build/style.css", "./build/fonts/sf1/style.css", "./build/fonts/font-awesome-4.1.0/css/font-awesome.min.css"]
 	}]
 }

@@ -1,8 +1,9 @@
 'use strict';
 
-var clientId = require("../config.js").clientId;
-var clientSecret = require("../config.js").clientSecret;
-var host = require("../config.js").host;
+var Config = require("../../config.js");
+var clientId = Config.clientId;
+var clientSecret = Config.clientSecret;
+var host = Config.host;
 var Auth = require("salesforce-chrome-oauth")(clientId, clientSecret, host);
 
 var Storage = require("./storage.js");

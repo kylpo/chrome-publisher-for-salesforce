@@ -7,32 +7,32 @@ var React = require("react");
 module.exports = React.createClass({
     actionsWithoutDescribableIcon: {
         "Post" : {
-            "icon" : chrome.extension.getURL("icons/post_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/post_120.png"),
             "iconColor" : "4eb1cb"
         },
         "Link" : {
-            "icon" : chrome.extension.getURL("icons/link_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/link_120.png"),
             "iconColor" : "6078c2"
         },
         "File" : {
-            "icon" : chrome.extension.getURL("icons/file_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/file_120.png"),
             "iconColor" : "b19f7e"
         },
         "Poll" : {
-            "icon" : chrome.extension.getURL("icons/poll_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/poll_120.png"),
             "iconColor" : "5181c4"
         },
         "New Note" : {
-            "icon" : chrome.extension.getURL("icons/note_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/note_120.png"),
             "iconColor" : "dcd861"
         },
         // HACK!!!
         "#TIL" : {
-            "icon" : chrome.extension.getURL("icons/custom57_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/custom57_120.png"),
             "iconColor" : "849cb1"
         },
         "#MyDay" : {
-            "icon" : chrome.extension.getURL("icons/custom3_120.png"),
+            "icon" : chrome.extension.getURL("build/icons/custom3_120.png"),
             "iconColor" : "849cb1"
         }
     },
@@ -43,7 +43,7 @@ module.exports = React.createClass({
 
     render: function() {
         var className = "sfqa-action" + (this.props.action.isDisabled ? " is-disabled" : "");
-        var icon = chrome.extension.getURL("icons/default_120.png");
+        var icon = chrome.extension.getURL("build/icons/default_120.png");
         var iconColor = "849cb1";
 
         if (this.props.action.label in this.actionsWithoutDescribableIcon) {

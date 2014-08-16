@@ -4,12 +4,12 @@ module.exports = function (grunt) {
 
         watch: {
             react: {
-                files: ['components/*.jsx', 'components/*/*.jsx', 'js/*.js'],
-                tasks: ['browserify']
+                files: [ './app/components/*.jsx', './app/components/*/*.jsx', './app/js/*.js' ],
+                tasks: [ 'browserify' ]
             },
 			sass: {
-				files: ['css/*.scss'],
-				tasks: ['sass']
+				files: [ './app/css/*.scss' ],
+				tasks: [ 'sass' ]
 			}
         },
 
@@ -18,38 +18,55 @@ module.exports = function (grunt) {
                 transform: [ require('grunt-react').browserify ]
             },
             client: {
-                src: ['components/*.jsx', 'components/*/*.jsx', 'secret.js'],
-                dest: 'app.built.js'
+                src: [ './app/components/*.jsx', './app/components/*/*.jsx' ],
+                dest: './build/app.built.js'
             },
             background: {
-            	src: 'js/background.js',
-            	dest: 'background.built.js'
+            	src: [ './app/js/background.js', './app/js/contexts.js' ],
+            	dest: './build/background.built.js'
             },
 			content: {
-				src: 'js/content.js',
-				dest: 'content.built.js'
+				src: [ './app/js/content.js' ],
+				dest: './build/content.built.js'
 			}
         },
 		
-		sass : {
+		sass: {
 			dist: {
 				options: {
 					style: 'expanded'
 				},
 				files: {
-					'./style.css': './css/style.scss'
+					'./build/style.css': './app/css/style.scss'
 				}
 			}
-		}
+		},
+
+        copy: {
+            dist: {
+                files: [{
+                    expand: true,
+                    src: [ './**/*.*' ],
+                    dest: './build/',
+                    cwd: './app/assets/'
+                }]
+            }
+        },
+
+        clean: [ './build' ]
     });
 
     grunt.loadNpmTasks('grunt-react');
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-sass');
 
     grunt.registerTask('default', [
+        'clean',
         'browserify',
-		'sass'
+		'sass',
+        'copy'
     ]);
 };

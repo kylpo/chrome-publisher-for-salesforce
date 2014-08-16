@@ -1,6 +1,6 @@
 .idea
-node_modules
+node_modules/
+bower_components/
 .project
-app.built.js
-background.built.js
 config.js
+build/
