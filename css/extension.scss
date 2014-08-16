@@ -3,13 +3,12 @@
 	z-index: 1000;
 	top: 0px;
 	right: 0px;
-	bottom: 0px;
 	overflow: visible;
 }
 .sfqa-sidebar {
-	margin-top: 44px;
-	height: 100%;
-	padding-right: 22px;
+	position: relative;
+	top: 44px;
+	right: 22px;
 	transition: width 0.4s, opacity 0.4s;
 }
 .sfqa-sidebar[data-open=false] {
@@ -17,10 +16,11 @@
 	opacity: 0.0;
 }
 .sfqa-sidebar[data-open=true] {
-	width: 320px;
+	width: 330px;
 	opacity: 1.0;
 }
 .sfqa-inner {
+	box-sizing: content-box;
 	width: 320px;
 	box-shadow: 5px 5px 5px #888888;
 	border: 1px solid black;
@@ -57,11 +57,12 @@
 	height: 471px;
 }
 .sfqa-grid .sfqa-action {
+	box-sizing: border-box;
 	text-align: center;
 	cursor: pointer;
 	float: left;
 	padding: 10px 20px;
-	width: 120px;
+	width: 160px;
     outline: 1px solid #2d4356;
     /*GUS*/
     /*outline: 1px solid #333;*/
