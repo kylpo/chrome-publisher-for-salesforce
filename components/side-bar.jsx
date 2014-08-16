@@ -13,7 +13,7 @@ module.exports = React.createClass({
         return (
         	<div className="sfqa-sidebar" data-open={this.props.open}>
                 <div className="sfqa-inner">
-					<App items={this.props.items} />
+					<App items={this.props.items} prefill={this.props.prefill} />
 				</div>
             </div>
             );

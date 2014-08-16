@@ -1,29 +1,35 @@
 chrome.contextMenus.create({
-	title: "Share on Salesforce",
+	title: "Share Link",
 	contexts: ["link"],
-	onclick: function() {
-		console.log("Launching Salesforce Quick Actions");
-	}
-}, function() {
-	console.log("'Share Link' context menu item for Salesforce Quick Actions created");
+	onclick: shareLink
 });
 
 chrome.contextMenus.create({
 	title: "Share Image",
 	contexts: ["image"],
-	onclick: function() {
-		console.log("Launching Salesforce Quick Actions");
-	}
-}, function() {
-	console.log("'Share Image' context menu item for Salesforce Quick Actions created");
+	onclick: shareImage
 });
 
-chrome.contextMenus.create({
-	title: "Share Video",
-	contexts: ["video"],
-	onclick: function() {
-		console.log("Launching Salesforce Quick Actions");
-	}
-}, function() {
-	console.log("'Share Video' context menu item for Salesforce Quick Actions created");
-});
+function shareLink( info, tab ) {
+	console.log("Sharing args: ", arguments);
+	console.log("Sharing link: ", info.linkUrl);
+	
+	sendShareLink( tab.id, info.linkUrl );
+}
+
+function shareImage( info, tab ) {
+	console.log("Sharing args: ", arguments);
+	console.log("Sharing image: ", info.srcUrl);
+
+	sendShareLink( tab.id, info.srcUrl );
+}
+
+function sendShareLink( tabId, url ) {
+	chrome.tabs.sendMessage(tabId, {
+		type: 'browserAction',
+		action: 'FeedItem.LinkPost',
+		data: {
+			url: url
+		}
+	});
+}
