@@ -11,13 +11,13 @@ module.exports = React.createClass({
         };
 
         chrome.runtime.sendMessage(options, function() {
-            window.close();
+            //window.close();
         });
     },
     render: function() {
         return (
-            <div className="Authorize">
-                <button className="AfterSubmit-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
+            <div className="sfqa-Authorize">
+                <button className="sfqa-AfterSubmit-button skin-Button is-active" onClick={this.handleClickAuthorize}>Authorize</button>
                 <p>(In popup window)</p>
             </div>
             );

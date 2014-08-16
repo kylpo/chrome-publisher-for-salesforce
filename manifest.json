@@ -18,14 +18,19 @@
 		"contextMenus",
         "storage"
     ],
+	
+	"web_accessible_resources": [
+		"icons/*.png",
+		"fonts/sf1/styles.css",
+		"fonts/sf1/fonts/*.*"
+	],
 
     "background": {
         "scripts": ["background.built.js", "contexts.js"]
     },
 
     "browser_action": {
-        "default_icon": "icon-flat.png",
-        "default_popup": "popup.html"
+        "default_icon": "icon-flat.png"
     },
 
     "commands": {
@@ -35,5 +40,11 @@
             },
             "global" : true
         }
-    }
+    },
+	
+	"content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["./content.built.js"],
+		"css": ["./style.css", "./fonts/sf1/style.css"]
+	}]
 }

@@ -13,7 +13,7 @@ module.exports = React.createClass({
 	},
     render: function() {
         return (
-        	<div className="back-nav">
+        	<div className="sfqa-back-nav">
 				<div className="icon icon-utility-back" onClick={this.props.onBackClicked}>
 				</div>
 				<div className="title">

@@ -9,7 +9,7 @@ var BackNav = require("./back-nav.jsx");
 var ActionForm = require("./action-form.jsx");
 var AuthorizePage = require("./authorize-page.jsx");
 
-var App = React.createClass({
+module.exports = React.createClass({
 	getInitialState: function() {
 		return {
 			flipped: false,
@@ -70,19 +70,13 @@ var App = React.createClass({
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
     		<ActionForm ref="actionForm" action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
     	];
+		
+		var component = <CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>;
+		if ( this.props.items == null ) {
+			component = <AuthorizePage />;
+		}
         return (
-        	<CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>
+        	component
         );
     }
 });
-
-chrome.runtime.sendMessage({type: "getActions"}, function(response) {
-    if (response === null) {
-        React.renderComponent(<AuthorizePage/>, document.body);
-//        console.error("Error getting actions to client");
-    } else {
-        console.log(response);
-        React.renderComponent(<App items={response}/>, document.body);
-    }
-});
-

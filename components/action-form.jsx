@@ -56,7 +56,7 @@ module.exports = React.createClass({
         case this.PERSONAL_MYDAY:
             return <PersonalMyDay onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
 		default:
-			return <div className="not-supported"><div className="wrapper"><div className="emphasize">{ this.props.action && this.props.action.label }</div><div>Not Supported Yet</div></div></div>;
+			return <div className="sfqa-not-supported"><div className="wrapper"><div className="emphasize">{ this.props.action && this.props.action.label }</div><div>Not Supported Yet</div></div></div>;
 		}
 	},
     render: function() {
@@ -72,7 +72,7 @@ module.exports = React.createClass({
         }
 
         return (
-			<div className="action-form">
+			<div className="sfqa-action-form">
 				{ display }
 			</div>
         );

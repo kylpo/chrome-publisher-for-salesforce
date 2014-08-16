@@ -89,6 +89,10 @@ module.exports = React.createClass({
             "skin-Button": true,
             'is-active': this.state.mood === ":("
         });
+        var submitClasses = cx({
+            "sfqa-Form-submitButton": true,
+            'is-clickable': this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== ""
+        });
 
 //        <div className="action-form-group">
 //            <label>What did not get done?</label>

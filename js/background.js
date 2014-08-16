@@ -28,18 +28,18 @@ var personalActions = [
 //
 //});
 
-function init() {
-    chrome.runtime.getPlatformInfo(function(info) {
-        if (info.os === "mac") {
-            // Feed item ContentPost is not available because of a bug in Chrome when launching file chooser
-            // see https://code.google.com/p/chromium/issues/detail?id=61632
-            actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
-            actionsBlacklist.push("FeedItem.ContentPost");
-        }
-    });
-}
-
-init();
+//function init() {
+//    chrome.runtime.getPlatformInfo(function(info) {
+//        if (info.os === "mac") {
+//            // Feed item ContentPost is not available because of a bug in Chrome when launching file chooser
+//            // see https://code.google.com/p/chromium/issues/detail?id=61632
+//            actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+//            actionsBlacklist.push("FeedItem.ContentPost");
+//        }
+//    });
+//}
+//
+//init();
 
 // This essentially acts as a dispatcher for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -81,6 +81,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                         console.error(err.message);
 //                        sendResponse(null);
                     } else {
+						console.log("Logged in");
+						chrome.tabs.query({}, function(tabs) {
+							var message = { type: 'authorized' };
+							for( var i = 0; i < tabs.length; ++i ) {
+								chrome.tabs.sendMessage(tabs[i].id, message);
+							}
+						});
 //                        sendResponse(actions);
                     }
                 });
@@ -113,6 +120,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 Storage.clearActions(function() {
                     localStateActions = null;
                     sendResponse();
+					console.log("Logged out");
+					chrome.tabs.query({}, function(tabs) {
+						var message = { type: 'loggedout' };
+						for( var i = 0; i < tabs.length; ++i ) {
+							chrome.tabs.sendMessage(tabs[i].id, message);
+						}
+					});
                 })
             });
             return true;
@@ -502,3 +516,11 @@ function populateActionsWithDescribeData(actions, position, connection, callback
         populateActionsWithDescribeData(actions, position + 1, connection, callback)
     }
 }
+
+(function( undefined ) {
+	chrome.browserAction.onClicked.addListener( function( tab ) {
+		console.log("Browser action clicked");
+		
+		chrome.tabs.sendMessage( tab.id, { type: 'browserAction' } );
+	});
+})();
