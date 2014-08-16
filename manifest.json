@@ -22,7 +22,9 @@
 	"web_accessible_resources": [
 		"icons/*.png",
 		"fonts/sf1/styles.css",
-		"fonts/sf1/fonts/*.*"
+		"fonts/sf1/fonts/*.*",
+		"fonts/font-awesome-4.1.0/css/font-awesome.min.css",
+		"fonts/font-awesome-4.1.0/fonts/*.*"
 	],
 
     "background": {
@@ -45,6 +47,6 @@
 	"content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
 		"js": ["./content.built.js"],
-		"css": ["./style.css", "./fonts/sf1/style.css"]
+		"css": ["./style.css", "./fonts/sf1/style.css", "./fonts/font-awesome-4.1.0/css/font-awesome.min.css"]
 	}]
 }
