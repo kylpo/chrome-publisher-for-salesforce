@@ -8,12 +8,44 @@ var ShareWith = require("./../inputs/share-with.jsx");
 var SubmitButton = require("./../inputs/submit-button.jsx");
 
 module.exports = React.createClass({
-    getInitialState: function() {		
+    getInitialState: function() {
+        var title = window.document.title;
+        var url = window.location.toString();
+
+        if ( this.props.data ) {
+            if ( this.props.data.title ) {
+                title = this.props.data.title;
+            }
+
+            if ( this.props.data.url ) {
+                url = this.props.data.url;
+            }
+        }
+
         return {
-            title: window.document.title,
-            url: window.location.toString(),
+            title: title,
+            url: url,
             message: ''
         };
+    },
+    componentWillReceiveProps: function( nextProps ) {
+        if ( nextProps.data ) {
+            var title = this.state.title;
+            var url = this.state.url;
+
+            if ( nextProps.data.title ) {
+                title = nextProps.data.title;
+            }
+
+            if ( nextProps.data.url ) {
+                url = nextProps.data.url;
+            }
+
+            this.setState({
+                title: title,
+                url: url
+            });
+        }
     },
     handleTitleChange: function(event) {
         this.setState({title: event.target.value});

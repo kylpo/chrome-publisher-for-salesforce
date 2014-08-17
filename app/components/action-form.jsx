@@ -46,7 +46,7 @@ module.exports = React.createClass({
 		case this.TEXT_POST:
 			return <PostText onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
 		case this.LINK_POST:
-			return <PostLink onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
+			return <PostLink onLoading={this.onLoading} data={this.props.data} onAfterSubmit={this.onAfterSubmit}/>;
         case this.FILE_POST:
             return <PostFile onLoading={this.onLoading} onAfterSubmit={this.onAfterSubmit}/>;
         case this.POLL_POST:

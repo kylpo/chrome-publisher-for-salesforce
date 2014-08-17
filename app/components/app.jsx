@@ -13,7 +13,10 @@ var AuthorizePage = require("./authorize-page.jsx");
 module.exports = React.createClass({
     propTypes: {
         context: React.PropTypes.shape({
-            action: React.PropTypes.string,
+            action: React.PropTypes.shape({
+                label: React.PropTypes.string,
+                name: React.PropTypes.string
+            }),
             data: React.PropTypes.object
         })
     },
@@ -24,6 +27,21 @@ module.exports = React.createClass({
 			selectedAction: null
 		};
 	},
+    componentWillMount: function() {
+        if ( this.props.items && this.props.context ) {
+            this.setState({
+                selectedAction: this.props.context.action,
+                flipped: true
+            });
+        }
+    },
+    componentWillReceiveProps: function( nextProps ) {
+        console.log("Old props: ", this.props);
+        console.log("New props: ", nextProps);
+        if ( nextProps.items && nextProps.context ) {
+            this.handleActionSelected(nextProps.context.action, nextProps.context.data);
+        }
+    },
     componentDidMount: function() {
         document.addEventListener('keydown', this.handleEscapeKey, true);
     },
@@ -47,11 +65,13 @@ module.exports = React.createClass({
             }
         }
     },
-	handleActionSelected: function(action) {
+	handleActionSelected: function(action, data) {
+        console.log("Action selected: ", action);
 		this.setState({
 			flipped: true,
 			unflipped: false,
-			selectedAction: action
+			selectedAction: action,
+            contextData: data
 		});
 	},
 	onBackClicked: function() {
@@ -64,7 +84,8 @@ module.exports = React.createClass({
 		// but state updates immediately. Therefore UI update is visible.
 		setTimeout(function() {
 			this.setState({
-				selectedAction: null
+				selectedAction: null,
+                contextData: null
 			});
 
             this.refs.actionForm.resetActionForm();
@@ -95,7 +116,7 @@ module.exports = React.createClass({
     	];
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
-    		<ActionForm ref="actionForm" action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
+    		<ActionForm ref="actionForm" action={this.state.selectedAction} data={this.state.contextData} backToGrid={this.onBackClicked}/>
     	];
 		
 		var component = <CardFlip frontface={frontface} backface={backface} flipped={this.state.flipped} unflipped={this.state.unflipped}/>;

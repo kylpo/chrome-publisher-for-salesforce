@@ -27,7 +27,10 @@ function shareImage( info, tab ) {
 function sendShareLink( tabId, url ) {
 	chrome.tabs.sendMessage(tabId, {
 		type: 'browserAction',
-		action: 'FeedItem.LinkPost',
+		action: {
+            name: 'FeedItem.LinkPost',
+            label: 'Link'
+        },
 		data: {
 			url: url
 		}
