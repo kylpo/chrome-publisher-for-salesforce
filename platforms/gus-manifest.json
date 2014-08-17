@@ -1,0 +1,39 @@
+{
+    "manifest_version": 2,
+
+    "name": "Quick Actions for Gus",
+    "description": "Perform Salesforce's Quick Actions from a browser extension!",
+    "version": "0.0.6",
+	
+	"icons": {
+		"16": "gus-icon.png",
+		"48": "gus-icon.png",
+		"128": "gus-icon.png"
+	},
+
+    "permissions": [
+        "https://*.salesforce.com/",
+        "identity",
+		"activeTab",
+		"contextMenus",
+        "storage"
+    ],
+
+    "background": {
+        "scripts": ["background.built.js", "contexts.js"]
+    },
+
+    "browser_action": {
+        "default_icon": "gus-icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+0"
+            },
+            "global" : true
+        }
+    }
+}

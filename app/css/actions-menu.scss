@@ -1,0 +1,68 @@
+.ActionsMenu {
+  float: right;
+  position: relative;
+}
+
+.ActionsMenu-button {
+  height: 32px;
+  padding: 8px 16px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+
+  &:hover {
+    /*background-color: #414141;*/
+  }
+
+  &.is-active {
+    background-color: #2A94D6;
+
+    &:hover {
+      /*color: white;*/
+    }
+  }
+}
+
+.ActionsMenu-dropdownMenu {
+  /*display: none;*/
+
+  text-align: left;
+  display: inline;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  width: 150px;
+
+  color: white;
+  background-color: #2A94D6;
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+.ActionsMenu-dropdownItem {
+  padding: 10px 15px;
+  /*outline: 1px solid #2d4356;*/
+  /*background-color: #2d4356;*/
+  /*GUS*/
+  /*outline: 1px solid #333;*/
+  /*background-color: #333;*/
+  /*border-bottom: 1px solid #414141;*/
+  cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: white;
+    color: #2A94D6;
+    /*outline: 1px solid white;*/
+    /*padding: 15px 20px;*/
+    /*cursor: pointer;*/
+  }
+}

@@ -1,0 +1,89 @@
+.card {
+  -webkit-transition: -webkit-transform 0.4s;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+
+  background-color: #344a5f;
+  /*GUS*/
+  /*background-color: #414141;*/
+
+  .frontface, .backface {
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: opacity 0.4s;
+  }
+
+  .backface {
+    -webkit-transform: rotateY(-180deg);
+    -webkit-backface-visibility: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: white;
+  }
+}
+.card[data-flipped=true] {
+  -webkit-animation: away-and-back 0.4s;
+  -webkit-animation-fill-mode: forwards;
+
+  .page-nav {
+    opacity: 0;
+  }
+
+  .frontface {
+    opacity: 0;
+  }
+}
+.card[data-unflipped=true] {
+  -webkit-animation: back-and-away 0.4s;
+  -webkit-animation-fill-mode: forwards;
+
+  .backface {
+    opacity: 0;
+  }
+}
+
+.grid {
+  .action {
+    box-sizing: border-box;
+    text-align: center;
+    cursor: pointer;
+    float: left;
+    padding: 10px 20px;
+    width: 160px;
+    outline: 1px solid #2d4356;
+    /*GUS*/
+    /*outline: 1px solid #333;*/
+
+    &.is-disabled {
+      opacity: .35;
+      cursor: not-allowed;
+    }
+
+    img {
+      height: 100px;
+      width: 100px;
+      margin: 10px;
+      margin-bottom: 0px;
+      -webkit-animation: grow 0.4s;
+      -webkit-animation-delay: 0.2s;
+      -webkit-animation-fill-mode: forwards;
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      border-radius: 8px;
+    }
+
+    .title {
+      color: white;
+      -webkit-animation: fadein 0.4s;
+      -webkit-animation-delay: 0.2s;
+      -webkit-animation-fill-mode: forwards;
+      opacity: 0;
+      -webkit-backface-visibility: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+  }
+}
