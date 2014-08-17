@@ -1,0 +1,25 @@
+$window-width: 330px;
+$default-offset-x: 22px;
+$default-offset-y: 22px;
+
+.sidebar {
+  position: relative;
+  top: $default-offset-y;
+  transition: right 0.4s, opacity 0.4s;
+  -webkit-perspective: 800px;
+}
+.sidebar[data-open=false] {
+  right: 0px;
+  opacity: 0.0;
+}
+.sidebar[data-open=true] {
+  right: $default-offset-x + $window-width;
+  opacity: 1.0;
+}
+.inner {
+  background: #888888;
+  box-sizing: content-box;
+  width: 320px;
+  box-shadow: 5px 5px 5px #888888;
+  border: 1px solid black;
+}

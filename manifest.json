@@ -3,15 +3,50 @@
 
     "name": "Quick Actions for Salesforce",
     "description": "Perform Salesforce's Quick Actions from a browser extension!",
-    "version": "0.0.1",
+    "version": "0.0.6",
+	
+	"icons": {
+		"16": "icon-flat.png",
+		"48": "icon-flat.png",
+		"128": "icon-flat.png"
+	},
 
     "permissions": [
         "https://*.salesforce.com/",
-        "identity"
+        "identity",
+		"activeTab",
+		"contextMenus",
+        "storage"
     ],
+	
+	"web_accessible_resources": [
+		"build/icons/*.png",
+		"build/fonts/sf1/styles.css",
+		"build/fonts/sf1/fonts/*.*",
+		"build/fonts/font-awesome-4.1.0/css/font-awesome.min.css",
+		"build/fonts/font-awesome-4.1.0/fonts/*.*"
+	],
+
+    "background": {
+        "scripts": ["./build/background.built.js"]
+    },
 
     "browser_action": {
-        "default_icon": "icon-flat.png",
-        "default_popup": "popup.html"
-    }
+        "default_icon": "icon-flat.png"
+    },
+
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+0"
+            },
+            "global" : true
+        }
+    },
+	
+	"content_scripts": [{
+		"matches": ["http://*/*", "https://*/*"],
+		"js": ["./build/content.built.js"],
+		"css": ["./build/style.css", "./build/fonts/sf1/style.css"]
+	}]
 }
