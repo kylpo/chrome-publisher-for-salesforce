@@ -11,6 +11,12 @@ var ActionForm = require("./action-form.jsx");
 var AuthorizePage = require("./authorize-page.jsx");
 
 module.exports = React.createClass({
+    propTypes: {
+        context: React.PropTypes.shape({
+            action: React.PropTypes.string,
+            data: React.PropTypes.object
+        })
+    },
 	getInitialState: function() {
 		return {
 			flipped: false,
@@ -31,6 +37,8 @@ module.exports = React.createClass({
                     e.preventDefault();
                     this.onBackClicked();
                     return false;
+                } else {
+                    this.onCloseClicked();
                 }
             } else {
                 e.preventDefault();
