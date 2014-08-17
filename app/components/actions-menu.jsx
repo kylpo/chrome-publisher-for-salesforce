@@ -49,20 +49,19 @@ module.exports = React.createClass({
         });
         var buttonClasses = cx({
             "ActionsMenu-button": true,
-            "fa": true,
-            "fa-ellipsis-v": true,
             'is-active': !this.state.isHidden
         });
+        var buttonIcon = chrome.extension.getURL("build/icons/menu-dots.png");
 
         return (
             <div className="ActionsMenu">
-                <span className={buttonClasses} onClick={this.openMenu}/>
+                <img className={buttonClasses} src={buttonIcon} onClick={this.openMenu}/>
                 <ul className={menuClasses}>
                     <li className="ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
                     <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
                     <li className="ActionsMenu-dropdownItem" onClick={this.logout}><span className="icon-utility-logout"/>  Logout</li>
                 </ul>
             </div>
-            );
+        );
     }
 });

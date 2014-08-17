@@ -1,4 +1,4 @@
-.back-nav {
+.back-nav, .title-bar {
   height: 50px;
 
   background-color: #2d4356;
@@ -22,5 +22,18 @@
     color: white;
     padding: 0 10px;
     cursor: pointer;
+  }
+}
+
+.title-bar {
+  .icon {
+    float: initial;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+
+  .title {
+    margin-left: 50px;
   }
 }

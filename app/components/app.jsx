@@ -4,6 +4,7 @@
 
 var React = require("react");
 var CardFlip = require("./card-flip.jsx");
+var TitleBar = require("./title-bar.jsx");
 var Grid = require("./grid.jsx");
 var BackNav = require("./back-nav.jsx");
 var ActionForm = require("./action-form.jsx");
@@ -15,7 +16,7 @@ module.exports = React.createClass({
 			flipped: false,
 			unflipped: false,
 			selectedAction: null
-		}
+		};
 	},
     componentDidMount: function() {
         document.addEventListener('keydown', this.handleEscapeKey, true);
@@ -62,10 +63,28 @@ module.exports = React.createClass({
 
 		}.bind(this), 400);
 	},
+	onCloseClicked: function() {
+	    if ( this.props.onClose ) {
+	        this.props.onClose();
+	    }
+
+	    setTimeout(function() {
+	        this.setState({
+	            selectedAction: null,
+	            flipped: false,
+	            unflipped: false
+	        });
+
+	        this.refs.actionForm.resetActionForm();
+	    }.bind(this), 400);
+	},
 
     render: function() {
 		var backTitle = this.state.selectedAction == null ? "" : this.state.selectedAction.label;
-    	var frontface = <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>;
+    	var frontface = [
+    	    <TitleBar title="Chrome Publisher" onCloseClicked={this.onCloseClicked} />,
+    	    <Grid actions={this.props.items} onActionSelected={this.handleActionSelected}/>
+    	];
     	var backface = [
     		<BackNav title={backTitle} onBackClicked={this.onBackClicked} />,
     		<ActionForm ref="actionForm" action={this.state.selectedAction} backToGrid={this.onBackClicked}/>
