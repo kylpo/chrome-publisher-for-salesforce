@@ -1,0 +1,26 @@
+.back-nav {
+  height: 50px;
+
+  background-color: #2d4356;
+  /*GUS*/
+  /*background-color: #414141;*/
+
+  .title {
+    color: white;
+    line-height: 50px;
+    text-align: center;
+    margin-right: 50px;
+    font-size: 18px;
+    font-variant: small-caps;
+  }
+
+  .icon {
+    line-height: 50px;
+    font-size: 24px;
+    float: left;
+    display: inline-block;
+    color: white;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+}

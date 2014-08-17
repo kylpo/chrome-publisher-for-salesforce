@@ -10,12 +10,19 @@ module.exports = React.createClass({
 		open: React.PropTypes.bool.isRequired
 	},
     render: function() {
+        var closeStyle = {
+            position: 'absolute',
+            top: '5px',
+            right: '5px'
+        };
+
         return (
-        	<div className="sfqa-sidebar" data-open={this.props.open}>
-                <div className="sfqa-inner">
+        	<div className="sidebar" data-open={this.props.open}>
+                <div className="inner">
+                    <div className="icon icon-utility-back" style={ closeStyle }></div>
 					<App items={this.props.items} prefill={this.props.prefill} />
 				</div>
             </div>
-            );
+        );
     }
 });

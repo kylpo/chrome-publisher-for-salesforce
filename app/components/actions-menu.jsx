@@ -44,23 +44,23 @@ module.exports = React.createClass({
     render: function() {
         var cx = React.addons.classSet;
         var menuClasses = cx({
-            "sfqa-ActionsMenu-dropdownMenu": true,
+            "ActionsMenu-dropdownMenu": true,
             'is-hidden': this.state.isHidden
         });
         var buttonClasses = cx({
-            "sfqa-ActionsMenu-button": true,
+            "ActionsMenu-button": true,
             "fa": true,
             "fa-ellipsis-v": true,
             'is-active': !this.state.isHidden
         });
 
         return (
-            <div className="sfqa-ActionsMenu">
+            <div className="ActionsMenu">
                 <span className={buttonClasses} onClick={this.openMenu}/>
                 <ul className={menuClasses}>
-                    <li className="sfqa-ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
-                    <li className="sfqa-ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
-                    <li className="sfqa-ActionsMenu-dropdownItem" onClick={this.logout}><span className="icon-utility-logout"/>  Logout</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.logout}><span className="icon-utility-logout"/>  Logout</li>
                 </ul>
             </div>
             );

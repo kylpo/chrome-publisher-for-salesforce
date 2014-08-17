@@ -43,7 +43,7 @@ module.exports = React.createClass({
                     <label>Post Text</label>
                     <CompletionTextarea
                         ref="textarea"
-                        rows="20"
+                        rows="15"
                     handleChange={this.handleChange}
                     handleSubmit={this.handleSubmit}
                     />

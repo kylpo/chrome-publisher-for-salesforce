@@ -1,0 +1,46 @@
+.action-form {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 5px;
+  background-color: white;
+
+  .action-form-group {
+    padding: 5px;
+
+    label {
+      display: block;
+    }
+
+    input, textarea {
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 5px;
+      border-width: 1px;
+      border-style: solid;
+      padding: 7px;
+      border-color: #888;
+      resize: none;
+    }
+
+    select {
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    /*
+    button {
+      border-width: 0px;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #3f9fd9;
+      color: white;
+      padding: 7px;
+      display: block;
+      width: 100%;
+    }
+    */
+  }
+}

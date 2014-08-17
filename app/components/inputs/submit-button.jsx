@@ -14,7 +14,7 @@ module.exports = React.createClass({
     },
     render: function() {
         var submitClasses = cx({
-            "sfqa-Form-submitButton": true,
+            "Form-submitButton": true,
             "skin-Button": true,
             "is-active": true,
             'is-clickable': this.props.hasRequiredFields
