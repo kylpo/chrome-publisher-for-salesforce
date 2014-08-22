@@ -10,7 +10,13 @@ var container = undefined;
 var prefillData = undefined;
 
 function render() {
-	React.renderComponent(<SideBar open={show} items={items} />, container);
+	React.renderComponent(<SideBar open={show} items={items} onClose={closeApp} />, container);
+}
+
+function closeApp() {
+    show = false;
+    prefillData = undefined;
+    render();
 }
 
 function refreshActions() {
