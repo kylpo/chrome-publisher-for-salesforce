@@ -13,7 +13,7 @@ module.exports = React.createClass({
         return (
         	<div className="sidebar" data-open={this.props.open}>
                 <div className="inner">
-					<App items={this.props.items} prefill={this.props.prefill} onClose={this.props.onClose} />
+                    { this.props.children }
 				</div>
             </div>
         );

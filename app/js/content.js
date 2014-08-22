@@ -4,18 +4,24 @@
 
 var React = require("react");
 var SideBar = require("../components/side-bar.jsx");
+var App = require("../components/app.jsx");
 var show = false;
 var items = undefined;
 var container = undefined;
-var prefillData = undefined;
+var contextData = undefined;
 
 function render() {
-	React.renderComponent(<SideBar open={show} items={items} onClose={closeApp} />, container);
+	React.renderComponent(
+        <SideBar open={show}>
+            <App items={items} onClose={closeApp} context={contextData} />
+        </SideBar>,
+        container
+    );
 }
 
 function closeApp() {
     show = false;
-    prefillData = undefined;
+    contextData = undefined;
     render();
 }
 
@@ -38,17 +44,18 @@ chrome.runtime.onMessage.addListener( function( request, sender, sendResponse ) 
 		// Check if extra data is sent with this request
 		if ( request.action ) {
 			show = true;
-			prefillData = {
+            contextData = {
 				action: request.action,
 				data: request.data
 			};
 		} else {
 			show = !show;
-			if ( items == undefined ) {
-				refreshActions();
-				return;
-			}
 		}
+
+        if ( items == undefined ) {
+            refreshActions();
+            return;
+        }
 		
 		render();
 	} else if ( request.type === 'authorized' ) {
@@ -63,8 +70,7 @@ chrome.runtime.onMessage.addListener( function( request, sender, sendResponse ) 
 
 container = document.createElement("section");
 container.id = "chrome-publisher";
-container.className = "container";
 document.body.appendChild(container);
 
-React.renderComponent(<SideBar open={show} items={items} prefill={prefillData} />, container);
+render();
 console.log("Content script loaded");
