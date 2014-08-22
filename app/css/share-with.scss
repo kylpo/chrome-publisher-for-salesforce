@@ -1,0 +1,27 @@
+.share-with {
+  .share-with-group {
+    display: flex;
+
+    label {
+      padding: 5px;
+      padding-left: 0px;
+    }
+
+    input {
+      width: inherit;
+      flex-grow: 1;
+    }
+
+    .share-with-group button {
+      width: inherit;
+    }
+  }
+}
+
+#share-with-who {
+  flex-grow: 1;
+}
+
+label.share {
+  display: inline-block;
+}

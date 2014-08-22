@@ -47,11 +47,11 @@ module.exports = React.createClass({
 
 //        <Toolbar />
         return (
-            <div className="sfqa-grid">
+            <div className="grid">
             	<div className="action-wrapper">
 					<div className="actions">
 						{ pageActions }
-						<div className="sfqa-clearfix" />
+						<div className="clearfix" />
 					</div>
                     <DotNav dots={ dotsNeeded } onPageSelected={this.onPageChanged} />
             	</div>

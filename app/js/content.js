@@ -56,8 +56,8 @@ chrome.runtime.onMessage.addListener( function( request, sender, sendResponse ) 
 });
 
 container = document.createElement("section");
-container.id = "sfqa-container";
-container.className = "sfqa-container";
+container.id = "chrome-publisher";
+container.className = "container";
 document.body.appendChild(container);
 
 React.renderComponent(<SideBar open={show} items={items} prefill={prefillData} />, container);

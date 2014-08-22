@@ -47,6 +47,6 @@
 	"content_scripts": [{
 		"matches": ["http://*/*", "https://*/*"],
 		"js": ["./build/content.built.js"],
-		"css": ["./build/style.css", "./build/fonts/sf1/style.css", "./build/fonts/font-awesome-4.1.0/css/font-awesome.min.css"]
+		"css": ["./build/style.css", "./build/fonts/sf1/style.css"]
 	}]
 }

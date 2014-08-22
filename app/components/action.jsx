@@ -42,7 +42,7 @@ module.exports = React.createClass({
 	},
 
     render: function() {
-        var className = "sfqa-action" + (this.props.action.isDisabled ? " is-disabled" : "");
+        var className = "action" + (this.props.action.isDisabled ? " is-disabled" : "");
         var icon = chrome.extension.getURL("build/icons/default_120.png");
         var iconColor = "849cb1";
 

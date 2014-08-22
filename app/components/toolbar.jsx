@@ -8,7 +8,7 @@ var ActionsMenu = require("./actions-menu.jsx");
 module.exports = React.createClass({
     render: function() {
         return (
-            <div className="sfqa-Toolbar">
+            <div className="Toolbar">
                 <ActionsMenu/>
             </div>
             );
