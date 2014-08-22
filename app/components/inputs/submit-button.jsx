@@ -21,7 +21,9 @@ module.exports = React.createClass({
         });
 
         return (
-            <button className={submitClasses} type="submit">{this.props.text}</button>
-            );
+            <div className="action-form-group">
+                <button className={submitClasses} type="submit">{this.props.text}</button>
+            </div>
+        );
     }
 });
