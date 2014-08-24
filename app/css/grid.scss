@@ -2,8 +2,8 @@
   -webkit-transition: -webkit-transform 0.4s;
   position: relative;
   -webkit-transform-style: preserve-3d;
-  width: 320px;
-  height: 565px;
+  -webkit-transform-origin-x: 160px;
+  -webkit-transform-origin-y: 141.25px;
   border: 1px solid black;
 
   background-color: #344a5f;
@@ -22,11 +22,13 @@
 
   .frontface {
     background-color: rgb(52, 74, 95);
+    border: 1px solid rgb(52, 74, 95);
   }
 
   .backface {
     -webkit-transform: rotateY(-180deg);
     background-color: white;
+    border: 1px solid black;
   }
 }
 .card[data-flipped=true] {
@@ -48,6 +50,11 @@
   .backface {
     opacity: 0;
   }
+}
+
+.page-nav {
+  -webkit-transition: opacity 0.4s;
+  opacity: 1.0;
 }
 
 .grid {
