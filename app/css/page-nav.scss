@@ -1,0 +1,60 @@
+.page-nav {
+  -webkit-transition: opacity 0.4s;
+  text-align: center;
+
+  outline: 1px solid #2d4356;
+  background-color: #2d4356;
+  /*GUS*/
+  /*outline: 1px solid #333;*/
+  /*background-color: #333;*/
+
+  > ul {
+    list-style: none;
+    margin: 20px 0 15px 44px; /*44px right to make up for menuActions on right*/
+    padding: 0;
+    display: inline-block;
+    position: relative;
+
+    li {
+      position: relative;
+      float: left;
+      width: 10px;
+      height: 10px;
+      cursor: pointer;
+      display: block;
+      margin: 0 10px;
+
+      a {
+        background-color: transparent;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.page-nav > ul li a::before, .page-nav ul li a::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  /*background-color: white;*/
+  content: '';
+  text-indent: 0;
+}
+.page-nav > ul li a::after {
+  background-color: #14222E;
+  /*GUS*/
+  /*background-color: #414141;*/
+}
+.page-nav > ul li.active a::after {
+  -webkit-animation: grow 0.4s;
+  background-color: #2A94D6;
+}
