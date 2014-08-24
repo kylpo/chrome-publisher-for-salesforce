@@ -109,6 +109,7 @@ module.exports = React.createClass({
                     <label>What did you accomplish today?</label>
                     <CompletionTextarea
                     ref="textareaDone"
+                    rows="6"
                     handleChange={this.handleChangeDone}
                     handleSubmit={this.handleSubmit}
                     />
@@ -117,6 +118,7 @@ module.exports = React.createClass({
                     <label>What do you hope to do tomorrow?</label>
                     <CompletionTextarea
                     ref="textareaTomorrow"
+                    rows="6"
                     shouldFocus={false}
                     handleChange={this.handleChangeTomorrow}
                     handleSubmit={this.handleSubmit}

@@ -98,7 +98,7 @@ module.exports = React.createClass({
 					<label>Link Description</label>
                     <CompletionTextarea
                     ref="textarea"
-                    rows="12"
+                    rows="10"
                     handleChange={this.handleMessageChange}
                     handleSubmit={this.handleSubmit}
                     />
