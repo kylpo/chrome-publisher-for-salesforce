@@ -12,9 +12,8 @@ module.exports = React.createClass({
     render: function() {
         return (
         	<div className="sidebar" data-open={this.props.open}>
-                <div className="inner">
+
                     { this.props.children }
-				</div>
             </div>
         );
     }

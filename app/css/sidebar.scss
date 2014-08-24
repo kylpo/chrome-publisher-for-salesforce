@@ -16,10 +16,3 @@ $default-offset-y: 22px;
   right: $default-offset-x + $window-width;
   opacity: 1.0;
 }
-.inner {
-  background: #888888;
-  box-sizing: content-box;
-  width: 320px;
-  box-shadow: 5px 5px 5px #888888;
-  border: 1px solid black;
-}
