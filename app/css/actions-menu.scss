@@ -4,8 +4,9 @@
 }
 
 .ActionsMenu-button {
-  height: 32px;
-  padding: 8px 16px;
+  box-sizing: content-box;
+  height: 28px;
+  padding: 11px 12px;
   font-size: 18px;
   color: white;
   cursor: pointer;
@@ -54,6 +55,14 @@
   /*border-bottom: 1px solid #414141;*/
   cursor: pointer;
 
+  .ActionsMenu-icon {
+    color: white;
+  }
+  .ActionsMenu-label {
+    color: white;
+    margin-left: 5px;
+  }
+
   &:last-child {
     border-bottom: none;
   }
@@ -61,6 +70,14 @@
   &:hover {
     background-color: white;
     color: #2A94D6;
+
+    .ActionsMenu-icon {
+      color: black;
+    }
+
+    .ActionsMenu-label {
+      color: black;
+    }
     /*outline: 1px solid white;*/
     /*padding: 15px 20px;*/
     /*cursor: pointer;*/

@@ -46,7 +46,7 @@ module.exports = React.createClass({
             subTitle = <div className="AfterSubmit-subtitle">You just created a <strong>{this.props.label}</strong>.</div>;
             buttons = (
                 <div className="AfterSubmit-buttons">
-                    <button className="AfterSubmit-button skin-Button is-error" onClick={this.handleUndo}><span className="fa fa-undo"/> Undo</button>
+                    <button className="AfterSubmit-button skin-Button is-error" onClick={this.handleUndo}><span className="icon icon-utility-reply"/> Undo</button>
                     <button className="AfterSubmit-button skin-Button is-active" onClick={this.onClickNewTab}><span className="icon icon-utility-share"/> Open</button>
                 </div>
             );

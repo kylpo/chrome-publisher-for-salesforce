@@ -57,9 +57,14 @@ module.exports = React.createClass({
             <div className="ActionsMenu">
                 <img className={buttonClasses} src={buttonIcon} onClick={this.openMenu}/>
                 <ul className={menuClasses}>
-                    <li className="ActionsMenu-dropdownItem" onClick={this.launchPanel}><span className="icon-utility-share"/>  Popout</li>
-                    <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}><span className="icon-utility-refresh"/>  Refresh</li>
-                    <li className="ActionsMenu-dropdownItem" onClick={this.logout}><span className="icon-utility-logout"/>  Logout</li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.refreshActions}>
+                        <span className="ActionsMenu-icon icon-utility-refresh"/>
+                        <span className="ActionsMenu-label">Refresh</span>
+                    </li>
+                    <li className="ActionsMenu-dropdownItem" onClick={this.logout}>
+                        <span className="ActionsMenu-icon icon-utility-logout"/>
+                        <span className="ActionsMenu-label">Logout</span>
+                    </li>
                 </ul>
             </div>
         );
