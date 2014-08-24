@@ -36,8 +36,6 @@ module.exports = React.createClass({
         }
     },
     componentWillReceiveProps: function( nextProps ) {
-        console.log("Old props: ", this.props);
-        console.log("New props: ", nextProps);
         if ( nextProps.items && nextProps.context ) {
             this.handleActionSelected(nextProps.context.action, nextProps.context.data);
         }
@@ -66,7 +64,6 @@ module.exports = React.createClass({
         }
     },
 	handleActionSelected: function(action, data) {
-        console.log("Action selected: ", action);
 		this.setState({
 			flipped: true,
 			unflipped: false,

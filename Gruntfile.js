@@ -37,7 +37,8 @@ module.exports = function (grunt) {
 					style: 'expanded'
 				},
 				files: {
-					'./build/style.css': './app/css/style.scss'
+					'./build/style.css': './app/css/style.scss',
+                    './build/fix.css': './app/css/select2-fix.scss'
 				}
 			}
 		},
