@@ -175,6 +175,21 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             deletePost(request.id, function(){});
             return true;
 
+		case "postFile":
+			getConnection( function(err, connection) {
+		        if (err) {
+		            return callback(err);
+		        }
+		        
+		        console.log("Posting file: ", request.file);
+		        
+		        Api.postFile(connection, request.file, function(status, response) {
+		        	console.log("Response received from post file: ", status);
+		        	console.log("Response: ", response);
+		        });
+		    });
+			return true;
+			
         default:
             break;
     }
