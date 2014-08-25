@@ -4,6 +4,7 @@ $default-offset-y: 22px;
 
 .sidebar {
   position: relative;
+  overflow: visible;
   top: $default-offset-y;
   transition: right 0.4s, opacity 0.4s;
   -webkit-perspective: 800px;
