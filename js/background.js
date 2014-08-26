@@ -10,8 +10,8 @@ var Api = require("./api.js")(Auth.refreshToken, Storage.upsertConnection);
 var localStateActions = null;
 var localStateMentions = null;
 var localStateConnection = null;
-var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.ContentPost", "FeedItem.TextPost", "FeedItem.PollPost"];
-var actionsBlacklist = ["FeedItem.MobileSmartActions"];
+var actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+var actionsBlacklist = ["FeedItem.MobileSmartActions", "FeedItem.ContentPost"];
 var personalActions = [
         {
             "name" : "Personal.TIL",
@@ -28,18 +28,18 @@ var personalActions = [
 //
 //});
 
-function init() {
-    chrome.runtime.getPlatformInfo(function(info) {
-        if (info.os === "mac") {
-            // Feed item ContentPost is not available because of a bug in Chrome when launching file chooser
-            // see https://code.google.com/p/chromium/issues/detail?id=61632
-            actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
-            actionsBlacklist.push("FeedItem.ContentPost");
-        }
-    });
-}
-
-init();
+//function init() {
+//    chrome.runtime.getPlatformInfo(function(info) {
+//        if (info.os === "mac") {
+//            // Feed item ContentPost is not available because of a bug in Chrome when launching file chooser
+//            // see https://code.google.com/p/chromium/issues/detail?id=61632
+//            actionsWhitelist = ["FeedItem.LinkPost", "FeedItem.TextPost", "FeedItem.PollPost"];
+//            actionsBlacklist.push("FeedItem.ContentPost");
+//        }
+//    });
+//}
+//
+//init();
 
 // This essentially acts as a dispatcher for what function to call
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
