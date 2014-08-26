@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
 
-    "name": "Quick Actions for Gus",
-    "description": "Perform Salesforce's Quick Actions from a browser extension!",
-    "version": "0.0.6",
+    "name": "Chrome Publisher for Gus",
+    "description": "Perform Salesforce's Publisher Actions directly from Chrome! No need to be on a salesforce.com page.",
+    "version": "0.0.7",
 	
 	"icons": {
 		"16": "gus-icon.png",
@@ -15,12 +15,11 @@
         "https://*.salesforce.com/",
         "identity",
 		"activeTab",
-		"contextMenus",
         "storage"
     ],
 
     "background": {
-        "scripts": ["background.built.js", "contexts.js"]
+        "scripts": ["background.built.js"]
     },
 
     "browser_action": {

@@ -3,7 +3,7 @@
 
     "name": "Chrome Publisher for Salesforce",
     "description": "Perform Salesforce's Publisher Actions directly from Chrome! No need to be on a salesforce.com page.",
-    "version": "0.0.6",
+    "version": "0.0.7",
 	
 	"icons": {
 		"16": "icon-flat.png",
