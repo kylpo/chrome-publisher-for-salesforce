@@ -250,7 +250,7 @@ Controller = (function() {
       return DEFAULT_CALLBACKS[func_name].apply(this, args);
     } catch (_error) {
       error = _error;
-      return $.error("" + error + " Or maybe At.js doesn't have function " + func_name);
+      return $.error("" + error + " Or maybe At.background doesn't have function " + func_name);
     }
   };
 

@@ -93,7 +93,7 @@
       @domInputor = @$inputor[0]
 
     getIEPos: ->
-      # https://github.com/ichord/Caret.js/wiki/Get-pos-of-caret-in-IE
+      # https://github.com/ichord/Caret.background/wiki/Get-pos-of-caret-in-IE
       inputor = @domInputor
       range = oDocument.selection.createRange()
       pos = 0

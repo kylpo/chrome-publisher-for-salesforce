@@ -13,11 +13,11 @@
   "extra": {
     "component": {
       "scripts": [
-        "select2.js"
+        "select2.background"
       ],
       "files": [
-        "select2.js",
-        "select2_locale_*.js",
+        "select2.background",
+        "select2_locale_*.background",
         "select2.css",
         "select2-bootstrap.css",
         "select2-spinner.gif",

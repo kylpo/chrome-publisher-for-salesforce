@@ -1,14 +1,14 @@
 {
     "manifest_version": 2,
 
-    "name": "Chrome Publisher for Salesforce",
-    "description": "Perform Salesforce's Publisher Actions directly from Chrome! No need to be on a salesforce.com page.",
-    "version": "0.0.7",
+    "name": "Chrome Publisher for Gus",
+    "description": "Perform Salesforce's Publisher Actions natively in Chrome! No need to be on a salesforce.com page.",
+    "version": "0.0.8",
 	
 	"icons": {
-		"16": "icon-flat.png",
-		"48": "icon-flat.png",
-		"128": "icon-flat.png"
+		"16": "gus-icon.png",
+		"48": "gus-icon.png",
+		"128": "gus-icon.png"
 	},
 
     "permissions": [
@@ -23,7 +23,7 @@
     },
 
     "browser_action": {
-        "default_icon": "icon-flat.png",
+        "default_icon": "gus-icon.png",
         "default_popup": "popup.html"
     },
 

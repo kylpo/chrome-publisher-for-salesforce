@@ -42,11 +42,11 @@ module.exports = (grunt) ->
         banner: "<%= meta.banner %>"
       dist:
         src: ['src/wrapper_header.js', 'src/build/<%= pkg.name %>.js', 'src/wrapper_footer.js'],
-        dest: 'dist/js/<%= pkg.name %>.js'
+        dest: 'dist/background/<%= pkg.name %>.js'
 
     uglify:
       dist:
-        src: 'dist/js/<%= pkg.name %>.js', dest: 'dist/js/<%= pkg.name %>.min.js'
+        src: 'dist/background/<%= pkg.name %>.js', dest: 'dist/background/<%= pkg.name %>.min.js'
     cssmin:
       minify: {src: 'src/jquery.atwho.css', dest: 'dist/css/jquery.atwho.min.css'}
 
@@ -62,14 +62,14 @@ module.exports = (grunt) ->
 
     jasmine:
       dist:
-        src: 'dist/js/<%= pkg.name %>.js',
+        src: 'dist/background/<%= pkg.name %>.js',
         options:
           keepRunner: true
           styles: 'dist/css/<%= pkg.name %>.css',
           specs: 'spec/build/javascripts/*.spec.js',
           vendor: [
             'bower_components/jquery/dist/jquery.js',
-            'bower_components/Caret.js/src/*.js'
+            'bower_components/Caret.background/src/*.js'
           ],
           helpers: [
             'bower_components/jasmine-jquery/lib/jasmine-jquery.js',

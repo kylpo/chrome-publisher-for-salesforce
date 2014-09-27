@@ -2,7 +2,7 @@
   "name": "select2",
   "version": "3.5.1",
   "main": [
-    "select2.js",
+    "select2.background",
     "select2.css",
     "select2.png",
     "select2x2.png",

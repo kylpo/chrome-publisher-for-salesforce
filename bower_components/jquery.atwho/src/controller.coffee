@@ -31,7 +31,7 @@ class Controller
     try
       DEFAULT_CALLBACKS[func_name].apply this, args
     catch error
-      $.error "#{error} Or maybe At.js doesn't have function #{func_name}"
+      $.error "#{error} Or maybe At.background doesn't have function #{func_name}"
 
   # Delegate custom `jQueryEvent` to the inputor
   # This function will add `atwho` as namespace to every jQuery event

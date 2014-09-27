@@ -1,7 +1,7 @@
 {
-  "name": "Caret.js",
+  "name": "Caret.background",
   "version": "0.1.0",
-  "main": "src/jquery.caret.js",
+  "main": "src/jquery.caret.background",
   "ignore": [
     "**/.*",
     "node_modules",

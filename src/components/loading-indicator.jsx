@@ -8,7 +8,7 @@ module.exports = React.createClass({
     render: function() {
         return (
             <div>
-                <img className="LoadingIndicator" src="../icons/ajax-loader.gif"/>
+                <img className="LoadingIndicator" src="assets/img/icons/ajax-loader.gif"/>
             </div>
             );
     }
