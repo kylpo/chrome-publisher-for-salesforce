@@ -9,24 +9,26 @@ module.exports = React.createClass({
 	propTypes: {
 		dots: React.PropTypes.number.isRequired
 	},
+
 	getDefaultProps: function() {
 		return {
 			dots: 0,
 			maxDots: 6
 		};
 	},
+
 	getInitialState: function() {
 		return {
 			page: 0
 		}
 	},
+
 	onDotClicked: function(dot) {
 		this.setState({ page: dot });
 		this.props.onPageSelected(dot);
 	},
 
     render: function() {
-    	var pages = Math.min(this.props.dots, this.props.maxDots);
 		var dots = [];
 		
 		for( var i = 0; i < Math.min(this.props.maxDots, this.props.dots); ++i ) {

@@ -17,12 +17,15 @@ var App = React.createClass({
 			selectedAction: null
 		}
 	},
+
     componentDidMount: function() {
         document.addEventListener('keydown', this.handleEscapeKey, true);
     },
+
     componentWillUnmount: function() {
         document.removeEventListener('keydown', this.handleEscapeKey, true);
     },
+
     handleEscapeKey: function(e) {
         if (e.keyCode === 27) {
             if (e.target.nodeName === "BODY") {
@@ -38,6 +41,7 @@ var App = React.createClass({
             }
         }
     },
+
 	handleActionSelected: function(action) {
 		this.setState({
 			flipped: true,
@@ -45,6 +49,7 @@ var App = React.createClass({
 			selectedAction: action
 		});
 	},
+
 	onBackClicked: function() {
 		this.setState({
 			flipped: false,
@@ -76,10 +81,12 @@ var App = React.createClass({
     }
 });
 
+/**
+ * This is the piece that renders the whole app
+ */
 chrome.runtime.sendMessage({type: "getActions"}, function(response) {
     if (response === null) {
         React.renderComponent(<AuthorizePage/>, document.body);
-//        console.error("Error getting actions to client");
     } else {
         console.log(response);
         React.renderComponent(<App items={response}/>, document.body);

@@ -9,6 +9,16 @@ var ShareWith = require("./../inputs/share-with.jsx");
 var SubmitButton = require("./../inputs/submit-button.jsx");
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {
+            message: "",
+            value1: "",
+            value2: "",
+            value3: "",
+            value4: ""
+        };
+    },
+
     handleSubmit: function(e) {
         e.preventDefault();
 
@@ -24,7 +34,7 @@ module.exports = React.createClass({
             "to": this.refs.shareWith.getValue(),
             "attachment": {
                 "attachmentType" : "Poll",
-                "pollChoices" : this.getPollChoices()
+                "pollChoices" : this._getPollChoices()
             }
         };
 
@@ -32,38 +42,37 @@ module.exports = React.createClass({
             this.props.onAfterSubmit(response);
         }.bind(this));
     },
-    getInitialState: function() {
-        return {
-            message: "",
-            value1: "",
-            value2: "",
-            value3: "",
-            value4: ""
-        };
-    },
-    getPollChoices: function() {
-        return [this.state.value1, this.state.value2, this.state.value3, this.state.value4].filter(function (val) {
-                return val !== "";
-            })
-    },
+
     handleChange: function() {
         this.setState({message: this.refs.textarea.getValue()});
     },
+
     handleInput1Change: function(event) {
         this.setState({value1: event.target.value});
     },
+
     handleInput2Change: function(event) {
         this.setState({value2: event.target.value});
     },
+
     handleInput3Change: function(event) {
         this.setState({value3: event.target.value});
     },
+
     handleInput4Change: function(event) {
         this.setState({value4: event.target.value});
     },
-    _hasRequiredFields: function() {
-        return this.state.message !== "" && this.getPollChoices().length >= 2;
+
+    _getPollChoices: function() {
+        return [this.state.value1, this.state.value2, this.state.value3, this.state.value4].filter(function (val) {
+            return val !== "";
+        })
     },
+
+    _hasRequiredFields: function() {
+        return this.state.message !== "" && this._getPollChoices().length >= 2;
+    },
+
     render: function() {
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>

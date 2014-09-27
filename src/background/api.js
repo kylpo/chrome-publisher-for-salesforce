@@ -12,7 +12,7 @@ module.exports = function(refreshToken, upsertConnection) {
                     return callback(null);
                 }
 
-                // args[0] == connection
+                // args[0] is the connection
                 args[0] = data;
                 upsertConnection(data, function(err, data) {
                     if (err) {

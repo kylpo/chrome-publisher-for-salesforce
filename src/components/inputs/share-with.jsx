@@ -7,15 +7,14 @@ var React = require("react");
 module.exports = React.createClass({
 	MY_FOLLOWERS: "My Followers",
 	LABEL: "To",
-    getValue: function() {
-        return $(this.refs.shareWithWho.getDOMNode()).select2("val");
-    },
+
     getDefaultProps: function() {
         return {
             minimumInputLength: 1,
             groupOnly: false
         };
     },
+
     componentDidMount: function() {
         $(this.refs.shareWithWho.getDOMNode()).select2({
             minimumInputLength: this.props.minimumInputLength,
@@ -43,6 +42,11 @@ module.exports = React.createClass({
             allowClear: true
         });
     },
+
+    getValue: function() {
+        return $(this.refs.shareWithWho.getDOMNode()).select2("val");
+    },
+
     render: function() {
         return (
             <div className="action-form-group">

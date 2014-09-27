@@ -3,6 +3,7 @@
 'use strict';
 
 var React = require("react/addons");
+var cx = React.addons.classSet;
 
 module.exports = React.createClass({
     getInitialState: function() {
@@ -10,16 +11,17 @@ module.exports = React.createClass({
             "isHidden": true
         };
     },
+
     launchPanel: function() {
         chrome.windows.create({
             "url": "popup.html",
             "type": "panel",
-//            "type": "popup",
             "width": 320,
             "height": 521
         });
         window.close();
     },
+
     refreshActions: function() {
         chrome.runtime.sendMessage({type: "refreshActions"}, function(response) {
             if (response === null) {
@@ -29,20 +31,18 @@ module.exports = React.createClass({
             }
         });
     },
+
     logout: function() {
         chrome.runtime.sendMessage({type: "logout"}, function() {
-//            if (response === null) {
-//                console.error("Error re-authorizing");
-//            } else {
-                window.location.reload();
-//            }
+            window.location.reload();
         });
     },
+
     openMenu: function() {
         this.setState({"isHidden": !this.state.isHidden})
     },
+
     render: function() {
-        var cx = React.addons.classSet;
         var menuClasses = cx({
             "ActionsMenu-dropdownMenu": true,
             'is-hidden': this.state.isHidden

@@ -5,12 +5,10 @@
 var React = require("react");
 
 module.exports = React.createClass({
-//	propTypes: {
-//		title: React.PropTypes.string.isRequired
-//	},
 	getDefaultProps: function() {
 		return {title: "Back"};
 	},
+
     render: function() {
         return (
         	<div className="back-nav">

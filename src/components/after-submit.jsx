@@ -13,9 +13,11 @@ module.exports = React.createClass({
 
         this.sendMessage(options);
     },
+
     onClose: function() {
         window.close();
     },
+
     handleUndo: function() {
         var options = {
             "type": "delete",
@@ -24,21 +26,20 @@ module.exports = React.createClass({
 
         this.sendMessage(options);
     },
+
     sendMessage: function(options) {
         chrome.runtime.sendMessage(options);
 
         // Necessary to reset to action form for popout mode
         this.props.backToGrid();
     },
+
     render: function() {
         var titleImage = "";
         var title = "";
         var subTitle = "";
         var resourceLink = "";
         var buttons = "";
-        var undoButton = "";
-        var openButton = "";
-//        var closeButton = <button className="AfterSubmit-button AfterSubmit-button--close" onClick={this.onClose}>Close</button>;
 
         if (this.props.response) {
             titleImage = <div className="AfterSubmit-titleImage AfterSubmit-titleImage--success icon icon-utility-success"/>;

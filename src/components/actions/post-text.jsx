@@ -8,6 +8,10 @@ var ShareWith = require("./../inputs/share-with.jsx");
 var SubmitButton = require("./../inputs/submit-button.jsx");
 
 module.exports = React.createClass({
+    getInitialState: function() {
+        return {value: ""};
+    },
+
     handleSubmit: function(e) {
         e.preventDefault();
 
@@ -27,15 +31,15 @@ module.exports = React.createClass({
             this.props.onAfterSubmit(response);
         }.bind(this));
     },
-    getInitialState: function() {
-        return {value: ""};
-    },
+
     handleChange: function() {
         this.setState({value: this.refs.textarea.getValue()});
     },
+
     _hasRequiredFields: function() {
         return this.state.value !== "";
     },
+
     render: function() {
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>

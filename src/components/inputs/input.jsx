@@ -19,6 +19,7 @@ module.exports = React.createClass({
             return false;
         }
     },
+
     render: function() {
         return (
                 <input type="text"

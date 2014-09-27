@@ -11,7 +11,6 @@ module.exports = React.createClass({
     getInitialState: function() {
         return {
             done: "",
-//            notDone: "",
             tomorrow: "",
             mood: ""
         };
@@ -40,9 +39,6 @@ module.exports = React.createClass({
         if (this.state.done !== "") {
             message = message.concat("\n\n--What I accomplished today--\n" + this.refs.textareaDone.getValue());
         }
-//        if (this.state.notDone !== "") {
-//            message = message.concat("\n\nNot done:\n" + this.state.notDone);
-//        }
         if (this.state.tomorrow !== "") {
             message = message.concat("\n\n--What I hope to do tomorrow--\n" + this.refs.textareaTomorrow.getValue());
         }
@@ -53,26 +49,28 @@ module.exports = React.createClass({
         return "#[MyDay]" + message;
     },
 
-    handleChangeDone: function(event) {
+    handleChangeDone: function() {
         this.setState({done: this.refs.textareaDone.getValue()});
     },
-//    handleChangeNotDone: function(event) {
-//        this.setState({notDone: event.target.value});
-//    },
-    handleChangeTomorrow: function(event) {
+
+    handleChangeTomorrow: function() {
         this.setState({tomorrow: this.refs.textareaTomorrow.getValue()});
     },
+
     handleChangeMood: function(event) {
         this.setState({mood: (this.state.mood === event.target.value ? "" : event.target.value)});
     },
+
     handleClickSubmit: function() {
         if (this.state.done === "" && this.state.tomorrow === "" && this.state.mood === "") {
             return false;
         }
     },
+
     _hasRequiredFields: function() {
         return this.state.done !== "" || this.state.tomorrow !== "" || this.state.mood !== "";
     },
+
     render: function() {
         var happyButtonClasses = cx({
             "ButtonGroup-button": true,
@@ -90,15 +88,6 @@ module.exports = React.createClass({
             'is-active': this.state.mood === ":("
         });
 
-//        <div className="action-form-group">
-//            <label>What did not get done?</label>
-//            <CompletionTextarea
-//            value={this.state.notDone}
-//            rows="4"
-//            handleChange={this.handleChangeNotDone}
-//            handleSubmit={this.handleSubmit}
-//            />
-//        </div>
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>
                 <div className="action-form-group">

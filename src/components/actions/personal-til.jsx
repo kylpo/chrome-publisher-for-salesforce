@@ -27,18 +27,23 @@ module.exports = React.createClass({
             this.props.onAfterSubmit(response);
         }.bind(this));
     },
+
     getInitialState: function() {
         return {value: ""};
     },
+
     handleChange: function() {
         this.setState({value: this.refs.textarea.getValue()});
     },
+
     handleClickSubmit: function() {
         if (this.state.value === "") return false;
     },
+
     _hasRequiredFields: function() {
         return this.state.value !== "";
     },
+
     render: function() {
         return (
             <form className="post-text" onSubmit={this.handleSubmit}>

@@ -14,6 +14,7 @@ module.exports = React.createClass({
             window.close();
         });
     },
+
     render: function() {
         return (
             <div className="Authorize">

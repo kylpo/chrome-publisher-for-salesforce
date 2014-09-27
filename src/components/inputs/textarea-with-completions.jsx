@@ -12,12 +12,14 @@ module.exports = React.createClass({
             "shouldFocus": true
         }
     },
+
     getInitialState: function() {
         return {
             "showCompletions": false,
             "completionValues": null
         }
     },
+
     componentDidMount: function() {
         if (this.props.shouldFocus) {
             this.refs.textarea.getDOMNode().focus();
@@ -55,8 +57,6 @@ module.exports = React.createClass({
                     if (query === "") {
                         return callback(null);
                     }
-
-//                    console.log(query);
 
                     chrome.runtime.sendMessage({type: "getTopics", query: query}, function(response) {
                         if (response === null) {
@@ -115,14 +115,10 @@ module.exports = React.createClass({
             var regexp = new RegExp(flag+'([A-Za-z0-9_\+\-][A-Za-z0-9_\+\-\\s]*)$|'+flag+'([^\\x00-\\xff]*)$','gi');
             var match = regexp.exec(subtext);
 
-//            console.log(match);
-            if (match) {
-                return match[2] || match[1];
-            } else {
-                return null;
-            }
+            return match ? match[2] || match[1] : null;
         }
     },
+
     handleKeyDown: function(e) {
         // Shift + Enter
         if (e.keyCode === 13 && e.shiftKey) {
@@ -132,6 +128,7 @@ module.exports = React.createClass({
             return false;
         }
     },
+
     getValue: function() {
       return this.refs.textarea.getDOMNode().value;
     },

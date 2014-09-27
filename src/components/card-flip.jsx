@@ -11,6 +11,7 @@ module.exports = React.createClass({
 			unflipped: false
 		}
 	},
+
     render: function() {
         return (
             <div className="card" data-flipped={this.props.flipped} data-unflipped={this.props.unflipped} onKeyDown={this.handleEscapeKey}>

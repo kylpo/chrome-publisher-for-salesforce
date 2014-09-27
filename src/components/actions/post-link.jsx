@@ -12,30 +12,35 @@ module.exports = React.createClass({
     	chrome.tabs.query({
 			active: true,
 			currentWindow: true
-		}, this.tabQueryResponse);
-		
+		}, this._tabQueryResponse);
+
         return {
             title: "",
             url: "",
             message: ''
         }
     },
-	tabQueryResponse: function(arrayOfTabs) {
+
+	_tabQueryResponse: function(arrayOfTabs) {
 		var activeTab = arrayOfTabs[0];
 		this.setState({
 			title: activeTab.title,
 			url: activeTab.url
 		});
 	},
+
     handleTitleChange: function(event) {
         this.setState({title: event.target.value});
     },
+
     handleUrlChange: function(event) {
         this.setState({url: event.target.value});
     },
+
     handleMessageChange: function() {
         this.setState({message: this.refs.textarea.getValue()});
     },
+
     handleSubmit: function(e) {
         e.preventDefault();
 
@@ -60,9 +65,11 @@ module.exports = React.createClass({
             this.props.onAfterSubmit(response);
         }.bind(this));
     },
+
     _hasRequiredFields: function() {
         return this.state.url !== "";
     },
+
     render: function() {		
         return (
 			<form className="post-link" onSubmit={this.handleSubmit}>

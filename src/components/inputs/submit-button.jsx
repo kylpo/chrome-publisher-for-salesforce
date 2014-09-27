@@ -12,6 +12,7 @@ module.exports = React.createClass({
             text: "Share"
         };
     },
+
     render: function() {
         var submitClasses = cx({
             "Form-submitButton": true,
