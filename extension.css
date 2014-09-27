@@ -56,9 +56,9 @@ input:focus, textarea:focus {
 	position: relative;
 	-webkit-transform-style: preserve-3d;
 
-    /*background-color: #344a5f;*/
+    background-color: #344a5f;
     /*GUS*/
-    background-color: #414141;
+    /*background-color: #414141;*/
 }
 .card[data-flipped=true] {
 	-webkit-animation: away-and-back 0.4s;
@@ -88,9 +88,9 @@ input:focus, textarea:focus {
 	padding: 10px 20px;
 	width: 120px;
 
-    /*outline: 1px solid #2d4356;*/
+    outline: 1px solid #2d4356;
     /*GUS*/
-    outline: 1px solid #333;
+    /*outline: 1px solid #333;*/
 }
 
 .action.is-disabled {
@@ -136,11 +136,11 @@ input:focus, textarea:focus {
 	-webkit-transition: opacity 0.4s;
 	text-align: center;
 
-    /*outline: 1px solid #2d4356;*/
-    /*background-color: #2d4356;*/
+    outline: 1px solid #2d4356;
+    background-color: #2d4356;
     /*GUS*/
-    outline: 1px solid #333;
-    background-color: #333;
+    /*outline: 1px solid #333;*/
+    /*background-color: #333;*/
 }
 .page-nav > ul {
 	list-style: none;
@@ -179,9 +179,9 @@ input:focus, textarea:focus {
 	text-indent: 0;
 }
 .page-nav > ul li a::after {
-	/*background-color: #14222E;*/
+	background-color: #14222E;
     /*GUS*/
-    background-color: #414141;
+    /*background-color: #414141;*/
 }
 .page-nav > ul li.active a::after {
 	-webkit-animation: grow 0.4s;
@@ -191,9 +191,9 @@ input:focus, textarea:focus {
 .back-nav {
 	height: 50px;
 
-    /*background-color: #2a94d6;*/
+    background-color: #2a94d6;
     /*GUS*/
-    background-color: #414141;
+    /*background-color: #414141;*/
 }
 
 .back-nav .title {
@@ -269,11 +269,11 @@ input:focus, textarea:focus {
 }
 
 .Toolbar {
-    /*outline: 1px solid #2d4356;*/
-    /*background-color: #2d4356;*/
+    outline: 1px solid #2d4356;
+    background-color: #2d4356;
     /*GUS*/
-    outline: 1px solid #333;
-    background-color: #333;
+    /*outline: 1px solid #333;*/
+    /*background-color: #333;*/
 
     text-align: right;
 }
