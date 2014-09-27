@@ -4,7 +4,7 @@ module.exports = function (grunt) {
 
         watch: {
             react: {
-                files: ['components/*.jsx', 'js/*.js'],
+                files: ['components/*.jsx', 'components/*/*.jsx', 'background/*.js'],
                 tasks: ['browserify']
             }
         },
@@ -14,8 +14,12 @@ module.exports = function (grunt) {
                 transform: [ require('grunt-react').browserify ]
             },
             client: {
-                src: ['components/*.jsx', 'js/*.js'],
+                src: ['src/components/*.jsx', 'src/components/*/*.jsx'],
                 dest: 'app.built.js'
+            },
+            background: {
+            	src: 'src/background/background.js',
+            	dest: 'background.built.js'
             }
         }
     });

@@ -1,0 +1,43 @@
+{
+  "name": "At.background",
+  "version": "0.5.0",
+  "main": [
+    "dist/background/jquery.atwho.background",
+    "dist/css/jquery.atwho.css"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "libs",
+    "spec"
+  ],
+  "dependencies": {
+    "jquery": ">=1.7.0",
+    "Caret.js": ">= 0.1.0"
+  },
+  "devDependencies": {
+    "jasmine-jquery": "~2.0.2"
+  },
+  "keywords": [
+    "mention",
+    "mentions",
+    "autocomplete",
+    "autocompletion",
+    "autosuggest",
+    "autosuggestion",
+    "atjs",
+    "at.background"
+  ],
+  "homepage": "https://github.com/ichord/At.background",
+  "_release": "0.5.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.5.0",
+    "commit": "dc3ab42d653804d47c6d19cbfa1d0e8b3f7d70d2"
+  },
+  "_source": "git://github.com/ichord/At.background.git",
+  "_target": "~0.5.0",
+  "_originalSource": "jquery.atwho",
+  "_direct": true
+}

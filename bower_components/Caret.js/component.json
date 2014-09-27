@@ -1,0 +1,20 @@
+{
+  "name": "Caret.background",
+  "repo": "ichord/Caret.background",
+  "description": "Add Github like mentions autocomplete to your application.",
+  "version": "0.1.0",
+  "keywords": [
+    "At.background",
+    "caret",
+    "ui"
+  ],
+  "dependencies": {
+    "component/jquery": "*"
+  },
+  "demo": "http://ichord.github.com/Caret.background",
+  "main": "src/jquery.caret.background",
+  "scripts": [
+    "src/jquery.caret.background"
+  ],
+  "license": "MIT"
+}

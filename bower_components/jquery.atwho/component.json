@@ -1,0 +1,32 @@
+{
+  "name": "At.background",
+  "repo": "ichord/At.background",
+  "description": "Add Github like mentions autocomplete to your application.",
+  "version": "0.5.0",
+  "demo": "http://ichord.github.com/At.background",
+  "dependencies": {
+    "ichord/Caret.js": ">= 0.1.0",
+    "component/jquery": ">= 1.7.0"
+  },
+  "main": [
+    "dist/background/jquery.atwho.background"
+  ],
+  "scripts": [
+    "dist/background/jquery.atwho.background"
+  ],
+  "styles": [
+    "dist/css/jquery.atwho.css"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "mentions",
+    "ui",
+    "mentions",
+    "autocomplete",
+    "autocompletion",
+    "autosuggest",
+    "autosuggestion",
+    "atjs",
+    "at.background"
+  ]
+}
