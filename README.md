@@ -1,13 +1,26 @@
-QuickActionsForSalesforce
+Chrome Publisher for Salesforce
 =========================
 
-To generate bg bundle:
-browserify js/background.js > background.built.js
+### Perform Salesforce's Publisher Actions directly from Chrome! No need to be on a salesforce.com page.
 
-npm install salesforce-api-using-access-token@latest --save
+[Chrome Publisher for Salesforce](https://chrome.google.com/webstore/detail/chrome-publisher-for-sale/iicjicoidokejlhbgdpbfphddeifhnjb) on the Chrome Web Store
 
-Lessons learned:
-- chrome.runtime.sendMessage can only pass a callback with 1 param. This means
-  you can't employ the error-first (node) strategy.
-- Maybe it is more appropriate to call out chrome.runtime.onMessage for only
-  passing the 1 argument. Not sure which is to blame...
+*Currently in an ALPHA state since only Chatter actions are enabled. Also, a preview of personal actions (#TIL and #MyDay) made it in. Watch [this video](https://www.youtube.com/watch?v=yYF0jF6rVzg) for more details.*
+
+This extension brings the power and convenience of Salesforce1's Publisher, right into the browser! No longer will you need to open a salesforce.com page, just to send a post/poll/link. 
+
+While browsing the web, simply click the icon in the upper right of Chrome to get started.
+
+**Note: this is NOT an official Salesforce project. Salesforce is not responsible for this extension.**
+
+## Dev Notes
+1. `npm install`
+2. Create a `config.js` file in the root directory with:
+  * `exports.clientId = "YOUR_CLIENT_ID";`
+  * `exports.clientSecret = "YOUR_CLIENT_SECRET";`
+  * `exports.host = "https://login.salesforce.com";`
+3. `grunt`
+4. Load unpacked extension in chrome://extensions/
+
+### Notes for me
+`npm install salesforce-api-using-access-token@latest --save`
