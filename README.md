@@ -13,6 +13,9 @@ While browsing the web, simply click the icon in the upper right of Chrome to ge
 
 **Note: this is NOT an official Salesforce project. Salesforce is not responsible for this extension.**
 
+## Contributors
+[Nick Ferraro](https://github.com/Spidy88) and [Kyle Poole](https://github.com/kylpo)
+
 ## Dev Notes
 1. `npm install`
 2. Create a `config.js` file in the root directory with:
