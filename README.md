@@ -16,6 +16,7 @@ While browsing the web, simply click the icon in the upper right of Chrome to ge
 **Note: this is NOT an official Salesforce project. Salesforce is not responsible for this extension.**
 
 ![Chrome Publisher Link](/Chrome_Publisher_Link.png?raw=true "Chrome Publisher Link")
+
 ![Chrome Publisher Options](/Chrome_Publisher_Options.png?raw=true "Chrome Publisher Options")
 
 ## Contributors
