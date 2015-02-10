@@ -1,6 +1,8 @@
 Chrome Publisher for Salesforce
 =========================
 
+![Chrome Publisher for Salesforce](/Chrome_Publisher.png?raw=true "Chrome Publisher")
+
 ### Perform Salesforce's Publisher Actions directly from Chrome! No need to be on a salesforce.com page.
 
 [Chrome Publisher for Salesforce](https://chrome.google.com/webstore/detail/chrome-publisher-for-sale/iicjicoidokejlhbgdpbfphddeifhnjb) on the Chrome Web Store
@@ -12,6 +14,9 @@ This extension brings the power and convenience of Salesforce1's Publisher, righ
 While browsing the web, simply click the icon in the upper right of Chrome to get started.
 
 **Note: this is NOT an official Salesforce project. Salesforce is not responsible for this extension.**
+
+![Chrome Publisher Link](/Chrome_Publisher_Link.png?raw=true "Chrome Publisher Link")
+![Chrome Publisher Options](/Chrome_Publisher_Options.png?raw=true "Chrome Publisher Options")
 
 ## Contributors
 [Nick Ferraro](https://github.com/Spidy88) and [Kyle Poole](https://github.com/kylpo)

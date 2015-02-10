@@ -6,7 +6,8 @@ body {
     color: #525354;
 	background-color: #999;
 	-webkit-perspective: 800px;
-	font-family: ProximaNova, Arial, sans-serif;
+	font-family: Arial, sans-serif;
+    font-size: 15px;
 }
 input, textarea {
     background-color: #e8eaeb;
